@@ -2,7 +2,7 @@
   "artist": {
     "name": "Eryn",
     "title": "Live2D 리거",
-    "intro": "안녕하세요 Live2D 리거 에린 Eryn 입니다.\n캐릭터의 개성을 살려 자연스럽고 예쁘게 움직이도록 작업하고 있습니다.\n현재 9월 작업부터 예약 받고 있습니다 방문해주셔서 감사드립니다!",
+    "intro": "안녕하세요 Live2D 리거 에린 Eryn 입니다.\n캐릭터의 개성을 살려 자연스럽고 예쁘게 움직이도록 작업하고 있습니다.\n방문해주셔서 감사드립니다!",
     "tags": ["#말랑한 리깅", "#자연스러운 움직임", "#빠르고 꼼꼼하게"],
     "socialLinks": {
       "twitter": "#",
@@ -19,13 +19,10 @@
   },
   "slots": {
     "enabled": true,
-    "notice": "최근 3개월 일정만 안내드립니다. 이후 일정도 문의 주시면 조율 가능합니다.",
+    "notice": "현재 9월 작업부터 예약받고 있습니다. 3개월치 일정을 안내해드리며, 그 이후 작업도 문의가능합니다.",
     "slotNotices": [
-      "안내 1",
-      "안내 2",
-      "안내 3",
-      "안내 4",
-      "안내 5"
+      "2026년 9월부터 리깅 가격이 상승할 예정입니다. 9월 이전에 작업 예약을 하실 경우 현재 가격으로 예약 가능합니다.",
+      "PSD 파일을 첨부해주시면 빠른 견적 확인이 가능하며, 파일이 없을 경우에도 대략적인 모델 디자인을 알려주시면 견적 확인이 가능합니다.",
     ],
     "months": [
       {
@@ -196,35 +193,35 @@
   ],
   "collaborators": [
     {
-      "initial": "소",
+      "initial": "Someang",
       "name": "소맹꽁님",
       "discount": "일러스트 / 리깅 각 5만원 할인",
       "bonus": "감정 표정 파츠 총 5개",
       "link": "https://artmug.kr/index.php?channel=view&uid=53626"
     },
     {
-      "initial": "나",
+      "initial": "Nae",
       "name": "나에 Nae님",
       "discount": "일러스트 / 리깅 각 5만원 할인",
       "bonus": "감정 표정 파츠 총 3개",
       "link": "https://artmug.kr/index.php?channel=view&uid=53061"
     },
     {
-      "initial": "R",
+      "initial": "RioBH",
       "name": "RioBH님",
       "discount": "일러스트 / 리깅 각 5만원 할인",
       "bonus": "감정 표정 파츠 총 3개",
       "link": "https://artmug.kr/index.php?channel=view&uid=44575"
     },
     {
-      "initial": "피",
+      "initial": "Peach",
       "name": "피치님",
       "discount": "일러스트 / 리깅 각 5만원 할인",
       "bonus": "감정 표정 파츠 총 7개",
       "link": "https://artmug.kr/index.php?channel=view&uid=51109"
     },
     {
-      "initial": "C",
+      "initial": "Cooing",
       "name": "cooing님",
       "discount": "일러스트 / 리깅 각 5만원 할인",
       "bonus": "감정 표정 파츠 총 5개",
@@ -245,6 +242,12 @@
         "name": "LD 반신 Bust 리깅",
         "price": 300000,
         "description": "LD 몸 반신(흉상)을 리깅하는 작업입니다.\n상체 표현에 집중된 구성으로,\n머리카락과 얼굴 움직임에 더 디테일하게 작업을 진행합니다."
+      },
+      {
+        "id": "sdbody",
+        "name": "SD 전신 Full Body 리깅",
+        "price": 150000,
+        "description": "SD 몸 전신을 리깅하는 작업입니다.\n말랑말랑하면서 통통 튀는 귀여운 움직임이 느껴지도록 작업을 진행합니다."
       }
     ],
     "includedOptions": [
