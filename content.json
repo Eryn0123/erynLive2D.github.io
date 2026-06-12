@@ -198,6 +198,7 @@
       "initial": "Someang",
       "name": "소맹꽁님",
       "discount": "일러스트 / 리깅 각 5만원 할인",
+      "discountPrice": 50000,
       "bonus": "감정 표정 파츠 총 5개",
       "link": "https://artmug.kr/index.php?channel=view&uid=53626"
     },
@@ -205,6 +206,7 @@
       "initial": "Nae",
       "name": "나에 Nae님",
       "discount": "일러스트 / 리깅 각 5만원 할인",
+      "discountPrice": 50000,
       "bonus": "감정 표정 파츠 총 3개",
       "link": "https://artmug.kr/index.php?channel=view&uid=53061"
     },
@@ -212,6 +214,7 @@
       "initial": "RioBH",
       "name": "RioBH님",
       "discount": "일러스트 / 리깅 각 5만원 할인",
+      "discountPrice": 50000,
       "bonus": "감정 표정 파츠 총 3개",
       "link": "https://artmug.kr/index.php?channel=view&uid=44575"
     },
@@ -219,6 +222,7 @@
       "initial": "Peach",
       "name": "피치님",
       "discount": "일러스트 / 리깅 각 5만원 할인",
+      "discountPrice": 50000,
       "bonus": "감정 표정 파츠 총 7개",
       "link": "https://artmug.kr/index.php?channel=view&uid=51109"
     },
@@ -226,6 +230,7 @@
       "initial": "Cooing",
       "name": "cooing님",
       "discount": "일러스트 / 리깅 각 5만원 할인",
+      "discountPrice": 50000,
       "bonus": "감정 표정 파츠 총 5개",
       "link": "https://artmug.kr/index.php?channel=view&uid=53653"
     }
