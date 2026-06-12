@@ -296,9 +296,6 @@
     "other": [
       { "id": "extra_revision", "name": "추가 수정 횟수", "price": 10000 },
       { "id": "delay_reveal", "name": "작업 60일 이후 공개", "price": 50000 }
-    ],
-    "discount": [
-      { "id": "discount", "name": "2026년 리깅 이벤트", "price": -100000 }
     ]
   },
   "notices": [
