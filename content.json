@@ -32,7 +32,7 @@
         "month": "2026-09",
         "status": "available",
         "slots": [
-          { "type": "full", "label": "빈 슬롯" },
+          { "type": "empty", "label": "빈 슬롯" },
           { "type": "empty", "label": "빈 슬롯" }
         ]
       },
@@ -124,9 +124,9 @@
       "id": "free",
       "label": "자유 움직임",
       "samples": [
-        { "src": "images/free_move/fm1.gif", "alt": "자유 움직임 샘플 1", "caption": "" },
-        { "src": "images/free_move/fm2.gif", "alt": "자유 움직임 샘플 2", "caption": "" },
-        { "src": "images/free_move/fm3.gif", "alt": "자유 움직임 샘플 3", "caption": "" }
+        { "src": "images/free_move/fm1.mp4", "alt": "자유 움직임 샘플 1", "caption": "" },
+        { "src": "images/free_move/fm2.mp4", "alt": "자유 움직임 샘플 2", "caption": "" },
+        { "src": "images/free_move/fm3.mp4", "alt": "자유 움직임 샘플 3", "caption": "" }
       ]
     },
     {
@@ -201,13 +201,6 @@
       "discount": "일러스트 / 리깅 각 5만원 할인",
       "bonus": "감정 표정 파츠 총 5개",
       "link": "https://artmug.kr/index.php?channel=view&uid=53626"
-    },
-    {
-      "initial": "포",
-      "name": "포욘님",
-      "discount": "일러스트 10 / 리깅 5만원 할인",
-      "bonus": "감정 표정 파츠 총 3개",
-      "link": "#"
     },
     {
       "initial": "나",
