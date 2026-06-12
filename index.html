@@ -1022,8 +1022,6 @@ function renderForm() {
       <div class="form-group"><label class="form-label">기타</label><div id="f-other-wrap"></div></div>
       <div class="form-group full"><label class="form-label">협업 작가님</label><div class="form-radio-group" id="f-collabartist"></div></div>
 
-      <div class="form-group full"><label class="form-label">할인 적용</label><div id="f-discount-wrap"></div></div>
-
       
       <div class="form-group full">
         <label class="form-label">추가 문의 사항</label>
@@ -1048,8 +1046,34 @@ function renderForm() {
     (val) => updateRadioField('workpublic', val, '작업과정 공개'));
 
   makeRadios('f-collabartist',
-    (C.collaborators||[]).map(c => c.name).concat(['없음']),
-    (val) => updateRadioField('collabartist', val, '협업 작가님'));
+  (C.collaborators || []).map(c => c.name).concat(['없음']),
+  (val) => {
+    delete estimate['collabartist'];
+    delete estimate['collab-discount'];
+
+    if (!val || val === '없음') {
+      updateEstimate();
+      return;
+    }
+
+    const artist = (C.collaborators || []).find(c => c.name === val);
+    const discountPrice = Number(artist?.discountPrice || 0);
+
+    estimate['collabartist'] = {
+      type: 'tag',
+      label: '협업 작가님',
+      value: val
+    };
+
+    if (discountPrice > 0) {
+      estimate['collab-discount'] = {
+        name: val + ' 협업 할인',
+        price: -discountPrice
+      };
+    }
+
+    updateEstimate();
+  });
 
   const plans = bo.plans||[];
   makeRadios('f-plan', plans.map(p=>p.name), (val,idx) => {
@@ -1068,7 +1092,6 @@ function renderForm() {
   makeQtySelect('f-parts-wrap', ao.partsAdd||[], 'parts');
   makeCheckboxes('f-animal-wrap', ao.animalParts||[], 'animal');
   makeCheckboxes('f-other-wrap', ao.other||[], 'other');
-  makeCheckboxes('f-discount-wrap', ao.discount||[], 'discount');
 
   document.getElementById('btn-reset').onclick = resetForm;
   document.getElementById('btn-submit').onclick = submitForm;
