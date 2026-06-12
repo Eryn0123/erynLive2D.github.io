@@ -1047,27 +1047,33 @@ function renderForm() {
 
   makeRadios('f-collabartist',
   (C.collaborators || []).map(c => c.name).concat(['없음']),
-  (val) => {
-    delete estimate['collabartist'];
+  (val, idx) => {
+    delete estimate['__radio_collabartist'];
     delete estimate['collab-discount'];
 
-    if (!val || val === '없음') {
+    if (val === null || val === '없음' || idx < 0) {
       updateEstimate();
       return;
     }
 
-    const artist = (C.collaborators || []).find(c => c.name === val);
-    const discountPrice = Number(artist?.discountPrice || 0);
+    const artist = (C.collaborators || [])[idx];
 
-    estimate['collabartist'] = {
-      type: 'tag',
+    if (!artist) {
+      updateEstimate();
+      return;
+    }
+
+    const discountPrice = Number(artist.discountPrice || 0);
+
+    estimate['__radio_collabartist'] = {
       label: '협업 작가님',
-      value: val
+      value: artist.name,
+      isRadioTag: true
     };
 
     if (discountPrice > 0) {
       estimate['collab-discount'] = {
-        name: val + ' 협업 할인',
+        name: artist.name + ' 협업 할인',
         price: -discountPrice
       };
     }
