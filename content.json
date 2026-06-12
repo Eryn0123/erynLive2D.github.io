@@ -125,7 +125,8 @@
       "samples": [
         { "src": "images/free_move/fm1.mp4", "alt": "자유 움직임 샘플 1", "caption": "" },
         { "src": "images/free_move/fm2.mp4", "alt": "자유 움직임 샘플 2", "caption": "" },
-        { "src": "images/free_move/fm3.mp4", "alt": "자유 움직임 샘플 3", "caption": "" }
+        { "src": "images/free_move/fm3.mp4", "alt": "자유 움직임 샘플 3", "caption": "" },
+        { "src": "images/free_move/fm4.mp4", "alt": "자유 움직임 샘플 4", "caption": "" }
       ]
     },
     {
@@ -163,11 +164,11 @@
       "id": "clothes",
       "label": "옷 디테일",
       "samples": [
-        { "src": "images/clothes_detail/cd1.gif", "alt": "옷 디테일 샘플 1", "caption": "리본 움직임" },
-        { "src": "images/clothes_detail/cd2.gif", "alt": "옷 디테일 샘플 2", "caption": "안경 움직임" },
-        { "src": "images/clothes_detail/cd3.gif", "alt": "옷 디테일 샘플 3", "caption": "치마 움직임" },
-        { "src": "images/clothes_detail/cd4.gif", "alt": "옷 디테일 샘플 4", "caption": "다리 흔들림" },
-        { "src": "images/clothes_detail/cd5.gif", "alt": "옷 디테일 샘플 5", "caption": "입체적인 장신구" },
+        { "src": "images/clothes_detail/cd1.gif", "alt": "옷 디테일 샘플 1", "caption": "치마 움직임" },
+        { "src": "images/clothes_detail/cd2.gif", "alt": "옷 디테일 샘플 2", "caption": "리본 움직임" },
+        { "src": "images/clothes_detail/cd3.gif", "alt": "옷 디테일 샘플 3", "caption": "안경 움직임" },
+        { "src": "images/clothes_detail/cd4.gif", "alt": "옷 디테일 샘플 4", "caption": "입체적인 장신구" },
+        { "src": "images/clothes_detail/cd5.gif", "alt": "옷 디테일 샘플 5", "caption": "다리 흔들림" },
         { "src": "images/clothes_detail/cd6.gif", "alt": "옷 디테일 샘플 6", "caption": "겉옷에 따른 머리카락 움직임" }
 
       ]
