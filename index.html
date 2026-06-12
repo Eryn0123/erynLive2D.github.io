@@ -1000,15 +1000,6 @@ function renderForm() {
       <div class="form-group"><label class="form-label">방송 플랫폼</label><input class="form-input" id="f-platform" placeholder="예: 트위치, 유튜브, 치지직 등" oninput="updateInfoField('platform', this.value, '방송 플랫폼')"></div>
       <div class="form-group"><label class="form-label">트래킹 장비</label><div class="form-radio-group" id="f-tracking"></div></div>
 
-
-      <div class="form-group">
-        <label class="form-label">제작 목적 <span class="required">*</span></label>
-        <div class="form-radio-group" id="f-purpose"></div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">사용 소프트웨어</label>
-        <div class="form-radio-group" id="f-software"></div>
-      </div>
       <div class="form-group">
         <label class="form-label">레이어 파일 보유</label>
         <div class="form-radio-group" id="f-layer"></div>
@@ -1045,14 +1036,6 @@ function renderForm() {
         <input class="form-input" readonly value="${ff.reservationNoticePlaceholder||'기재한 최소 60일 (기본) 이후 일정으로 예약 신청 가능합니다.'}" style="opacity:.6;">
       </div>
     </div>`;
-
-  /* 제작 목적 - 선택값을 견적에 태그로 반영 */
-  makeRadios('f-purpose', ff.purposeOptions||['개인-V튜버','개인-기타','상업용'],
-    (val) => updateRadioField('purpose', val, '제작 목적'));
-
-  /* 사용 소프트웨어 - 선택값을 견적에 태그로 반영 */
-  makeRadios('f-software', ff.softwareOptions||['VTube Studio','기타'],
-    (val) => updateRadioField('software', val, '사용 소프트웨어'));
 
   /* 레이어 파일 보유 - 선택값을 견적에 태그로 반영 */
   makeRadios('f-layer', ff.layerFileOptions||['YES','NO'],
