@@ -270,6 +270,7 @@ section{padding:var(--section-gap) 0;}
 }
 .sample-placeholder-icon{font-size:28px;opacity:0.35;}
 .sample-item img{width:100%;height:100%;object-fit:cover;}
+.sample-item video{width:100%;height:100%;object-fit:cover;}
 .sample-caption{padding:8px 10px;font-size:12px;color:var(--text-secondary);text-align:center;border-top:1px solid var(--glass-border);}
 .animal-desc{font-size:13px;color:var(--text-secondary);line-height:1.9;white-space:pre-line;}
 .all-cat-block{margin-bottom:28px;}
@@ -823,12 +824,39 @@ function renderSamples() {
 
   function buildGrid(samples) {
     if (!samples || !samples.length) return '';
+    function isVideo(src) {
+    return /\.(mp4|webm|mov)$/i.test(src || '');
+    }
+    return `<div class="sample-grid">${samples.map(s => {
+      if (!s.src) {
+        return `<div class="sample-item">
+          <div class="sample-placeholder">
+            <div class="sample-placeholder-icon"></div>
+            <div>${s.alt || '샘플'}</div>
+          </div>
+          ${s.caption ? `<div class="sample-caption">${s.caption}</div>` : ''}
+        </div>`;
+      }
+      const media = isVideo(s.src)
+        ? `<video autoplay muted loop playsinline preload="metadata" aria-label="${s.alt || '리깅 샘플 영상'}">
+          <source src="${s.src}" type="video/mp4">
+        </video>`
+      : `<img src="${s.src}" alt="${s.alt || '리깅 샘플'}">`;
+      return `<div class="sample-item">
+        ${media}
+        ${s.caption ? `<div class="sample-caption">${s.caption}</div>` : ''}
+      </div>`;
+    }).join('')}</div>`;
+  }
+  /*
+  function buildGrid(samples) {
+    if (!samples || !samples.length) return '';
     return `<div class="sample-grid">${samples.map(s => s.src
       ? `<div class="sample-item"><img src="${s.src}" alt="${s.alt}">${s.caption?`<div class="sample-caption">${s.caption}</div>`:''}</div>`
       : `<div class="sample-item"><div class="sample-placeholder"><div class="sample-placeholder-icon">🎨</div><div>${s.alt||'GIF 샘플'}</div></div>${s.caption?`<div class="sample-caption">${s.caption}</div>`:''}</div>`
     ).join('')}</div>`;
   }
-
+*/
   function activate(id) {
     document.querySelectorAll('.sample-tab').forEach(t=>t.classList.remove('active'));
     document.querySelectorAll('.sample-category').forEach(c=>c.classList.remove('active'));
