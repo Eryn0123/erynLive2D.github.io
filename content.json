@@ -134,8 +134,7 @@
       "samples": [
         { "src": "images/free_move/fm_1.mp4", "alt": "자유 움직임 샘플 1", "caption": "" },
         { "src": "images/free_move/fm_2.mp4", "alt": "자유 움직임 샘플 2", "caption": "" },
-        { "src": "images/free_move/fm_3.mp4", "alt": "자유 움직임 샘플 3", "caption": "" },
-        { "src": "images/free_move/fm_4.mp4", "alt": "자유 움직임 샘플 4", "caption": "" }
+        { "src": "images/free_move/fm_3.mp4", "alt": "자유 움직임 샘플 3", "caption": "" }
       ]
     },
     {
@@ -208,6 +207,15 @@
       "samples": [
         { "src": "images/free_move/fm_4.mp4", "alt": "SD 모델 샘플 1", "caption": "" }
       ]
+    }
+  ],
+  "waitingScreens": [
+    {
+      "id": 1,
+      "title": "마법 대기화면&화면전환",
+      "subtitle": "손동작과 이펙트를 활용한 Live2D 대기화면 및 화면 전환 샘플입니다.",
+      "src": "images/waiting/waiting_01.mp4",
+      "caption": "씨미에서 활동중인 빈터님 대기화면&화면전환"
     }
   ],
   "collaborators": [
