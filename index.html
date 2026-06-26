@@ -8,6 +8,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+@font-face {
+  font-family: 'Paperozi';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Paperozi';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+  
 :root {
   --c-purple:    #b3a8f0;
   --c-blue:      #a8c8f0;
@@ -44,7 +58,8 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{
-  font-family:'Noto Sans KR',sans-serif;
+  font-family:'Paperozi','Noto Sans KR',sans-serif;
+  font-weight:400;
   background:var(--bg-page);
   color:var(--text-primary);
   min-height:100vh;
@@ -93,14 +108,14 @@ section{padding:var(--section-gap) 0;}
   background:linear-gradient(135deg,var(--purple-light),var(--purple-dark));
   border:none;color:#fff;padding:9px 20px;border-radius:10px;
   font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;
-  box-shadow:0 3px 14px var(--accent-glow);font-family:'Noto Sans KR',sans-serif;
+  box-shadow:0 3px 14px var(--accent-glow);font-family:'Paperozi','Noto Sans KR',sans-serif;
 }
 .btn-primary:hover{transform:translateY(-1px);box-shadow:0 5px 22px rgba(122,109,212,0.38);}
 .btn-secondary{
   background:rgba(255,255,255,0.72);border:1px solid var(--glass-border);
   color:var(--text-secondary);padding:9px 20px;border-radius:10px;
   font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;
-  font-family:'Noto Sans KR',sans-serif;
+  font-family:'Paperozi','Noto Sans KR',sans-serif;
 }
 .btn-secondary:hover{background:rgba(255,255,255,0.92);color:var(--text-primary);border-color:rgba(122,109,212,0.36);}
 
@@ -246,7 +261,7 @@ section{padding:var(--section-gap) 0;}
   padding:8px 18px;border-radius:20px;font-size:13px;font-weight:500;
   cursor:pointer;transition:all .2s;border:1px solid var(--glass-border);
   background:rgba(255,255,255,0.62);color:var(--text-secondary);
-  font-family:'Noto Sans KR',sans-serif;box-shadow:var(--shadow-sm);
+  font-family:'Paperozi','Noto Sans KR',sans-serif;box-shadow:var(--shadow-sm);
 }
 .sample-tab.active{
   background:linear-gradient(135deg,var(--purple-light),var(--purple-dark));
@@ -326,7 +341,7 @@ section{padding:var(--section-gap) 0;}
   width:100%;display:flex;justify-content:space-between;align-items:center;
   padding:16px 20px;background:none;border:none;color:var(--text-primary);
   font-size:15px;font-weight:600;cursor:pointer;text-align:left;
-  font-family:'Noto Sans KR',sans-serif;transition:background .2s;
+  font-family:'Paperozi','Noto Sans KR',sans-serif;transition:background .2s;
 }
 .notice-header:hover{background:rgba(179,168,240,0.07);}
 .notice-chevron{transition:transform .3s;color:var(--text-muted);font-size:12px;}
@@ -362,7 +377,7 @@ section{padding:var(--section-gap) 0;}
 .form-input,.form-select,.form-textarea{
   background:rgba(255,255,255,0.72);border:1px solid rgba(179,168,240,0.30);
   border-radius:10px;padding:10px 14px;color:var(--text-primary);
-  font-size:13px;font-family:'Noto Sans KR',sans-serif;transition:all .2s;outline:none;
+  font-size:13px;font-family:'Paperozi','Noto Sans KR',sans-serif;transition:all .2s;outline:none;
 }
 .form-input:focus,.form-select:focus,.form-textarea:focus{
   border-color:var(--purple-light);background:#fff;
@@ -453,14 +468,14 @@ section{padding:var(--section-gap) 0;}
 .btn-reset{
   background:rgba(255,255,255,0.62);border:1px solid rgba(179,168,240,0.28);
   color:var(--text-muted);padding:11px 24px;border-radius:10px;
-  font-size:14px;cursor:pointer;transition:all .2s;font-family:'Noto Sans KR',sans-serif;
+  font-size:14px;cursor:pointer;transition:all .2s;font-family:'Paperozi','Noto Sans KR',sans-serif;
 }
 .btn-reset:hover{color:var(--text-primary);background:rgba(255,255,255,0.88);}
 .btn-submit{
   background:linear-gradient(135deg,var(--purple-light),var(--purple-dark));
   border:none;color:#fff;padding:11px 28px;border-radius:10px;
   font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;
-  box-shadow:0 3px 14px var(--accent-glow);font-family:'Noto Sans KR',sans-serif;
+  box-shadow:0 3px 14px var(--accent-glow);font-family:'Paperozi','Noto Sans KR',sans-serif;
 }
 .btn-submit:hover{transform:translateY(-1px);box-shadow:0 5px 22px rgba(122,109,212,0.38);}
 
@@ -481,7 +496,7 @@ section{padding:var(--section-gap) 0;}
   font-size:11px;font-weight:600;color:var(--purple-dark);
   background:rgba(179,168,240,0.14);border:1px solid rgba(179,168,240,0.28);
   border-radius:6px;padding:4px 10px;cursor:pointer;transition:all .2s;
-  font-family:'Noto Sans KR',sans-serif;
+  font-family:'Paperozi','Noto Sans KR',sans-serif;
 }
 .btn-copy:hover{background:rgba(179,168,240,0.28);}
 .btn-copy.copied{background:rgba(100,200,130,0.15);border-color:rgba(100,200,130,0.30);color:#3a9a5a;}
@@ -557,6 +572,28 @@ section{padding:var(--section-gap) 0;}
 
 .fade-in{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease;}
 .fade-in.visible{opacity:1;transform:translateY(0);}
+
+.section-title {
+  font-family:'Outfit','Paperozi','Noto Sans KR',sans-serif;
+  font-weight:700;
+}
+  
+.event-card h3,
+.event-desc,
+.showcase-caption-main,
+.all-cat-label,
+.collab-name,
+.plan-name,
+.included-title,
+.add-group-title,
+.notice-header,
+.process-title,
+.form-section-title,
+.estimate-total {
+  font-family:'Paperozi','Noto Sans KR',sans-serif;
+  font-weight:700;
+}
+
 </style>
 </head>
 <body>
