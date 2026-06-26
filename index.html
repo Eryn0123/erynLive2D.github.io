@@ -285,7 +285,7 @@ section{padding:var(--section-gap) 0;}
 }
 
 /* ── 대기화면 샘플 슬라이더 ── */
-.waiting-section{margin-top:34px;}
+.waiting-block{margin-top:28px;}
 .waiting-slider{position:relative;}
 .waiting-track{overflow:hidden;border-radius:var(--card-radius);box-shadow:var(--shadow-md);}
 .waiting-slides{display:flex;transition:transform .4s ease;}
@@ -332,6 +332,21 @@ section{padding:var(--section-gap) 0;}
   color:var(--purple-dark);
   margin-top:6px;
 }
+.waiting-credits{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:8px;
+}
+.waiting-credits span{
+  font-size:11px;
+  color:var(--purple-dark);
+  background:rgba(179,168,240,0.16);
+  border:1px solid rgba(179,168,240,0.30);
+  padding:4px 10px;
+  border-radius:20px;
+}
+
 .sample-placeholder-icon{font-size:28px;opacity:0.35;}
 /*.sample-item img{width:100%;height:100%;object-fit:cover;}*/
 .sample-item img,
@@ -728,21 +743,6 @@ section{padding:var(--section-gap) 0;}
     <p class="section-desc fade-in">카테고리별 리깅 샘플 GIF입니다.</p>
     <div class="sample-tabs" id="sample-tabs"></div>
     <div id="sample-categories"></div>
-    <div class="waiting-section fade-in" id="waiting-section">
-      <div class="all-cat-label">대기화면 샘플</div>
-      <p class="sample-cat-desc">Live2D를 활용한 대기화면 및 화면전환 연출 샘플입니다.</p>
-
-      <div class="waiting-slider">
-        <div class="waiting-track">
-          <div class="waiting-slides" id="waiting-slides"></div>
-        </div>
-
-        <button class="slider-btn slider-prev" id="waiting-prev">‹</button>
-        <button class="slider-btn slider-next" id="waiting-next">›</button>
-      </div>
-
-      <div class="slider-dots" id="waiting-dots"></div>
-    </div>
   </section>
 
   <section id="collabs">
@@ -829,7 +829,7 @@ const fmt = n => n.toLocaleString('ko-KR') + '원';
 
 function init() {
   renderSlotInfo(); renderArtist(); renderEvent(); renderSlots();
-  renderShowcase(); renderSamples(); renderWaitingScreens(); renderCollabs();
+  renderShowcase(); renderSamples(); renderCollabs();
   renderBaseOptions(); renderAddOptions(); renderNotices();
   renderProcess(); renderForm(); initScrollFade();
 }
@@ -976,7 +976,29 @@ function renderSamples() {
     document.querySelector(`.sample-tab[data-id="${id}"]`).classList.add('active');
     document.getElementById('cat-'+id).classList.add('active');
   }
+  function buildWaitingBlock(mode, showLabel = true) {
+    const labelHtml = showLabel
+      ? `<div class="all-cat-label">대기화면</div>
+         <div class="sample-cat-desc">Live2D를 활용한 대기화면 및 화면전환 연출 샘플입니다.</div>`
+      : `<div class="sample-cat-desc">Live2D를 활용한 대기화면 및 화면전환 연출 샘플입니다.</div>`;
 
+    return `
+      <div class="all-cat-block waiting-block">
+        ${labelHtml}
+
+        <div class="waiting-slider">
+          <div class="waiting-track">
+            <div class="waiting-slides" id="waiting-${mode}-slides"></div>
+          </div>
+
+          <button class="slider-btn slider-prev" id="waiting-${mode}-prev">‹</button>
+          <button class="slider-btn slider-next" id="waiting-${mode}-next">›</button>
+        </div>
+
+        <div class="slider-dots" id="waiting-${mode}-dots"></div>
+      </div>
+    `;
+  }
   const allTab = document.createElement('button');
   allTab.className = 'sample-tab active'; allTab.dataset.id = 'all';
   allTab.textContent = '전체보기'; allTab.onclick = ()=>activate('all');
@@ -984,18 +1006,23 @@ function renderSamples() {
 
   const allDiv = document.createElement('div');
   allDiv.className = 'sample-category active'; allDiv.id = 'cat-all';
-  allDiv.innerHTML = cats.map(cat => {
-    const grid = (cat.samples&&cat.samples.length) ? buildGrid(cat.samples) : '';
-    const desc = cat.description
-      ? (cat.samples&&cat.samples.length
-          ? `<div class="sample-cat-desc">${cat.description}</div>`
-          : `<div class="animal-desc">${cat.description}</div>`)
-      : '';
-    return `<div class="all-cat-block">
-      <div class="all-cat-label">${cat.label}</div>
-      ${desc}${grid}
-    </div>`;
-  }).join('');
+  
+  const waitingItems = C.waitingScreens || [];
+  allDiv.innerHTML =
+    cats.map(cat => {
+      const grid = (cat.samples&&cat.samples.length) ? buildGrid(cat.samples) : '';
+      const desc = cat.description
+        ? (cat.samples&&cat.samples.length
+            ? `<div class="sample-cat-desc">${cat.description}</div>`
+            : `<div class="animal-desc">${cat.description}</div>`)
+        : '';
+
+      return `<div class="all-cat-block">
+        <div class="all-cat-label">${cat.label}</div>
+        ${desc}${grid}
+      </div>`;
+    }).join('')
+    + (waitingItems.length ? buildWaitingBlock('all', true) : '');
   catsEl.appendChild(allDiv);
 
   cats.forEach(cat => {
@@ -1012,23 +1039,41 @@ function renderSamples() {
     else if (cat.description) html += `<div class="animal-desc">${cat.description}</div>`;
     div.innerHTML = html; catsEl.appendChild(div);
   });
+
+    if (waitingItems.length) {
+    const waitingTab = document.createElement('button');
+    waitingTab.className = 'sample-tab';
+    waitingTab.dataset.id = 'waiting';
+    waitingTab.textContent = '대기화면';
+    waitingTab.onclick = () => activate('waiting');
+    tabsEl.appendChild(waitingTab);
+
+    const waitingDiv = document.createElement('div');
+    waitingDiv.className = 'sample-category';
+    waitingDiv.id = 'cat-waiting';
+    waitingDiv.innerHTML = buildWaitingBlock('cat', false);
+
+    catsEl.appendChild(waitingDiv);
+
+    renderWaitingSlides('all');
+    renderWaitingSlides('cat');
+  }
 }
 
-/* ── Waiting Screens ── */
-let waitingIdx = 0;
+/* ── Waiting Screen Slides ── */
+const waitingIdxMap = {
+  all: 0,
+  cat: 0
+};
 
-function renderWaitingScreens() {
+function renderWaitingSlides(mode) {
   const items = C.waitingScreens || [];
-  const section = document.getElementById('waiting-section');
-  const slides = document.getElementById('waiting-slides');
-  const dots = document.getElementById('waiting-dots');
+  const slides = document.getElementById(`waiting-${mode}-slides`);
+  const dots = document.getElementById(`waiting-${mode}-dots`);
+  const prev = document.getElementById(`waiting-${mode}-prev`);
+  const next = document.getElementById(`waiting-${mode}-next`);
 
-  if (!section || !slides || !dots) return;
-
-  if (!items.length) {
-    section.style.display = 'none';
-    return;
-  }
+  if (!slides || !dots || !items.length) return;
 
   slides.innerHTML = '';
   dots.innerHTML = '';
@@ -1047,6 +1092,12 @@ function renderWaitingScreens() {
       <div class="waiting-caption">
         <div class="waiting-caption-main">（ ${item.title || ''} ）</div>
         <div class="waiting-caption-sub">${item.subtitle || ''}</div>
+
+        <div class="waiting-credits">
+          ${item.illust ? `<span>ILLUST / ${item.illust}</span>` : ''}
+          ${item.rig ? `<span>RIG / ${item.rig}</span>` : ''}
+        </div>
+
         ${item.caption ? `<div class="waiting-caption-small">${item.caption}</div>` : ''}
       </div>
     `;
@@ -1054,24 +1105,28 @@ function renderWaitingScreens() {
     slides.appendChild(slide);
 
     const dot = document.createElement('button');
-    dot.className = 'slider-dot waiting-dot' + (i === 0 ? ' active' : '');
-    dot.onclick = () => goWaitingSlide(i);
+    dot.className = `slider-dot waiting-${mode}-dot` + (i === 0 ? ' active' : '');
+    dot.onclick = () => goWaitingSlide(mode, i);
     dots.appendChild(dot);
   });
 
-  document.getElementById('waiting-prev').onclick = () => goWaitingSlide(waitingIdx - 1);
-  document.getElementById('waiting-next').onclick = () => goWaitingSlide(waitingIdx + 1);
+  if (prev) prev.onclick = () => goWaitingSlide(mode, waitingIdxMap[mode] - 1);
+  if (next) next.onclick = () => goWaitingSlide(mode, waitingIdxMap[mode] + 1);
 }
 
-function goWaitingSlide(idx) {
+function goWaitingSlide(mode, idx) {
   const n = (C.waitingScreens || []).length;
   if (!n) return;
 
-  waitingIdx = (idx + n) % n;
-  document.getElementById('waiting-slides').style.transform = `translateX(-${waitingIdx * 100}%)`;
+  waitingIdxMap[mode] = (idx + n) % n;
 
-  document.querySelectorAll('.waiting-dot').forEach((d, i) => {
-    d.classList.toggle('active', i === waitingIdx);
+  const slides = document.getElementById(`waiting-${mode}-slides`);
+  if (slides) {
+    slides.style.transform = `translateX(-${waitingIdxMap[mode] * 100}%)`;
+  }
+
+  document.querySelectorAll(`.waiting-${mode}-dot`).forEach((d, i) => {
+    d.classList.toggle('active', i === waitingIdxMap[mode]);
   });
 }
 
