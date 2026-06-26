@@ -283,6 +283,55 @@ section{padding:var(--section-gap) 0;}
   font-size:11px;color:var(--text-muted);gap:8px;
   background:linear-gradient(135deg,rgba(179,168,240,0.07),rgba(168,200,240,0.07));
 }
+
+/* ── 대기화면 샘플 슬라이더 ── */
+.waiting-section{margin-top:34px;}
+.waiting-slider{position:relative;}
+.waiting-track{overflow:hidden;border-radius:var(--card-radius);box-shadow:var(--shadow-md);}
+.waiting-slides{display:flex;transition:transform .4s ease;}
+.waiting-slide{
+  min-width:100%;
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
+  border-radius:var(--card-radius);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.waiting-video-wrap{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  background:var(--lav);
+  overflow:hidden;
+}
+.waiting-video-wrap video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.waiting-caption{
+  padding:14px 20px;
+  background:rgba(255,255,255,0.60);
+  border-top:1px solid var(--glass-border);
+}
+.waiting-caption-main{
+  font-size:14px;
+  font-weight:700;
+  color:var(--text-primary);
+}
+.waiting-caption-sub{
+  font-size:12px;
+  color:var(--text-muted);
+  margin-top:3px;
+  line-height:1.6;
+}
+.waiting-caption-small{
+  font-size:11px;
+  color:var(--purple-dark);
+  margin-top:6px;
+}
 .sample-placeholder-icon{font-size:28px;opacity:0.35;}
 /*.sample-item img{width:100%;height:100%;object-fit:cover;}*/
 .sample-item img,
@@ -679,6 +728,21 @@ section{padding:var(--section-gap) 0;}
     <p class="section-desc fade-in">카테고리별 리깅 샘플 GIF입니다.</p>
     <div class="sample-tabs" id="sample-tabs"></div>
     <div id="sample-categories"></div>
+    <div class="waiting-section fade-in" id="waiting-section">
+      <div class="all-cat-label">대기화면 샘플</div>
+      <p class="sample-cat-desc">Live2D를 활용한 대기화면 및 화면전환 연출 샘플입니다.</p>
+
+      <div class="waiting-slider">
+        <div class="waiting-track">
+          <div class="waiting-slides" id="waiting-slides"></div>
+        </div>
+
+        <button class="slider-btn slider-prev" id="waiting-prev">‹</button>
+        <button class="slider-btn slider-next" id="waiting-next">›</button>
+      </div>
+
+      <div class="slider-dots" id="waiting-dots"></div>
+    </div>
   </section>
 
   <section id="collabs">
@@ -765,7 +829,7 @@ const fmt = n => n.toLocaleString('ko-KR') + '원';
 
 function init() {
   renderSlotInfo(); renderArtist(); renderEvent(); renderSlots();
-  renderShowcase(); renderSamples(); renderCollabs();
+  renderShowcase(); renderSamples(); renderWaitingScreens(); renderCollabs();
   renderBaseOptions(); renderAddOptions(); renderNotices();
   renderProcess(); renderForm(); initScrollFade();
 }
@@ -950,6 +1014,73 @@ function renderSamples() {
   });
 }
 
+/* ── Waiting Screens ── */
+let waitingIdx = 0;
+
+function renderWaitingScreens() {
+  const items = C.waitingScreens || [];
+  const section = document.getElementById('waiting-section');
+  const slides = document.getElementById('waiting-slides');
+  const dots = document.getElementById('waiting-dots');
+
+  if (!section || !slides || !dots) return;
+
+  if (!items.length) {
+    section.style.display = 'none';
+    return;
+  }
+
+  slides.innerHTML = '';
+  dots.innerHTML = '';
+
+  items.forEach((item, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'waiting-slide';
+
+    slide.innerHTML = `
+      <div class="waiting-video-wrap">
+        <video autoplay muted loop playsinline preload="metadata" aria-label="${item.title || '대기화면 샘플'}">
+          <source src="${item.src}" type="${getWaitingVideoType(item.src)}">
+        </video>
+      </div>
+
+      <div class="waiting-caption">
+        <div class="waiting-caption-main">（ ${item.title || ''} ）</div>
+        <div class="waiting-caption-sub">${item.subtitle || ''}</div>
+        ${item.caption ? `<div class="waiting-caption-small">${item.caption}</div>` : ''}
+      </div>
+    `;
+
+    slides.appendChild(slide);
+
+    const dot = document.createElement('button');
+    dot.className = 'slider-dot waiting-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goWaitingSlide(i);
+    dots.appendChild(dot);
+  });
+
+  document.getElementById('waiting-prev').onclick = () => goWaitingSlide(waitingIdx - 1);
+  document.getElementById('waiting-next').onclick = () => goWaitingSlide(waitingIdx + 1);
+}
+
+function goWaitingSlide(idx) {
+  const n = (C.waitingScreens || []).length;
+  if (!n) return;
+
+  waitingIdx = (idx + n) % n;
+  document.getElementById('waiting-slides').style.transform = `translateX(-${waitingIdx * 100}%)`;
+
+  document.querySelectorAll('.waiting-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === waitingIdx);
+  });
+}
+
+function getWaitingVideoType(src) {
+  if (/\.webm$/i.test(src || '')) return 'video/webm';
+  if (/\.mov$/i.test(src || '')) return 'video/quicktime';
+  return 'video/mp4';
+}
+  
 /* ── Collabs ── */
 function renderCollabs() {
   const grid = document.getElementById('collab-grid');
