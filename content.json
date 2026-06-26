@@ -291,11 +291,11 @@
     "expressionPose": [
       { "id": "expr_single", "name": "표정 [단순] 추가", "price": 10000 },
       { "id": "expr_anim", "name": "표정 [애니메이션] 추가", "price": 15000 },
-      { "id": "kazikoi", "name": "가지코이 (앞으로 내밀기)", "price": 40000 }
+      { "id": "kazikoi", "name": "가치코이 (앞으로 내밀기)", "price": 40000 }
     ],
     "iosPhysics": [
       { "id": "blowing", "name": "볼빵빵", "price": 10000 },
-      { "id": "tongue", "name": "혀 메붕", "price": 10000 },
+      { "id": "tongue", "name": "혀 메롱", "price": 10000 },
       { "id": "mouth_x", "name": "입 X", "price": 10000 },
       { "id": "vbridger", "name": "VBridger", "price": 60000 }
     ],
@@ -347,10 +347,10 @@
   ],
   "formFields": {
     "characterNamePlaceholder": "캐릭터 이름을 적어주세요.",
-    "artistNamePlaceholder": "일러스트를 그려주신 작가님 이름/사이트 링크를 적어주세요.",
+    "artistNamePlaceholder": "일러스트 작가님 이름/사이트 링크를 적어주세요.",
     "layerFileOptions": ["YES", "NO"],
     "revealOptions": ["작업완료 최소 60일 (기본)"],
     "contactPlaceholder": "추가 문의 사항을 적어주세요.",
-    "reservationNoticePlaceholder": "예상 견적을 복사하신 다음 문의글에 붙여넣기를 해주세요!"
+    "reservationNoticePlaceholder": "예상 견적을 복사하시고 문의글에 붙여넣기를 해주세요!"
   }
 }
