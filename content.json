@@ -201,6 +201,13 @@
         { "src": "images/body_xyz/bodyz.gif", "alt": "몸 xyz 샘플 3", "caption": "몸 Z" }
 
       ]
+    },
+    {
+      "id": "sd",
+      "label": "SD 모델",
+      "samples": [
+        { "src": "images/free_move/fm_4.mp4", "alt": "SD 모델 샘플 1", "caption": "" }
+      ]
     }
   ],
   "collaborators": [
