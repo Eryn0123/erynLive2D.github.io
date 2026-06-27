@@ -132,9 +132,10 @@
       "id": "free",
       "label": "자유 움직임",
       "samples": [
-        { "src": "images/free_move/fm_1.mp4", "alt": "자유 움직임 샘플 1", "caption": "" },
+        { "src": "images/free_move/fm_5.mp4", "alt": "자유 움직임 샘플 1", "caption": "" },
         { "src": "images/free_move/fm_2.mp4", "alt": "자유 움직임 샘플 2", "caption": "" },
-        { "src": "images/free_move/fm_3.mp4", "alt": "자유 움직임 샘플 3", "caption": "" }
+        { "src": "images/free_move/fm_3.mp4", "alt": "자유 움직임 샘플 3", "caption": "" },
+        { "src": "images/free_move/fm_1.mp4", "alt": "자유 움직임 샘플 4", "caption": "" }
       ]
     },
     {
