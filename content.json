@@ -153,7 +153,7 @@
       "label": "몸 디테일",
       "samples": [
         { "src": "images/body_detail/bd1.gif", "alt": "몸 디테일 샘플 1", "caption": "가슴 움직임" },
-        { "src": "images/body_detail/bd2.gif", "alt": "몸 디테일 샘플 2", "caption": "가지코이 (앞으로 내밀기)" },
+        { "src": "images/body_detail/bd2.gif", "alt": "몸 디테일 샘플 2", "caption": "가치코이 (앞으로 내밀기)" },
         { "src": "images/body_detail/bd3.gif", "alt": "몸 디테일 샘플 3", "caption": "허리 움직임" }
       ]
     },
