@@ -157,25 +157,6 @@
       ]
     },
     {
-      "id": "face",
-      "label": "얼굴 디테일",
-      "description": "입 모션(IOS 기능) 및 VBridger를 활용한 얼굴 디테일 리깅이 가능합니다.",
-      "samples": [
-        { "src": "images/face_detail/fd1.gif", "alt": "얼굴 디테일 샘플 1", "caption": "" },
-        { "src": "images/face_detail/fd2.gif", "alt": "얼굴 디테일 샘플 2", "caption": "" },
-        { "src": "images/face_detail/fd3.gif", "alt": "얼굴 디테일 샘플 3", "caption": "" }
-      ]
-    },
-    {
-      "id": "body",
-      "label": "몸 디테일",
-      "samples": [
-        { "src": "images/body_detail/bd1.gif", "alt": "몸 디테일 샘플 1", "caption": "가슴 움직임" },
-        { "src": "images/body_detail/bd2.gif", "alt": "몸 디테일 샘플 2", "caption": "가치코이 (앞으로 내밀기)" },
-        { "src": "images/body_detail/bd3.gif", "alt": "몸 디테일 샘플 3", "caption": "허리 움직임" }
-      ]
-    },
-    {
       "id": "animal",
       "label": "동물 파츠 움직임",
       "description": "특정 신체 부위 움직임에 따른 움직임 구현이 가능합니다. \nEX) 웃을 때 꼬리/날개 움직임 증가, 눈썹 높낮이에 따른 동물 귀 반응",
@@ -184,19 +165,6 @@
         { "src": "images/animal_parts/ap1.gif", "alt": "동물 파츠 움직임 샘플 1", "caption": "날개 움직임" },
         { "src": "images/animal_parts/ap2.gif", "alt": "동물 파츠 움직임 샘플 2", "caption": "동물 귀" },
         { "src": "images/animal_parts/ap3.gif", "alt": "동물 파츠 움직임 샘플 3", "caption": "동물 꼬리" }
-
-      ]
-    },
-    {
-      "id": "clothes",
-      "label": "옷 디테일",
-      "samples": [
-        { "src": "images/clothes_detail/cd1.gif", "alt": "옷 디테일 샘플 1", "caption": "치마 움직임" },
-        { "src": "images/clothes_detail/cd2.gif", "alt": "옷 디테일 샘플 2", "caption": "리본 움직임" },
-        { "src": "images/clothes_detail/cd3.gif", "alt": "옷 디테일 샘플 3", "caption": "안경 움직임" },
-        { "src": "images/clothes_detail/cd4.gif", "alt": "옷 디테일 샘플 4", "caption": "입체적인 장신구" },
-        { "src": "images/clothes_detail/cd5.gif", "alt": "옷 디테일 샘플 5", "caption": "다리 흔들림" },
-        { "src": "images/clothes_detail/cd6.gif", "alt": "옷 디테일 샘플 6", "caption": "겉옷에 따른 머리카락 움직임" }
 
       ]
     },
