@@ -65,6 +65,15 @@
     },
     {
       "id": 2,
+      "title": "빈터님",
+      "subtitle": "씨미에서 활동중인 빈님 리깅 작업 진행",
+      "videoUrl": "https://www.youtube.com/embed/f5IkGsf18_4",
+      "thumbnail": "",
+      "illust": "쿠잉",
+      "rig": "ERYN"
+    },
+    {
+      "id": 3,
       "title": "카메하이키 해해님",
       "subtitle": "치지직에서 활동중인 카메하이키 해해님 리깅 작업 진행",
       "videoUrl": "https://www.youtube.com/embed/zrrvh4wdHik",
@@ -73,7 +82,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 3,
+      "id": 4,
       "title": "말리히니님",
       "subtitle": "치지직에서 활동중인 말리히니님 리깅 작업 진행",
       "videoUrl": "https://www.youtube.com/embed/g5mS0-XaA1M",
@@ -82,7 +91,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 4,
+      "id": 5,
       "title": "Cyan님",
       "subtitle": "치지직에서 활동중인 Cyan님 리깅 작업 진행",
       "videoUrl": "https://www.youtube.com/embed/gKOWPj043Ow",
@@ -91,7 +100,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 5,
+      "id": 6,
       "title": "RioBH 작가님 협업 모델",
       "subtitle": "RioBH 작가님과 협업 모델을 제작",
       "videoUrl": "https://www.youtube.com/embed/QjBBmIGhzNA",
@@ -100,7 +109,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 6,
+      "id": 7,
       "title": "포욘 작가님 협업 판매 모델",
       "subtitle": "판매 완료",
       "videoUrl": "https://www.youtube.com/embed/unJGkBWa__s",
@@ -109,7 +118,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 7,
+      "id": 8,
       "title": "포욘 작가님 협업 판매 모델",
       "subtitle": "[일러 20 + 리깅 40] 60만원 판매",
       "videoUrl": "https://www.youtube.com/embed/epMrF8BoJYY",
@@ -118,30 +127,12 @@
       "rig": "ERYN"
     },
     {
-      "id": 8,
+      "id": 9,
       "title": "소맹꽁 작가님 협업 판매 모델",
       "subtitle": "[일러 60 + 리깅 55] 115만원 판매",
       "videoUrl": "https://www.youtube.com/embed/akRGKmBFDh4",
       "thumbnail": "",
       "illust": "소맹꽁",
-      "rig": "ERYN"
-    },
-    {
-      "id": 9,
-      "title": "Nurse_Jellyfish",
-      "subtitle": "귀여운 해파리 간호사 캐릭터를 리깅",
-      "videoUrl": "https://www.youtube.com/embed/gyKtck3PwyY",
-      "thumbnail": "",
-      "illust": "",
-      "rig": "ERYN"
-    },
-    {
-      "id": 10,
-      "title": "Shiro ",
-      "subtitle": "천사날개를 가진 소녀를 리깅",
-      "videoUrl": "https://www.youtube.com/embed/rXjkntUIT7M",
-      "thumbnail": "",
-      "illust": "",
       "rig": "ERYN"
     }
   ],
