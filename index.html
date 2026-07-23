@@ -1138,11 +1138,26 @@ function getWaitingVideoType(src) {
 /* ── Collabs ── */
 function renderCollabs() {
   const grid = document.getElementById('collab-grid');
-  (C.collaborators||[]).forEach(c => {
+
+  (C.collaborators || []).forEach(c => {
     const a = document.createElement('a');
-    a.className = 'collab-card'; a.href = c.link||'#';
-    a.innerHTML = `<div class="collab-avatar">${c.initial}</div>
-      <div><div class="collab-name">${c.name}</div><div class="collab-detail">${c.discount}<br>${c.bonus}</div></div>`;
+
+    a.className = 'collab-card';
+    a.href = c.link || '#';
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+
+    a.innerHTML = `
+      <div class="collab-avatar">${c.initial}</div>
+      <div>
+        <div class="collab-name">${c.name}</div>
+        <div class="collab-detail">
+          ${c.discount}<br>
+          ${c.bonus}
+        </div>
+      </div>
+    `;
+
     grid.appendChild(a);
   });
 }
