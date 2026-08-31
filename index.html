@@ -643,8 +643,10 @@ section{padding:var(--section-gap) 0;}
 }
 
 .sale-lightbox{
-  position:fixed;
-  inset:0;
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
   z-index:9999;
   display:none;
   align-items:center;
@@ -654,8 +656,21 @@ section{padding:var(--section-gap) 0;}
   backdrop-filter:blur(7px);
 }
 
+
 .sale-lightbox.open{
   display:flex;
+}
+
+.sale-lightbox-content{
+  max-height:100%;
+}
+
+.sale-lightbox-image-wrap{
+  max-height:calc(100% - 48px);
+}
+
+.sale-lightbox-image{
+  max-height:calc(100% - 48px);
 }
 
 .sale-lightbox-content{
@@ -775,18 +790,6 @@ body.sale-lightbox-open{
   overflow:hidden;
 }
 
-html:fullscreen,
-html:-webkit-full-screen{
-  background:#14121e;
-}
-
-html:fullscreen .sale-lightbox,
-html:-webkit-full-screen .sale-lightbox{
-  width:100%;
-  height:100%;
-}
-
-
 @media(max-width:800px){
   .sale-lightbox{
     padding:58px 16px 22px;
@@ -820,7 +823,6 @@ html:-webkit-full-screen .sale-lightbox{
 /* 판매 완료 */
 .sale-model-sold-overlay{
   position:absolute;
-  inset:0;
   z-index:4;
   display:flex;
   flex-direction:column;
@@ -1963,7 +1965,7 @@ function renderSaleModels() {
     slide.querySelectorAll('.sale-media-slide img').forEach((image, mediaIndex) => {
       image.addEventListener('click', event => {
         event.stopPropagation();
-        openSaleLightbox(modelIndex, mediaIndex);
+        openSaleLightbox(modelIndex, mediaIndex, image);
       });
     });
 
@@ -2059,7 +2061,7 @@ function getSaleLightboxImages(modelIndex) {
   return (item.images || []).slice(1);
 }
 
-async function openSaleLightbox(modelIndex, imageIndex) {
+function openSaleLightbox(modelIndex, imageIndex, triggerImage) {
   const images = getSaleLightboxImages(modelIndex);
   if (!images.length) return;
 
@@ -2072,23 +2074,35 @@ async function openSaleLightbox(modelIndex, imageIndex) {
 
   updateSaleLightbox();
 
+  /* ArtMug에서는 iframe 높이가 매우 길기 때문에
+     position:fixed로 중앙 정렬하면 현재 화면보다 훨씬 아래에 뜰 수 있습니다.
+     따라서 클릭한 상세 이미지의 실제 문서 위치를 기준으로 확대창을 띄웁니다. */
+  const rect = triggerImage?.getBoundingClientRect();
+
+  if (rect) {
+    const imageTop =
+      (window.scrollY || window.pageYOffset || 0) + rect.top;
+
+    const popupHeight =
+      Math.min(
+        Math.max((window.screen && window.screen.availHeight) || 800, 650),
+        900
+      );
+
+    const popupTop =
+      Math.max(0, imageTop - 120);
+
+    lightbox.style.position = 'absolute';
+    lightbox.style.top = `${popupTop}px`;
+    lightbox.style.left = '0';
+    lightbox.style.right = '0';
+    lightbox.style.bottom = 'auto';
+    lightbox.style.height = `${popupHeight}px`;
+    lightbox.style.minHeight = '650px';
+  }
+
   lightbox.classList.add('open');
   lightbox.setAttribute('aria-hidden', 'false');
-  document.body.classList.add('sale-lightbox-open');
-
-  /* ArtMug iframe 안에서는 브라우저 전체화면을 우선 시도합니다.
-     전체화면 권한이 막혀도 내부 확대창은 그대로 유지됩니다. */
-  if (window.parent && window.parent !== window) {
-    try {
-      const root = document.documentElement;
-
-      if (!document.fullscreenElement && root.requestFullscreen) {
-        await root.requestFullscreen();
-      }
-    } catch (e) {
-      console.warn('전체화면 전환이 허용되지 않았습니다. iframe 내부 확대창으로 표시합니다.', e);
-    }
-  }
 }
 
 function updateSaleLightbox() {
@@ -2154,7 +2168,6 @@ function closeSaleLightbox() {
 
   lightbox.classList.remove('open');
   lightbox.setAttribute('aria-hidden', 'true');
-  document.body.classList.remove('sale-lightbox-open');
 
   if (imageEl) {
     imageEl.src = '';
