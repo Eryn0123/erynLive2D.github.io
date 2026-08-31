@@ -636,6 +636,175 @@ section{padding:var(--section-gap) 0;}
   background:var(--purple-light);
 }
 
+
+/* ── 판매 모델 상세 이미지 확대 보기 ── */
+.sale-media-slide img{
+  cursor:zoom-in;
+}
+
+.sale-lightbox{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:28px 74px;
+  background:rgba(20,18,30,.86);
+  backdrop-filter:blur(7px);
+}
+
+.sale-lightbox.open{
+  display:flex;
+}
+
+.sale-lightbox-content{
+  position:relative;
+  width:min(1400px, 100%);
+  max-height:calc(100vh - 56px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.sale-lightbox-image-wrap{
+  position:relative;
+  width:100%;
+  max-height:calc(100vh - 105px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.sale-lightbox-image{
+  display:block;
+  max-width:100%;
+  max-height:calc(100vh - 105px);
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  user-select:none;
+  -webkit-user-drag:none;
+  box-shadow:0 8px 38px rgba(0,0,0,.34);
+}
+
+.sale-lightbox-close{
+  position:absolute;
+  top:-4px;
+  right:-52px;
+  z-index:3;
+  width:40px;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:none;
+  border-radius:50%;
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  font-family:inherit;
+  font-size:25px;
+  line-height:1;
+  cursor:pointer;
+  transition:background .2s, transform .2s;
+}
+
+.sale-lightbox-close:hover{
+  background:rgba(255,255,255,.25);
+  transform:scale(1.05);
+}
+
+.sale-lightbox-nav{
+  position:absolute;
+  top:50%;
+  z-index:3;
+  width:46px;
+  height:46px;
+  transform:translateY(-50%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:50%;
+  background:rgba(25,22,38,.58);
+  color:#fff;
+  font-family:inherit;
+  font-size:28px;
+  line-height:1;
+  cursor:pointer;
+  backdrop-filter:blur(8px);
+  transition:background .2s, transform .2s;
+}
+
+.sale-lightbox-nav:hover{
+  background:rgba(122,109,212,.78);
+}
+
+.sale-lightbox-prev{left:-60px;}
+.sale-lightbox-next{right:-60px;}
+
+.sale-lightbox-footer{
+  min-height:38px;
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  color:#fff;
+}
+
+.sale-lightbox-caption{
+  font-size:12px;
+  line-height:1.5;
+  color:rgba(255,255,255,.88);
+  text-align:center;
+}
+
+.sale-lightbox-counter{
+  flex-shrink:0;
+  padding:4px 9px;
+  border-radius:20px;
+  background:rgba(255,255,255,.12);
+  font-family:'Outfit','Paperozi',sans-serif;
+  font-size:11px;
+  color:rgba(255,255,255,.85);
+}
+
+body.sale-lightbox-open{
+  overflow:hidden;
+}
+
+@media(max-width:800px){
+  .sale-lightbox{
+    padding:58px 16px 22px;
+  }
+
+  .sale-lightbox-content{
+    max-height:calc(100vh - 80px);
+  }
+
+  .sale-lightbox-image-wrap,
+  .sale-lightbox-image{
+    max-height:calc(100vh - 135px);
+  }
+
+  .sale-lightbox-close{
+    top:-48px;
+    right:0;
+  }
+
+  .sale-lightbox-nav{
+    width:40px;
+    height:40px;
+    font-size:24px;
+    background:rgba(25,22,38,.70);
+  }
+
+  .sale-lightbox-prev{left:8px;}
+  .sale-lightbox-next{right:8px;}
+}
+
 /* 판매 완료 */
 .sale-model-sold-overlay{
   position:absolute;
@@ -1287,6 +1456,66 @@ section{padding:var(--section-gap) 0;}
 
 </div>
 
+
+<!-- 판매 모델 상세 이미지 확대 보기 -->
+<div
+  class="sale-lightbox"
+  id="sale-lightbox"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-label="판매 모델 상세 이미지 확대 보기">
+
+  <div class="sale-lightbox-content">
+
+    <button
+      type="button"
+      class="sale-lightbox-close"
+      id="sale-lightbox-close"
+      aria-label="확대 이미지 닫기">
+      ×
+    </button>
+
+    <div class="sale-lightbox-image-wrap">
+      <button
+        type="button"
+        class="sale-lightbox-nav sale-lightbox-prev"
+        id="sale-lightbox-prev"
+        aria-label="이전 이미지">
+        ‹
+      </button>
+
+      <img
+        class="sale-lightbox-image"
+        id="sale-lightbox-image"
+        src=""
+        alt="">
+
+      <button
+        type="button"
+        class="sale-lightbox-nav sale-lightbox-next"
+        id="sale-lightbox-next"
+        aria-label="다음 이미지">
+        ›
+      </button>
+    </div>
+
+    <div class="sale-lightbox-footer">
+      <div
+        class="sale-lightbox-caption"
+        id="sale-lightbox-caption">
+      </div>
+
+      <div
+        class="sale-lightbox-counter"
+        id="sale-lightbox-counter">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 <footer class="footer">
   <div class="wrapper">
     <div class="footer-logo">ERYN</div>
@@ -1718,6 +1947,14 @@ function renderSaleModels() {
       });
     });
 
+
+    slide.querySelectorAll('.sale-media-slide img').forEach((image, mediaIndex) => {
+      image.addEventListener('click', event => {
+        event.stopPropagation();
+        openSaleLightbox(modelIndex, mediaIndex);
+      });
+    });
+
     const outerDot = document.createElement('button');
     outerDot.type = 'button';
     outerDot.className =
@@ -1797,6 +2034,142 @@ function goSaleMedia(modelIndex, mediaIndex) {
       dot.classList.toggle('active', dotIndex === current);
     });
 }
+
+
+/* ── 판매 모델 상세 이미지 확대 보기 ── */
+let saleLightboxModelIndex = 0;
+let saleLightboxImageIndex = 0;
+
+function getSaleLightboxImages(modelIndex) {
+  const items = (C.saleModels && C.saleModels.items) || [];
+  const item = items[modelIndex] || {};
+
+  return (item.images || []).slice(1);
+}
+
+function openSaleLightbox(modelIndex, imageIndex) {
+  const images = getSaleLightboxImages(modelIndex);
+  if (!images.length) return;
+
+  saleLightboxModelIndex = modelIndex;
+  saleLightboxImageIndex =
+    (imageIndex + images.length) % images.length;
+
+  const lightbox = document.getElementById('sale-lightbox');
+  if (!lightbox) return;
+
+  updateSaleLightbox();
+
+  lightbox.classList.add('open');
+  lightbox.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('sale-lightbox-open');
+
+  document.getElementById('sale-lightbox-close')?.focus();
+}
+
+function updateSaleLightbox() {
+  const images = getSaleLightboxImages(saleLightboxModelIndex);
+  if (!images.length) return;
+
+  saleLightboxImageIndex =
+    (saleLightboxImageIndex + images.length) % images.length;
+
+  const imageData = images[saleLightboxImageIndex] || {};
+
+  const imageEl = document.getElementById('sale-lightbox-image');
+  const captionEl = document.getElementById('sale-lightbox-caption');
+  const counterEl = document.getElementById('sale-lightbox-counter');
+  const prevBtn = document.getElementById('sale-lightbox-prev');
+  const nextBtn = document.getElementById('sale-lightbox-next');
+
+  if (imageEl) {
+    imageEl.src = imageData.src || '';
+    imageEl.alt =
+      imageData.alt || '판매 모델 상세 이미지';
+  }
+
+  if (captionEl) {
+    captionEl.textContent =
+      imageData.caption || imageData.alt || '';
+  }
+
+  if (counterEl) {
+    counterEl.textContent =
+      `${saleLightboxImageIndex + 1} / ${images.length}`;
+  }
+
+  const showNavigation = images.length > 1;
+
+  if (prevBtn) {
+    prevBtn.style.display =
+      showNavigation ? 'flex' : 'none';
+  }
+
+  if (nextBtn) {
+    nextBtn.style.display =
+      showNavigation ? 'flex' : 'none';
+  }
+}
+
+function moveSaleLightbox(step) {
+  const images = getSaleLightboxImages(saleLightboxModelIndex);
+  if (!images.length) return;
+
+  saleLightboxImageIndex =
+    (saleLightboxImageIndex + step + images.length) %
+    images.length;
+
+  updateSaleLightbox();
+}
+
+function closeSaleLightbox() {
+  const lightbox = document.getElementById('sale-lightbox');
+  const imageEl = document.getElementById('sale-lightbox-image');
+
+  if (!lightbox) return;
+
+  lightbox.classList.remove('open');
+  lightbox.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('sale-lightbox-open');
+
+  if (imageEl) {
+    imageEl.src = '';
+  }
+}
+
+document.getElementById('sale-lightbox-close')
+  ?.addEventListener('click', closeSaleLightbox);
+
+document.getElementById('sale-lightbox-prev')
+  ?.addEventListener('click', () => moveSaleLightbox(-1));
+
+document.getElementById('sale-lightbox-next')
+  ?.addEventListener('click', () => moveSaleLightbox(1));
+
+document.getElementById('sale-lightbox')
+  ?.addEventListener('click', event => {
+    if (event.target.id === 'sale-lightbox') {
+      closeSaleLightbox();
+    }
+  });
+
+document.addEventListener('keydown', event => {
+  const lightbox = document.getElementById('sale-lightbox');
+
+  if (!lightbox?.classList.contains('open')) return;
+
+  if (event.key === 'Escape') {
+    closeSaleLightbox();
+  }
+
+  if (event.key === 'ArrowLeft') {
+    moveSaleLightbox(-1);
+  }
+
+  if (event.key === 'ArrowRight') {
+    moveSaleLightbox(1);
+  }
+});
 
 
 /* ── Samples ── */
