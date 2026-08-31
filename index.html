@@ -1574,7 +1574,7 @@ const fmt = n => n.toLocaleString('ko-KR') + '원';
 
 function init() {
   renderSlotInfo(); renderArtist(); renderEvent(); renderSlots();
-  renderShowcase(); renderSaleModels(); renderSamples(); renderCollabs();
+  renderShowcase(); renderSaleModels(); renderSamples(); initLazySampleVideos(); renderCollabs();
   renderBaseOptions(); renderAddOptions(); renderNotices();
   renderProcess(); renderForm(); initScrollFade();
 }
@@ -2259,6 +2259,147 @@ document.addEventListener('keydown', event => {
 });
 
 
+
+/* ── 샘플 영상 지연 / 순차 로딩 ──
+   ArtMug에서는 iframe 높이가 매우 길어서 화면 판정만으로는
+   많은 영상이 동시에 보이는 것으로 처리될 수 있습니다.
+   그래서 실제 로딩은 최대 2개씩만 순차 진행합니다. */
+let lazySampleVideoObserver = null;
+const lazySampleVideoQueue = [];
+const lazySampleVideoQueued = new WeakSet();
+let lazySampleVideoLoadingCount = 0;
+const LAZY_SAMPLE_VIDEO_MAX_LOADING = 3;
+
+function isLazySampleVideoVisible(video) {
+  return !!video && video.offsetParent !== null;
+}
+
+function queueLazySampleVideo(video) {
+  if (!video || video.dataset.loaded === 'true') {
+    if (video && isLazySampleVideoVisible(video)) {
+      video.play().catch(() => {});
+    }
+    return;
+  }
+
+  if (lazySampleVideoQueued.has(video)) return;
+
+  lazySampleVideoQueued.add(video);
+  lazySampleVideoQueue.push(video);
+  pumpLazySampleVideoQueue();
+}
+
+function pumpLazySampleVideoQueue() {
+  while (
+    lazySampleVideoLoadingCount < LAZY_SAMPLE_VIDEO_MAX_LOADING &&
+    lazySampleVideoQueue.length
+  ) {
+    const video = lazySampleVideoQueue.shift();
+
+    if (!video) continue;
+
+    /* 탭 전환 등으로 현재 숨겨졌다면 지금은 불러오지 않음 */
+    if (!isLazySampleVideoVisible(video)) {
+      lazySampleVideoQueued.delete(video);
+      continue;
+    }
+
+    const source = video.querySelector('source[data-src]');
+
+    if (!source) {
+      lazySampleVideoQueued.delete(video);
+      continue;
+    }
+
+    lazySampleVideoLoadingCount += 1;
+    video.dataset.loading = 'true';
+
+    const finishLoading = () => {
+      if (video.dataset.loading === 'true') {
+        delete video.dataset.loading;
+        lazySampleVideoLoadingCount =
+          Math.max(0, lazySampleVideoLoadingCount - 1);
+      }
+
+      lazySampleVideoQueued.delete(video);
+
+      if (isLazySampleVideoVisible(video)) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+
+      pumpLazySampleVideoQueue();
+    };
+
+    video.addEventListener('canplay', finishLoading, { once: true });
+    video.addEventListener('error', finishLoading, { once: true });
+
+    source.src = source.dataset.src;
+    source.removeAttribute('data-src');
+
+    video.dataset.loaded = 'true';
+    video.load();
+  }
+}
+
+function refreshLazySampleVideos() {
+  document
+    .querySelectorAll('video[data-lazy-video]')
+    .forEach(video => {
+      if (!isLazySampleVideoVisible(video)) {
+        video.pause();
+        return;
+      }
+
+      /* 이미 로드된 영상은 바로 재생 */
+      if (video.dataset.loaded === 'true') {
+        video.play().catch(() => {});
+        return;
+      }
+
+      /* observer가 없는 환경에서도 순차 로딩 가능 */
+      if (!lazySampleVideoObserver) {
+        queueLazySampleVideo(video);
+      }
+    });
+}
+
+function initLazySampleVideos() {
+  const videos =
+    document.querySelectorAll('video[data-lazy-video]');
+
+  if (!videos.length) return;
+
+  if ('IntersectionObserver' in window) {
+    lazySampleVideoObserver = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          const video = entry.target;
+
+          if (entry.isIntersecting && isLazySampleVideoVisible(video)) {
+            queueLazySampleVideo(video);
+          } else {
+            video.pause();
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: '120px 0px',
+        threshold: 0.01
+      }
+    );
+
+    videos.forEach(video => {
+      lazySampleVideoObserver.observe(video);
+    });
+  }
+
+  /* 현재 활성 탭의 영상만 초기 대상 */
+  refreshLazySampleVideos();
+}
+
 /* ── Samples ── */
 function renderSamples() {
   const cats = C.sampleCategories || [];
@@ -2290,10 +2431,22 @@ function renderSamples() {
     }
 
     const media = isVideo(s.src)
-      ? `<video autoplay muted loop playsinline preload="metadata" aria-label="${s.alt || '리깅 샘플 영상'}">
-          <source src="${s.src}" type="${getVideoType(s.src)}">
+      ? `<video
+          muted
+          loop
+          playsinline
+          preload="none"
+          data-lazy-video
+          aria-label="${s.alt || '리깅 샘플 영상'}">
+          <source
+            data-src="${s.src}"
+            type="${getVideoType(s.src)}">
         </video>`
-      : `<img src="${s.src}" alt="${s.alt || '리깅 샘플'}">`;
+      : `<img
+          src="${s.src}"
+          alt="${s.alt || '리깅 샘플'}"
+          loading="lazy"
+          decoding="async">`;
 
     return `<div class="sample-item">
       ${media}
@@ -2315,6 +2468,10 @@ function renderSamples() {
     document.querySelectorAll('.sample-category').forEach(c=>c.classList.remove('active'));
     document.querySelector(`.sample-tab[data-id="${id}"]`).classList.add('active');
     document.getElementById('cat-'+id).classList.add('active');
+
+    /* 숨겨진 탭의 영상은 정지하고,
+       새로 열린 탭의 영상은 필요한 순서대로 불러옵니다. */
+    requestAnimationFrame(() => refreshLazySampleVideos());
   }
   function buildWaitingBlock(mode, showLabel = true) {
     const labelHtml = showLabel
@@ -2424,8 +2581,16 @@ function renderWaitingSlides(mode) {
 
     slide.innerHTML = `
       <div class="waiting-video-wrap">
-        <video autoplay muted loop playsinline preload="metadata" aria-label="${item.title || '대기화면 샘플'}">
-          <source src="${item.src}" type="${getWaitingVideoType(item.src)}">
+        <video
+          muted
+          loop
+          playsinline
+          preload="none"
+          data-lazy-video
+          aria-label="${item.title || '대기화면 샘플'}">
+          <source
+            data-src="${item.src}"
+            type="${getWaitingVideoType(item.src)}">
         </video>
       </div>
 
