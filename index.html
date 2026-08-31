@@ -2051,9 +2051,35 @@ function openSaleLightbox(modelIndex, imageIndex) {
   const images = getSaleLightboxImages(modelIndex);
   if (!images.length) return;
 
-  saleLightboxModelIndex = modelIndex;
-  saleLightboxImageIndex =
+  const normalizedIndex =
     (imageIndex + images.length) % images.length;
+
+  /* ArtMug iframe 안에서 실행 중이면
+     부모 페이지에 확대 이미지 정보를 전달합니다. */
+  if (window.parent && window.parent !== window) {
+    const absoluteImages = images.map(image => ({
+      src: image.src
+        ? new URL(image.src, window.location.href).href
+        : '',
+      alt: image.alt || '판매 모델 상세 이미지',
+      caption: image.caption || image.alt || ''
+    }));
+
+    window.parent.postMessage({
+      type: 'ERYN_SALE_LIGHTBOX_OPEN',
+      modelTitle:
+        ((C.saleModels || {}).items || [])[modelIndex]?.title || '',
+      images: absoluteImages,
+      index: normalizedIndex
+    }, '*');
+
+    return;
+  }
+
+  /* GitHub 페이지를 단독으로 열었을 때는
+     기존 내부 확대창을 그대로 사용합니다. */
+  saleLightboxModelIndex = modelIndex;
+  saleLightboxImageIndex = normalizedIndex;
 
   const lightbox = document.getElementById('sale-lightbox');
   if (!lightbox) return;
@@ -2063,8 +2089,6 @@ function openSaleLightbox(modelIndex, imageIndex) {
   lightbox.classList.add('open');
   lightbox.setAttribute('aria-hidden', 'false');
   document.body.classList.add('sale-lightbox-open');
-
-  document.getElementById('sale-lightbox-close')?.focus();
 }
 
 function updateSaleLightbox() {
@@ -2847,13 +2871,6 @@ function initScrollFade() {
 }
 
 loadContent();
-
-try {
-  console.log('부모 접근 가능:', window.parent.document.body);
-} catch (e) {
-  console.log('부모 접근 불가:', e);
-}
-  
 </script>
 </body>
 </html>
