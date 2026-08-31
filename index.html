@@ -661,6 +661,16 @@ section{padding:var(--section-gap) 0;}
   display:flex;
 }
 
+.sale-lightbox-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(20,18,30,.24);
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
+  pointer-events:none;
+  z-index:0;
+}
+
 .sale-lightbox-content{
   max-height:100%;
 }
@@ -675,6 +685,7 @@ section{padding:var(--section-gap) 0;}
 
 .sale-lightbox-content{
   position:relative;
+  z-index:1;
   width:min(1400px, 100%);
   max-height:calc(100vh - 56px);
   display:flex;
@@ -793,7 +804,12 @@ section{padding:var(--section-gap) 0;}
 }
 
 body.sale-lightbox-open{
-  overflow:hidden;
+  overflow:hidden !important;
+  touch-action:none;
+}
+
+html.sale-lightbox-open{
+  overflow:hidden !important;
 }
 
 @media(max-width:800px){
@@ -1486,6 +1502,8 @@ body.sale-lightbox-open{
   aria-modal="true"
   aria-label="판매 모델 상세 이미지 확대 보기">
 
+  <div class="sale-lightbox-backdrop"></div>
+
   <div class="sale-lightbox-content">
 
     <button
@@ -2059,6 +2077,18 @@ function goSaleMedia(modelIndex, mediaIndex) {
 /* ── 판매 모델 상세 이미지 확대 보기 ── */
 let saleLightboxModelIndex = 0;
 let saleLightboxImageIndex = 0;
+let saleLightboxScrollTop = 0;
+
+function isSaleLightboxOpen() {
+  const lightbox = document.getElementById('sale-lightbox');
+  return !!lightbox && lightbox.classList.contains('open');
+}
+
+function blockSaleLightboxScroll(event) {
+  if (isSaleLightboxOpen()) {
+    event.preventDefault();
+  }
+}
 
 function getSaleLightboxImages(modelIndex) {
   const items = (C.saleModels && C.saleModels.items) || [];
@@ -2083,6 +2113,8 @@ function openSaleLightbox(modelIndex, imageIndex, triggerImage) {
   /* ArtMug에서는 iframe 높이가 매우 길기 때문에
      position:fixed로 중앙 정렬하면 현재 화면보다 훨씬 아래에 뜰 수 있습니다.
      따라서 클릭한 상세 이미지의 실제 문서 위치를 기준으로 확대창을 띄웁니다. */
+  saleLightboxScrollTop = window.scrollY || window.pageYOffset || 0;
+
   const rect = triggerImage?.getBoundingClientRect();
 
   if (rect) {
@@ -2109,6 +2141,8 @@ function openSaleLightbox(modelIndex, imageIndex, triggerImage) {
 
   lightbox.classList.add('open');
   lightbox.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('sale-lightbox-open');
+  document.documentElement.classList.add('sale-lightbox-open');
 }
 
 function updateSaleLightbox() {
@@ -2174,14 +2208,14 @@ function closeSaleLightbox() {
 
   lightbox.classList.remove('open');
   lightbox.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('sale-lightbox-open');
+  document.documentElement.classList.remove('sale-lightbox-open');
 
   if (imageEl) {
     imageEl.src = '';
   }
 
-  if (document.fullscreenElement && document.exitFullscreen) {
-    document.exitFullscreen().catch(() => {});
-  }
+  window.scrollTo({ top: saleLightboxScrollTop, behavior: 'auto' });
 }
 
 document.getElementById('sale-lightbox-close')
@@ -2195,10 +2229,16 @@ document.getElementById('sale-lightbox-next')
 
 document.getElementById('sale-lightbox')
   ?.addEventListener('click', event => {
-    if (event.target.id === 'sale-lightbox') {
+    if (
+      event.target.id === 'sale-lightbox' ||
+      event.target.classList.contains('sale-lightbox-backdrop')
+    ) {
       closeSaleLightbox();
     }
   });
+
+document.addEventListener('wheel', blockSaleLightboxScroll, { passive: false });
+document.addEventListener('touchmove', blockSaleLightboxScroll, { passive: false });
 
 document.addEventListener('keydown', event => {
   const lightbox = document.getElementById('sale-lightbox');
