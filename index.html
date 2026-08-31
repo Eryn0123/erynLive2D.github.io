@@ -714,9 +714,9 @@ section{padding:var(--section-gap) 0;}
   display:flex;
   align-items:center;
   justify-content:center;
-  border:none;
+  border:1px solid rgba(255,255,255,.22);
   border-radius:50%;
-  background:rgba(255,255,255,.14);
+  background:rgba(25,22,38,.72);
   color:#fff;
   font-family:inherit;
   font-size:25px;
@@ -726,7 +726,7 @@ section{padding:var(--section-gap) 0;}
 }
 
 .sale-lightbox-close:hover{
-  background:rgba(255,255,255,.25);
+  background:rgba(122,109,212,.78);
   transform:scale(1.05);
 }
 
@@ -765,25 +765,31 @@ section{padding:var(--section-gap) 0;}
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:12px;
+  gap:10px;
+  flex-wrap:wrap;
   color:#fff;
 }
 
 .sale-lightbox-caption{
   font-size:12px;
   line-height:1.5;
-  color:rgba(255,255,255,.88);
+  color:#fff;
   text-align:center;
+  padding:7px 14px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:999px;
+  background:rgba(25,22,38,.72);
 }
 
 .sale-lightbox-counter{
   flex-shrink:0;
-  padding:4px 9px;
-  border-radius:20px;
-  background:rgba(255,255,255,.12);
+  padding:7px 12px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:999px;
+  background:rgba(25,22,38,.72);
   font-family:'Outfit','Paperozi',sans-serif;
   font-size:11px;
-  color:rgba(255,255,255,.85);
+  color:#fff;
 }
 
 body.sale-lightbox-open{
