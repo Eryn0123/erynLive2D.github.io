@@ -32,15 +32,15 @@
         "status": "available",
         "slots": [
           { "type": "fullm", "label": "예약 완료" },
-          { "type": "empty", "label": "빈 슬롯" }
+          { "type": "fullm", "label": "예약 완료" }
         ]
       },
       {
         "month": "2026-10",
         "status": "available",
         "slots": [
-          { "type": "empty", "label": "빈 슬롯" },
-          { "type": "empty", "label": "빈 슬롯" }
+          { "type": "fullm", "label": "예약 완료" },
+          { "type": "fullm", "label": "예약 완료" }
         ]
       },
       {
@@ -54,8 +54,17 @@
     ]
   },
   "showcase": [
-    {
+     {
       "id": 1,
+      "title": "요루네 마논님",
+      "subtitle": "요루네 마논님 리깅 작업 진행",
+      "videoUrl": "https://www.youtube.com/embed/Ln7dOj8KfHk",
+      "thumbnail": "",
+      "illust": "AKIRA",
+      "rig": "ERYN"
+    },
+    {
+      "id": 2,
       "title": "RioBH 작가님 협업 모델",
       "subtitle": "[일러 150 + 리깅 100] 250만원 판매",
       "videoUrl": "https://www.youtube.com/embed/dt_EDU7vAM4",
@@ -64,7 +73,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 2,
+      "id": 3,
       "title": "빈터님",
       "subtitle": "씨미에서 활동중인 빈님 리깅 작업 진행",
       "videoUrl": "https://www.youtube.com/embed/f5IkGsf18_4",
@@ -73,7 +82,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 3,
+      "id": 4,
       "title": "카메하이키 해해님",
       "subtitle": "치지직에서 활동중인 카메하이키 해해님 리깅 작업 진행",
       "videoUrl": "https://www.youtube.com/embed/zrrvh4wdHik",
@@ -82,7 +91,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 4,
+      "id": 5,
       "title": "말리히니님",
       "subtitle": "치지직에서 활동중인 말리히니님 리깅 작업 진행",
       "videoUrl": "https://www.youtube.com/embed/g5mS0-XaA1M",
@@ -91,7 +100,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 5,
+      "id": 6,
       "title": "Cyan님",
       "subtitle": "치지직에서 활동중인 Cyan님 리깅 작업 진행",
       "videoUrl": "https://www.youtube.com/embed/gKOWPj043Ow",
@@ -100,7 +109,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 6,
+      "id": 7,
       "title": "RioBH 작가님 협업 모델",
       "subtitle": "RioBH 작가님과 협업 모델을 제작",
       "videoUrl": "https://www.youtube.com/embed/QjBBmIGhzNA",
@@ -109,7 +118,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 7,
+      "id": 8,
       "title": "포욘 작가님 협업 판매 모델",
       "subtitle": "판매 완료",
       "videoUrl": "https://www.youtube.com/embed/unJGkBWa__s",
@@ -118,7 +127,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 8,
+      "id": 9,
       "title": "포욘 작가님 협업 판매 모델",
       "subtitle": "[일러 20 + 리깅 40] 60만원 판매",
       "videoUrl": "https://www.youtube.com/embed/epMrF8BoJYY",
@@ -127,7 +136,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 9,
+      "id": 10,
       "title": "소맹꽁 작가님 협업 판매 모델",
       "subtitle": "[일러 60 + 리깅 55] 115만원 판매",
       "videoUrl": "https://www.youtube.com/embed/akRGKmBFDh4",
@@ -219,6 +228,16 @@
       ]
     },
     {
+      "id": "clothes",
+      "label": "옷 상세 움직임",
+      "samples": [
+        { "src": "images/clothes_detail/cd_1.mp4", "alt": "옷 상세 움직임 샘플 1", "caption": "리본 움직임" },
+        { "src": "images/clothes_detail/cd_2.mp4", "alt": "옷 상세 움직임 샘플 2", "caption": "치마 움직임" },
+        { "src": "images/clothes_detail/cd_3.mp4", "alt": "옷 상세 움직임 샘플 3", "caption": "옷 장신구 움직임" }
+
+      ]
+    },
+    {
       "id": "headxyz",
       "label": "머리 XYZ",
       "samples": [
@@ -265,6 +284,14 @@
       "discountPrice": 50000,
       "bonus": "감정 표정 파츠 총 5개",
       "link": "https://artmug.kr/index.php?channel=view&uid=53626"
+    },
+    {
+      "initial": "EKU",
+      "name": "에쿠님",
+      "discount": "일러스트 10만원 / 리깅 5만원 할인",
+      "discountPrice": 50000,
+      "bonus": "감정 표정 파츠 총 4개",
+      "link": "https://artmug.kr/index.php?channel=view&uid=55622"
     },
     {
       "initial": "Nae",
