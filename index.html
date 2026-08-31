@@ -256,6 +256,470 @@ section{padding:var(--section-gap) 0;}
 }
 .slider-dot.active{background:var(--purple-light);width:22px;border-radius:4px;}
 
+
+/* ─────────────────────────────────────────
+   판매 모델
+   ───────────────────────────────────────── */
+.sale-model-slider{position:relative;}
+.sale-model-track{overflow:hidden;}
+.sale-model-slides{display:flex;transition:transform .45s ease;}
+.sale-model-slide{min-width:100%;overflow:visible;}
+
+.sale-model-layout{
+  display:grid;
+  grid-template-columns:minmax(260px,.8fr) minmax(0,1.6fr);
+  align-items:stretch;
+  gap:18px;
+}
+
+/* 왼쪽 모델 정보 카드 */
+.sale-model-left{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  height:100%;
+  background:rgba(255,255,255,.72);
+  border:1px solid var(--glass-border);
+  border-radius:var(--card-radius);
+  overflow:hidden;
+  box-shadow:var(--shadow-md);
+}
+
+.sale-model-cover{
+  position:relative;
+  width:100%;
+  aspect-ratio:1/1;
+  overflow:hidden;
+  flex-shrink:0;
+  background:rgba(30,24,55,.08);
+}
+.sale-model-cover img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.sale-model-info{
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  min-height:0;
+  gap:9px;
+  padding:17px;
+}
+
+.sale-model-badges{display:flex;flex-wrap:wrap;gap:7px;}
+.sale-model-status,.sale-model-badge{
+  font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;
+}
+.sale-model-status{
+  color:#fff;
+  background:linear-gradient(135deg,var(--purple-light),var(--purple-dark));
+}
+.sale-model-badge{
+  color:var(--purple-dark);
+  background:rgba(179,168,240,.15);
+  border:1px solid rgba(179,168,240,.32);
+}
+
+.sale-model-title{
+  font-family:'Outfit','Paperozi',sans-serif;
+  font-size:20px;font-weight:800;color:var(--text-primary);line-height:1.2;
+}
+.sale-model-subtitle{font-size:12px;color:var(--text-muted);margin-top:4px;}
+.sale-model-description{font-size:12px;color:var(--text-secondary);line-height:1.75;}
+
+.sale-model-price-box{
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(179,168,240,.24);
+  background:linear-gradient(135deg,rgba(179,168,240,.09),rgba(168,200,240,.08));
+}
+.sale-model-price-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:3px 0;
+}
+.sale-model-price-label{font-size:11px;color:var(--text-secondary);}
+.sale-model-price-value{
+  flex-shrink:0;
+  font-family:'Outfit','Paperozi',sans-serif;
+  font-size:12px;
+  font-weight:700;
+  color:var(--text-primary);
+}
+.sale-model-price-divider{
+  height:1px;
+  margin:6px 0;
+  background:rgba(179,168,240,.24);
+}
+.sale-model-price-total{padding-top:3px;}
+.sale-model-price-total .sale-model-price-label{
+  font-size:12px;
+  font-weight:700;
+  color:var(--purple-dark);
+}
+.sale-model-price-total .sale-model-price-value{
+  font-size:18px;
+  font-weight:800;
+  color:var(--purple-dark);
+}
+
+.sale-model-credit{display:flex;flex-wrap:wrap;gap:7px;}
+.sale-model-credit span{
+  font-size:10px;
+  color:var(--purple-dark);
+  padding:3px 9px;
+  border-radius:20px;
+  background:rgba(179,168,240,.13);
+  border:1px solid rgba(179,168,240,.26);
+}
+
+/* 주요 기능: 4개 고정 */
+.sale-model-feature-box{
+  flex:1;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+  margin-top:2px;
+  padding:11px 12px;
+  background:rgba(179,168,240,.07);
+  border:1px solid rgba(179,168,240,.20);
+  border-radius:12px;
+}
+.sale-model-feature-title{
+  flex-shrink:0;
+  margin-bottom:8px;
+  padding-bottom:7px;
+  border-bottom:1px solid rgba(179,168,240,.18);
+  font-size:12px;
+  font-weight:700;
+  color:var(--text-primary);
+}
+.sale-model-features{
+  flex:1;
+  min-height:0;
+  display:grid;
+  grid-template-rows:repeat(4,minmax(30px,1fr));
+  gap:6px;
+}
+.sale-model-feature{
+  position:relative;
+  min-height:30px;
+  display:flex;
+  align-items:center;
+  padding:6px 8px 6px 24px;
+  border-radius:8px;
+  border:1px solid rgba(179,168,240,.13);
+  background:rgba(255,255,255,.68);
+  font-size:11px;
+  line-height:1.4;
+  color:var(--text-secondary);
+}
+.sale-model-feature::before{
+  content:'◆';
+  position:absolute;
+  left:9px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:6px;
+  color:var(--purple-light);
+}
+
+/* 오른쪽: 쇼케이스 + 상세 이미지 */
+.sale-media-gallery{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.sale-showcase-panel,
+.sale-detail-gallery{
+  overflow:hidden;
+  border:1px solid var(--glass-border);
+  border-radius:var(--card-radius);
+  background:rgba(255,255,255,.74);
+  box-shadow:var(--shadow-md);
+}
+
+.sale-showcase-frame{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  background:rgba(30,24,55,.08);
+}
+.sale-showcase-frame iframe{
+  width:100%;
+  height:100%;
+  display:block;
+  border:0;
+}
+.sale-showcase-caption{
+  padding:9px 14px;
+  border-top:1px solid var(--glass-border);
+  font-size:11px;
+  color:var(--text-muted);
+}
+.sale-showcase-empty,
+.sale-detail-empty{
+  min-height:180px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  color:var(--text-muted);
+  font-size:12px;
+}
+
+.sale-detail-gallery{
+  display:flex;
+  flex-direction:column;
+}
+.sale-detail-head{
+  padding:10px 14px;
+  font-size:12px;
+  font-weight:700;
+  color:var(--text-primary);
+  border-bottom:1px solid var(--glass-border);
+}
+.sale-detail-stage{position:relative;}
+.sale-media-track{
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  background:rgba(30,24,55,.08);
+}
+.sale-media-slides{
+  display:flex;
+  width:100%;
+  height:100%;
+  transition:transform .4s ease;
+}
+.sale-media-slide{
+  position:relative;
+  min-width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.sale-media-slide img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+.sale-media-caption{
+  position:absolute;
+  left:14px;
+  bottom:14px;
+  max-width:calc(100% - 28px);
+  padding:6px 10px;
+  border-radius:8px;
+  background:rgba(29,25,48,.72);
+  color:#fff;
+  font-size:10px;
+  line-height:1.4;
+  backdrop-filter:blur(8px);
+}
+
+/* 상세 이미지 하단 컨트롤 */
+.sale-detail-controls{
+  min-height:38px;
+  padding:6px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  border-top:1px solid var(--glass-border);
+  background:rgba(255,255,255,.68);
+}
+.sale-media-btn{
+  position:static;
+  flex-shrink:0;
+  width:26px;
+  height:26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transform:none;
+  border:1px solid rgba(155,144,224,.30);
+  border-radius:50%;
+  background:rgba(155,144,224,.10);
+  color:var(--purple-dark);
+  font-family:inherit;
+  font-size:16px;
+  line-height:1;
+  cursor:pointer;
+  transition:all .2s;
+}
+.sale-media-btn:hover{
+  background:var(--purple-dark);
+  border-color:var(--purple-dark);
+  color:#fff;
+}
+.sale-media-dots{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:0;
+  background:transparent;
+  border:none;
+}
+.sale-media-dot{
+  width:6px;
+  height:6px;
+  padding:0;
+  border:none;
+  border-radius:50%;
+  background:rgba(155,144,224,.28);
+  cursor:pointer;
+  transition:all .2s;
+}
+.sale-media-dot.active{
+  width:18px;
+  border-radius:4px;
+  background:var(--purple-dark);
+}
+
+/* 바깥 판매 모델 슬라이더 */
+.sale-model-outer-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:8;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  font-size:20px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,.88);
+  border:1px solid var(--glass-border);
+  color:var(--purple-dark);
+  box-shadow:0 3px 14px rgba(90,80,160,.18);
+  transition:all .2s;
+}
+.sale-model-outer-btn:hover{
+  background:#fff;
+  transform:translateY(-50%) scale(1.05);
+}
+.sale-model-outer-prev{left:-14px;}
+.sale-model-outer-next{right:-14px;}
+.sale-model-dots{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-top:14px;
+}
+.sale-model-dot{
+  width:8px;
+  height:8px;
+  padding:0;
+  border-radius:50%;
+  border:none;
+  background:rgba(155,144,224,.24);
+  cursor:pointer;
+  transition:all .2s;
+}
+.sale-model-dot.active{
+  width:22px;
+  border-radius:4px;
+  background:var(--purple-light);
+}
+
+/* 판매 완료 */
+.sale-model-sold-overlay{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:rgba(35,32,48,.62);
+  color:#fff;
+}
+.sale-model-sold-en{
+  font-family:'Outfit',sans-serif;
+  font-size:30px;
+  font-weight:800;
+  letter-spacing:2px;
+}
+.sale-model-sold-ko{
+  margin-top:5px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1px;
+  opacity:.88;
+}
+.sale-model-slide.is-sold .sale-model-left{
+  background:linear-gradient(180deg,rgba(232,232,240,.96),rgba(216,217,230,.96));
+  border-color:rgba(120,115,145,.30);
+}
+.sale-model-slide.is-sold .sale-model-cover img{
+  filter:grayscale(.45) brightness(.78);
+}
+.sale-model-slide.is-sold .sale-model-status{
+  background:linear-gradient(135deg,#9692a7,#656273);
+  box-shadow:none;
+}
+.sale-model-slide.is-sold .sale-model-description,
+.sale-model-slide.is-sold .sale-model-subtitle,
+.sale-model-slide.is-sold .sale-model-feature{
+  color:#757286;
+}
+.sale-model-slide.is-sold .sale-model-feature{
+  background:rgba(255,255,255,.42);
+  border-color:rgba(120,115,145,.14);
+}
+.sale-model-slide.is-sold .sale-model-price-box{
+  background:rgba(120,115,145,.08);
+  border-color:rgba(120,115,145,.22);
+}
+.sale-model-slide.is-sold .sale-model-price-total .sale-model-price-value{
+  color:#777386;
+  text-decoration:line-through;
+  text-decoration-thickness:2px;
+  text-decoration-color:#777386;
+}
+.sale-model-slide.is-sold .sale-model-price-total .sale-model-price-label{
+  color:#777386;
+}
+.sale-model-price-sold{
+  margin-top:8px;
+  padding-top:9px;
+  border-top:1px solid rgba(120,115,145,.20);
+  text-align:center;
+  font-size:11px;
+  font-weight:700;
+  color:#686476;
+}
+
+@media(max-width:900px){
+  .sale-model-layout{grid-template-columns:1fr;align-items:start;}
+  .sale-model-left{height:auto;}
+  .sale-model-feature-box{flex:none;}
+  .sale-model-features{grid-template-rows:repeat(4,auto);}
+  .sale-model-outer-prev{left:8px;}
+  .sale-model-outer-next{right:8px;}
+}
+@media(max-width:600px){
+  .sale-model-info{padding:15px;}
+  .sale-model-title{font-size:19px;}
+  .sale-model-price-total .sale-model-price-value{font-size:17px;}
+  .sale-model-outer-btn{width:34px;height:34px;}
+}
+
+
 .sample-tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;}
 .sample-tab{
   padding:8px 18px;border-radius:20px;font-size:13px;font-weight:500;
@@ -667,6 +1131,7 @@ section{padding:var(--section-gap) 0;}
     <div class="nav-logo">ERYN</div>
     <div class="nav-links">
       <a class="nav-link" href="javascript:void(0)" onclick=" var el = document.getElementById('showcase'); var rect = el.getBoundingClientRect(); window.parent.scrollTo({top: window.parent.scrollY + rect.top, behavior:'smooth'});">Showcase</a>
+      <a class="nav-link" href="javascript:void(0)" onclick=" var el = document.getElementById('sale-models'); var rect = el.getBoundingClientRect(); window.parent.scrollTo({top: window.parent.scrollY + rect.top, behavior:'smooth'});">판매 모델</a>
       <a class="nav-link" href="javascript:void(0)" onclick=" var el = document.getElementById('samples'); var rect = el.getBoundingClientRect(); window.parent.scrollTo({top: window.parent.scrollY + rect.top, behavior:'smooth'});">샘플</a>
       <a class="nav-link" href="javascript:void(0)" onclick=" var el = document.getElementById('pricing'); var rect = el.getBoundingClientRect(); window.parent.scrollTo({top: window.parent.scrollY + rect.top, behavior:'smooth'});">가격</a>
       <a class="nav-link" href="javascript:void(0)" onclick=" var el = document.getElementById('notices'); var rect = el.getBoundingClientRect(); window.parent.scrollTo({top: window.parent.scrollY + rect.top, behavior:'smooth'});">공지</a>
@@ -735,6 +1200,20 @@ section{padding:var(--section-gap) 0;}
       <button class="slider-btn slider-next" id="showcase-next">›</button>
     </div>
     <div class="slider-dots" id="showcase-dots"></div>
+  </section>
+
+
+  <section id="sale-models" style="display:none;">
+    <div class="section-title fade-in">판매 모델</div>
+    <p class="section-desc fade-in" id="sale-model-desc"></p>
+    <div class="sale-model-slider fade-in">
+      <div class="sale-model-track">
+        <div class="sale-model-slides" id="sale-model-slides"></div>
+      </div>
+      <button type="button" class="sale-model-outer-btn sale-model-outer-prev" id="sale-model-prev" aria-label="이전 판매 모델">‹</button>
+      <button type="button" class="sale-model-outer-btn sale-model-outer-next" id="sale-model-next" aria-label="다음 판매 모델">›</button>
+    </div>
+    <div class="sale-model-dots" id="sale-model-dots"></div>
   </section>
 
   <section id="samples">
@@ -828,7 +1307,7 @@ const fmt = n => n.toLocaleString('ko-KR') + '원';
 
 function init() {
   renderSlotInfo(); renderArtist(); renderEvent(); renderSlots();
-  renderShowcase(); renderSamples(); renderCollabs();
+  renderShowcase(); renderSaleModels(); renderSamples(); renderCollabs();
   renderBaseOptions(); renderAddOptions(); renderNotices();
   renderProcess(); renderForm(); initScrollFade();
 }
@@ -915,8 +1394,410 @@ function renderShowcase() {
 function goSlide(idx) {
   const n = (C.showcase||[]).length; scIdx = (idx+n)%n;
   document.getElementById('showcase-slides').style.transform = `translateX(-${scIdx*100}%)`;
-  document.querySelectorAll('.slider-dot').forEach((d,i)=>d.classList.toggle('active',i===scIdx));
+  document.querySelectorAll('#showcase-dots .slider-dot').forEach((d,i)=>d.classList.toggle('active',i===scIdx));
 }
+
+
+/* ── 판매 모델 ── */
+let saleModelIdx = 0;
+const saleMediaIdx = {};
+
+function getYoutubeEmbedUrl(url) {
+  if (!url) return '';
+
+  try {
+    const parsed = new URL(url, window.location.href);
+    const host = parsed.hostname.replace(/^www\./, '');
+
+    if (host === 'youtu.be') {
+      const id = parsed.pathname.split('/').filter(Boolean)[0];
+      return id ? `https://www.youtube.com/embed/${id}` : '';
+    }
+
+    if (host.endsWith('youtube.com')) {
+      if (parsed.pathname.startsWith('/embed/')) {
+        const id = parsed.pathname.split('/embed/')[1]?.split('/')[0];
+        return id ? `https://www.youtube.com/embed/${id}` : '';
+      }
+
+      const id = parsed.searchParams.get('v');
+      return id ? `https://www.youtube.com/embed/${id}` : '';
+    }
+  } catch (e) {}
+
+  return url;
+}
+
+function stopSaleYoutubeVideos(scope) {
+  if (!scope) return;
+  scope.querySelectorAll('.sale-youtube-frame').forEach(frame => {
+    frame.src = frame.src;
+  });
+}
+
+function renderSaleModels() {
+  const section = document.getElementById('sale-models');
+  const config = C.saleModels || {};
+  const items = config.items || [];
+  const slides = document.getElementById('sale-model-slides');
+  const dots = document.getElementById('sale-model-dots');
+
+  if (!section || !slides || !dots) return;
+
+  if (!config.enabled || !items.length) {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = '';
+  document.getElementById('sale-model-desc').textContent =
+    config.description || '현재 판매 중인 Live2D 모델입니다.';
+
+  slides.innerHTML = '';
+  dots.innerHTML = '';
+  saleModelIdx = 0;
+
+  items.forEach((item, modelIndex) => {
+    const images = item.images || [];
+    const cover = images[0] || {};
+    const detailImages = images.slice(1);
+
+    const illustrationPrice = Number(item.illustrationPrice || 0);
+    const riggingPrice = Number(item.riggingPrice || 0);
+    const totalPrice = illustrationPrice + riggingPrice;
+
+    const showcaseEmbedUrl =
+      item.showcaseUrl ? getYoutubeEmbedUrl(item.showcaseUrl) : '';
+
+    saleMediaIdx[modelIndex] = 0;
+
+    const featuresHtml = (item.features || []).map(feature =>
+      `<div class="sale-model-feature">${feature}</div>`
+    ).join('');
+
+    const mediaSlidesHtml =
+      detailImages.length
+        ? detailImages.map((image, mediaIndex) => `
+            <div class="sale-media-slide">
+              <img
+                ${mediaIndex === 0
+                  ? `src="${image.src || ''}"`
+                  : `data-src="${image.src || ''}"`}
+                alt="${image.alt || item.title || '판매 모델 상세 이미지'}"
+                loading="${mediaIndex === 0 ? 'eager' : 'lazy'}"
+                decoding="async">
+              ${
+                image.caption
+                  ? `<div class="sale-media-caption">${image.caption}</div>`
+                  : ''
+              }
+            </div>
+          `).join('')
+        : `
+            <div class="sale-media-slide">
+              <div class="sale-detail-empty">
+                등록된 상세 이미지가 없습니다.
+              </div>
+            </div>
+          `;
+
+    const mediaDotsHtml =
+      detailImages.map((_, mediaIndex) => `
+        <button
+          type="button"
+          class="sale-media-dot${mediaIndex === 0 ? ' active' : ''}"
+          data-media-index="${mediaIndex}"
+          aria-label="${mediaIndex + 1}번째 상세 이미지">
+        </button>
+      `).join('');
+
+    const slide = document.createElement('article');
+    slide.className =
+      'sale-model-slide' + (item.sold ? ' is-sold' : '');
+
+    slide.innerHTML = `
+      <div class="sale-model-layout">
+
+        <!-- 왼쪽: 대표 이미지 + 상세 정보 -->
+        <div class="sale-model-left">
+
+          <div class="sale-model-cover">
+            ${
+              cover.src
+                ? `
+                  <img
+                    src="${cover.src}"
+                    alt="${cover.alt || item.title || '판매 모델 커버'}"
+                    loading="lazy"
+                    decoding="async">
+                `
+                : `
+                  <div class="sale-detail-empty">
+                    등록된 대표 이미지가 없습니다.
+                  </div>
+                `
+            }
+
+            ${
+              item.sold
+                ? `
+                  <div class="sale-model-sold-overlay">
+                    <div class="sale-model-sold-en">SOLD OUT</div>
+                    <div class="sale-model-sold-ko">판매 완료</div>
+                  </div>
+                `
+                : ''
+            }
+          </div>
+
+          <div class="sale-model-info">
+
+            <div class="sale-model-badges">
+              ${item.status ? `<span class="sale-model-status">${item.status}</span>` : ''}
+              ${item.badge ? `<span class="sale-model-badge">${item.badge}</span>` : ''}
+            </div>
+
+            <div>
+              <h3 class="sale-model-title">${item.title || ''}</h3>
+              <div class="sale-model-subtitle">${item.subtitle || ''}</div>
+            </div>
+
+            <p class="sale-model-description">${item.description || ''}</p>
+
+            ${
+              totalPrice > 0
+                ? `
+                  <div class="sale-model-price-box">
+
+                    <div class="sale-model-price-row">
+                      <span class="sale-model-price-label">일러스트 비용</span>
+                      <span class="sale-model-price-value">${fmt(illustrationPrice)}</span>
+                    </div>
+
+                    <div class="sale-model-price-row">
+                      <span class="sale-model-price-label">리깅 비용</span>
+                      <span class="sale-model-price-value">${fmt(riggingPrice)}</span>
+                    </div>
+
+                    <div class="sale-model-price-divider"></div>
+
+                    <div class="sale-model-price-row sale-model-price-total">
+                      <span class="sale-model-price-label">최종 판매 금액</span>
+                      <span class="sale-model-price-value">${fmt(totalPrice)}</span>
+                    </div>
+
+                    ${
+                      item.sold
+                        ? `<div class="sale-model-price-sold">판매 완료된 모델입니다</div>`
+                        : ''
+                    }
+
+                  </div>
+                `
+                : ''
+            }
+
+            <div class="sale-model-credit">
+              ${item.illust ? `<span>ILLUST / ${item.illust}</span>` : ''}
+              ${item.rig ? `<span>RIG / ${item.rig}</span>` : ''}
+            </div>
+
+            ${
+              featuresHtml
+                ? `
+                  <div class="sale-model-feature-box">
+                    <div class="sale-model-feature-title">모델 주요 기능</div>
+                    <div class="sale-model-features">
+                      ${featuresHtml}
+                    </div>
+                  </div>
+                `
+                : ''
+            }
+
+          </div>
+        </div>
+
+        <!-- 오른쪽: 위 쇼케이스 / 아래 상세 이미지 -->
+        <div class="sale-media-gallery">
+
+          <div class="sale-showcase-panel">
+            ${
+              showcaseEmbedUrl
+                ? `
+                  <div class="sale-showcase-frame">
+                    <iframe
+                      class="sale-youtube-frame"
+                      src="${showcaseEmbedUrl}${showcaseEmbedUrl.includes('?') ? '&' : '?'}rel=0&modestbranding=1"
+                      title="${item.title || '판매 모델'} 쇼케이스 영상"
+                      loading="lazy"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowfullscreen>
+                    </iframe>
+                  </div>
+                  <div class="sale-showcase-caption">Live2D Showcase</div>
+                `
+                : `
+                  <div class="sale-showcase-empty">
+                    등록된 쇼케이스 영상이 없습니다.
+                  </div>
+                `
+            }
+          </div>
+
+          <div class="sale-detail-gallery">
+            <div class="sale-detail-head">상세 이미지</div>
+
+            <div class="sale-detail-stage">
+              <div class="sale-media-track">
+                <div
+                  class="sale-media-slides"
+                  id="sale-media-slides-${modelIndex}">
+                  ${mediaSlidesHtml}
+                </div>
+              </div>
+            </div>
+
+            <div class="sale-detail-controls">
+
+              ${
+                detailImages.length > 1
+                  ? `
+                    <button
+                      type="button"
+                      class="sale-media-btn sale-media-prev"
+                      aria-label="이전 상세 이미지">
+                      ‹
+                    </button>
+                  `
+                  : ''
+              }
+
+              <div
+                class="sale-media-dots"
+                id="sale-media-dots-${modelIndex}">
+                ${mediaDotsHtml}
+              </div>
+
+              ${
+                detailImages.length > 1
+                  ? `
+                    <button
+                      type="button"
+                      class="sale-media-btn sale-media-next"
+                      aria-label="다음 상세 이미지">
+                      ›
+                    </button>
+                  `
+                  : ''
+              }
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    `;
+
+    slides.appendChild(slide);
+
+    slide.querySelector('.sale-media-prev')?.addEventListener('click', event => {
+      event.stopPropagation();
+      goSaleMedia(modelIndex, saleMediaIdx[modelIndex] - 1);
+    });
+
+    slide.querySelector('.sale-media-next')?.addEventListener('click', event => {
+      event.stopPropagation();
+      goSaleMedia(modelIndex, saleMediaIdx[modelIndex] + 1);
+    });
+
+    slide.querySelectorAll('.sale-media-dot').forEach(dot => {
+      dot.addEventListener('click', event => {
+        event.stopPropagation();
+        goSaleMedia(modelIndex, Number(dot.dataset.mediaIndex));
+      });
+    });
+
+    const outerDot = document.createElement('button');
+    outerDot.type = 'button';
+    outerDot.className =
+      'sale-model-dot' + (modelIndex === 0 ? ' active' : '');
+    outerDot.setAttribute(
+      'aria-label',
+      `${modelIndex + 1}번째 판매 모델`
+    );
+    outerDot.addEventListener('click', () => goSaleModel(modelIndex));
+    dots.appendChild(outerDot);
+  });
+
+  document.getElementById('sale-model-prev').onclick =
+    () => goSaleModel(saleModelIdx - 1);
+
+  document.getElementById('sale-model-next').onclick =
+    () => goSaleModel(saleModelIdx + 1);
+
+  const showOuterControls = items.length > 1;
+  document.getElementById('sale-model-prev').style.display =
+    showOuterControls ? 'flex' : 'none';
+  document.getElementById('sale-model-next').style.display =
+    showOuterControls ? 'flex' : 'none';
+  dots.style.display = showOuterControls ? 'flex' : 'none';
+}
+
+function goSaleModel(index) {
+  const items = (C.saleModels && C.saleModels.items) || [];
+  if (!items.length) return;
+
+  const section = document.getElementById('sale-models');
+  stopSaleYoutubeVideos(section);
+
+  saleModelIdx = (index + items.length) % items.length;
+
+  document.getElementById('sale-model-slides').style.transform =
+    `translateX(-${saleModelIdx * 100}%)`;
+
+  document
+    .querySelectorAll('#sale-model-dots .sale-model-dot')
+    .forEach((dot, dotIndex) => {
+      dot.classList.toggle('active', dotIndex === saleModelIdx);
+    });
+}
+
+function goSaleMedia(modelIndex, mediaIndex) {
+  const items = (C.saleModels && C.saleModels.items) || [];
+  const item = items[modelIndex] || {};
+  const mediaCount = Math.max((item.images || []).length - 1, 0);
+
+  if (!mediaCount) return;
+
+  saleMediaIdx[modelIndex] =
+    (mediaIndex + mediaCount) % mediaCount;
+
+  const current = saleMediaIdx[modelIndex];
+  const mediaSlides =
+    document.getElementById(`sale-media-slides-${modelIndex}`);
+
+  if (mediaSlides) {
+    mediaSlides.style.transform =
+      `translateX(-${current * 100}%)`;
+
+    const activeSlide = mediaSlides.children[current];
+    const lazyImage =
+      activeSlide?.querySelector('img[data-src]');
+
+    if (lazyImage) {
+      lazyImage.src = lazyImage.dataset.src;
+      lazyImage.removeAttribute('data-src');
+    }
+  }
+
+  document
+    .querySelectorAll(`#sale-media-dots-${modelIndex} .sale-media-dot`)
+    .forEach((dot, dotIndex) => {
+      dot.classList.toggle('active', dotIndex === current);
+    });
+}
+
 
 /* ── Samples ── */
 function renderSamples() {
