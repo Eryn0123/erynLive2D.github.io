@@ -19,21 +19,13 @@
   },
   "slots": {
     "enabled": true,
-    "notice": "현재 9월 작업부터 3개월치 일정을 안내해드리며, 그 이후 작업도 문의가능합니다.",
+    "notice": "현재 10월 작업부터 3개월치 일정을 안내해드리며, 그 이후 작업도 문의가능합니다.",
     "slotNotices": [
       "PSD 파일을 첨부해주시면 빠른 견적 확인이 가능하며, 해당 신청을 우선으로 진행합니다.",
       "PSD 파일이 없을 경우에도 모델 디자인을 알려주시면 대략적인 견적 확인이 가능합니다.",
       "작업 예약하신 이후 갑작스러운 작업 취소 시 위약금 10%를 지불하셔야 합니다."
     ],
     "months": [
-      {
-        "month": "2026-09",
-        "status": "available",
-        "slots": [
-          { "type": "fullm", "label": "예약 완료" },
-          { "type": "fullm", "label": "예약 완료" }
-        ]
-      },
       {
         "month": "2026-10",
         "status": "available",
@@ -47,6 +39,14 @@
         "status": "available",
         "slots": [
           { "type": "fullm", "label": "예약 완료" },
+          { "type": "empty", "label": "빈 슬롯" }
+        ]
+      },
+      {
+        "month": "2026-12",
+        "status": "available",
+        "slots": [
+          { "type": "empty", "label": "빈 슬롯" },
           { "type": "empty", "label": "빈 슬롯" }
         ]
       }
