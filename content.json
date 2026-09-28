@@ -53,8 +53,17 @@
     ]
   },
   "showcase": [
-     {
+    {
       "id": 1,
+      "title": "나에 작가님 협업 모델",
+      "subtitle": "[일러 90 + 리깅 80] 170만원 판매",
+      "videoUrl": "https://www.youtube.com/embed/bGxJeHw--hA",
+      "thumbnail": "",
+      "illust": "Nae",
+      "rig": "ERYN"
+    },
+     {
+      "id": 2,
       "title": "요루네 마논님",
       "subtitle": "요루네 마논님 리깅 작업 진행",
       "videoUrl": "https://www.youtube.com/embed/Ln7dOj8KfHk",
@@ -63,7 +72,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 2,
+      "id": 3,
       "title": "RioBH 작가님 협업 모델",
       "subtitle": "[일러 150 + 리깅 100] 250만원 판매",
       "videoUrl": "https://www.youtube.com/embed/dt_EDU7vAM4",
@@ -72,7 +81,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 3,
+      "id": 4,
       "title": "빈터님",
       "subtitle": "씨미에서 활동중인 빈님 리깅 작업 진행",
       "videoUrl": "https://www.youtube.com/embed/f5IkGsf18_4",
@@ -81,7 +90,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 4,
+      "id": 5,
       "title": "카메하이키 해해님",
       "subtitle": "치지직에서 활동중인 카메하이키 해해님 리깅 작업 진행",
       "videoUrl": "https://www.youtube.com/embed/zrrvh4wdHik",
@@ -90,7 +99,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 5,
+      "id": 6,
       "title": "말리히니님",
       "subtitle": "치지직에서 활동중인 말리히니님 리깅 작업 진행",
       "videoUrl": "https://www.youtube.com/embed/g5mS0-XaA1M",
@@ -99,7 +108,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 6,
+      "id": 7,
       "title": "Cyan님",
       "subtitle": "치지직에서 활동중인 Cyan님 리깅 작업 진행",
       "videoUrl": "https://www.youtube.com/embed/gKOWPj043Ow",
@@ -108,7 +117,7 @@
       "rig": "ERYN"
     },
     {
-      "id": 7,
+      "id": 8,
       "title": "RioBH 작가님 협업 모델",
       "subtitle": "RioBH 작가님과 협업 모델을 제작",
       "videoUrl": "https://www.youtube.com/embed/QjBBmIGhzNA",
@@ -117,19 +126,10 @@
       "rig": "ERYN"
     },
     {
-      "id": 8,
+      "id": 9,
       "title": "포욘 작가님 협업 판매 모델",
       "subtitle": "판매 완료",
       "videoUrl": "https://www.youtube.com/embed/unJGkBWa__s",
-      "thumbnail": "",
-      "illust": "포욘",
-      "rig": "ERYN"
-    },
-    {
-      "id": 9,
-      "title": "포욘 작가님 협업 판매 모델",
-      "subtitle": "[일러 20 + 리깅 40] 60만원 판매",
-      "videoUrl": "https://www.youtube.com/embed/epMrF8BoJYY",
       "thumbnail": "",
       "illust": "포욘",
       "rig": "ERYN"
@@ -148,6 +148,58 @@
     "enabled": true,
     "description": "현재 판매 중인 Live2D 모델입니다. 판매 모델의 상세 이미지를 확인할 수 있습니다.",
     "items": [
+      {
+        "id": "mint-cat-girl",
+        "title": "Mint Cat Girl",
+        "subtitle": "민트 고양이 소녀 Live2D 모델",
+        "status": "판매 중",
+        "badge": "1인 한정 판매",
+        "sold": false,
+        "illustrationPrice": 900000,
+        "riggingPrice": 800000,
+        "description": "나에 작가님과 협업하여 제작한 민트 고양이 소녀 Live2D 모델입니다.",
+        "illust": "Nae",
+        "rig": "ERYN",
+        "features": [
+          "VBridger 트래킹 대응",
+          "표정 5종 + 눈 표정 3종",
+          "옷 ON & OFF + 추가 팔 파츠 1종",
+          "꼬리 부풀기&위로 올리기"
+        ],
+        "showcaseUrl": "https://youtu.be/bGxJeHw--hA",
+        "images": [
+          {
+            "src": "images/sale_models/velvet_rose_vampire/01_cover.png",
+            "alt": "Velvet Rose Vampire 대표 이미지",
+            "caption": "모델 대표 이미지"
+          },
+          {
+            "src": "images/sale_models/mint_cat_girl/02_expression_preview.png",
+            "alt": "Velvet Rose Vampire 표정 미리보기",
+            "caption": "표정 미리보기"
+          },
+          {
+            "src": "images/sale_models/mint_cat_girl/03_expression_set_a.png",
+            "alt": "Velvet Rose Vampire 감정 표정 모음 1",
+            "caption": "감정 표정 모음 1"
+          },
+          {
+            "src": "images/sale_models/mint_cat_girl/04_expression_set_b.png",
+            "alt": "Velvet Rose Vampire 감정 표정 모음 2",
+            "caption": "감정 표정 모음 2"
+          },
+          {
+            "src": "images/sale_models/mint_cat_girl/05_toggle.png",
+            "alt": "Velvet Rose Vampire 헤어스타일 토글",
+            "caption": "헤어스타일 토글"
+          },
+          {
+            "src": "images/sale_models/mint_cat_girl/06_tail.png",
+            "alt": "Velvet Rose Vampire 몸 앞으로 내밀기와 추가 팔 파츠",
+            "caption": "몸 앞으로 내밀기 · 추가 팔 파츠"
+          }
+        ]
+      },
       {
         "id": "velvet-rose-vampire",
         "title": "Velvet Rose Vampire",
