@@ -170,33 +170,33 @@
         "images": [
           {
             "src": "images/sale_models/mint_cat_girl/01_cover.png",
-            "alt": "Velvet Rose Vampire 대표 이미지",
+            "alt": "Mint Cat Girl 대표 이미지",
             "caption": "모델 대표 이미지"
           },
           {
             "src": "images/sale_models/mint_cat_girl/02_expression_preview.png",
-            "alt": "Velvet Rose Vampire 표정 미리보기",
+            "alt": "Mint Cat Girl 표정 미리보기",
             "caption": "표정 미리보기"
           },
           {
             "src": "images/sale_models/mint_cat_girl/03_expression_set_a.png",
-            "alt": "Velvet Rose Vampire 감정 표정 모음 1",
+            "alt": "Mint Cat Girl 감정 표정 모음 1",
             "caption": "감정 표정 모음 1"
           },
           {
             "src": "images/sale_models/mint_cat_girl/04_expression_set_b.png",
-            "alt": "Velvet Rose Vampire 감정 표정 모음 2",
+            "alt": "Mint Cat Girl 감정 표정 모음 2",
             "caption": "감정 표정 모음 2"
           },
           {
             "src": "images/sale_models/mint_cat_girl/05_toggle.png",
-            "alt": "Velvet Rose Vampire 헤어스타일 토글",
-            "caption": "헤어스타일 토글"
+            "alt": "Mint Cat Girl 토글",
+            "caption": "옷 & 손 토글"
           },
           {
             "src": "images/sale_models/mint_cat_girl/06_tail.png",
-            "alt": "Velvet Rose Vampire 몸 앞으로 내밀기와 추가 팔 파츠",
-            "caption": "몸 앞으로 내밀기 · 추가 팔 파츠"
+            "alt": "Mint Cat Girl 꼬리 움직임",
+            "caption": "꼬리 움직임"
           }
         ]
       },
