@@ -1354,8 +1354,8 @@ html.sale-lightbox-open{
     </div>
       
     <div class="nav-actions">
-      <button class="btn-secondary" onclick="document.getElementById('showcase').scrollIntoView({behavior:'smooth'})">리깅 샘플 보러가기</button>
-      <button class="btn-primary" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">문의 작성하러 가기</button>
+      <button class="btn-secondary" onclick="scrollToSiteSection('samples')">리깅 샘플 보러가기</button>
+      <button class="btn-primary" onclick="scrollToSiteSection('form')">문의 작성하러 가기</button>
     </div>
   </div>
 </nav>
@@ -1396,8 +1396,8 @@ html.sale-lightbox-open{
             <p class="slots-footer-notice" id="slots-footer-notice"></p>
           </div>
           <div class="slots-btns" style="margin-top:auto;">
-            <button class="btn-primary" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">문의 작성하러 가기</button>
-            <button class="btn-secondary" onclick="document.getElementById('samples').scrollIntoView({behavior:'smooth'})">리깅 샘플 보러가기</button>
+            <button class="btn-primary" onclick="scrollToSiteSection('form')">문의 작성하러 가기</button>
+            <button class="btn-secondary" onclick="scrollToSiteSection('samples')">리깅 샘플 보러가기</button>
           </div>
         </div>
       </div>
@@ -3109,6 +3109,40 @@ function initScrollFade() {
 }
 
 loadContent();
+
+/* ── 섹션 이동: 일반 사이트 + ArtMug iframe 대응 ── */
+function scrollToSiteSection(sectionId) {
+  const target = document.getElementById(sectionId);
+  if (!target) return;
+
+  /* GitHub Pages에서 직접 볼 때 */
+  target.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
+
+  /* ArtMug의 긴 iframe 안에서는 부모 페이지가 스크롤해야 하므로
+     목표 섹션의 iframe 내부 Y좌표를 부모 페이지로 전달 */
+  try {
+    if (window.parent && window.parent !== window) {
+      const targetY =
+        target.getBoundingClientRect().top +
+        (window.scrollY || window.pageYOffset || 0);
+
+      window.parent.postMessage(
+        {
+          type: 'eryn-scroll-to-section',
+          sectionId: sectionId,
+          targetY: targetY
+        },
+        '*'
+      );
+    }
+  } catch (error) {
+    /* 교차 출처 보안으로 직접 접근할 수 없어도 postMessage는 사용 가능 */
+  }
+}
+
 </script>
 </body>
 </html>
