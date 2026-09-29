@@ -64,6 +64,18 @@ body{
   color:var(--text-primary);
   min-height:100vh;
   overflow-x:hidden;
+
+  /* 사이트 일반 텍스트 드래그/선택 방지 */
+  -webkit-user-select:none;
+  user-select:none;
+}
+
+/* 문의 폼처럼 직접 입력하는 영역은 텍스트 선택 허용 */
+input,
+textarea,
+select{
+  -webkit-user-select:text;
+  user-select:text;
 }
 
 .bg-mesh{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
