@@ -993,106 +993,130 @@ html.sale-lightbox-open{
   pointer-events:none;
 }
 
-/* 얇은 다이아몬드 프레임 */
+/* ── 4방향 별빛 다이아몬드 로더 ── */
 .sample-loader-gem{
   position:relative;
   z-index:1;
-  width:48px;
-  height:48px;
+  width:72px;
+  height:72px;
   display:flex;
   align-items:center;
   justify-content:center;
-  animation:sampleGemFloat 2.1s ease-in-out infinite;
 }
 
-.sample-loader-diamond{
-  position:relative;
-  width:31px;
-  height:31px;
-  transform:rotate(45deg);
-  border:2px solid transparent;
-  border-radius:5px;
-  background:
-    linear-gradient(rgba(247,247,255,.92),rgba(247,247,255,.92)) padding-box,
-    conic-gradient(
-      from 0deg,
-      #b3a8f0 0deg,
-      #a8c8f0 80deg,
-      #ffffff 145deg,
-      #e5b8df 215deg,
-      #a8c8f0 290deg,
-      #b3a8f0 360deg
-    ) border-box;
-  box-shadow:
-    0 0 10px rgba(179,168,240,.18),
-    0 0 22px rgba(168,200,240,.10);
-  animation:
-    sampleDiamondSpin 2.6s linear infinite,
-    sampleDiamondGlow 1.65s ease-in-out infinite;
-}
-
-/* 다이아몬드 중심의 아주 은은한 광택 */
-.sample-loader-diamond::after{
+/* 뒤쪽 보라빛 오라 */
+.sample-loader-gem::before{
   content:'';
   position:absolute;
-  inset:5px;
-  border:1px solid rgba(255,255,255,.68);
-  border-radius:3px;
-  opacity:.65;
-}
-
-/* 주변 별빛 */
-.sample-loader-star{
-  position:absolute;
-  z-index:2;
-  width:4px;
-  height:4px;
+  width:48px;
+  height:48px;
   border-radius:50%;
-  background:#fff;
-  box-shadow:
-    0 0 5px rgba(255,255,255,.95),
-    0 0 10px rgba(179,168,240,.55);
-  opacity:0;
-  transform:scale(.5);
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.88) 0%,
+      rgba(200,190,255,.48) 28%,
+      rgba(179,168,240,.23) 52%,
+      rgba(168,200,240,.10) 68%,
+      transparent 78%
+    );
+  filter:blur(7px);
+  animation:sampleSparkleAura 1.55s ease-in-out infinite;
 }
 
-.sample-loader-star::before,
-.sample-loader-star::after{
+/* 두 번째 참고 이미지처럼 세로/가로 끝이 길게 뻗은 4방향 별빛 */
+.sample-loader-diamond{
+  position:relative;
+  z-index:2;
+  width:56px;
+  height:56px;
+
+  clip-path:polygon(
+    50% 0%,
+    56% 38%,
+    100% 50%,
+    56% 62%,
+    50% 100%,
+    44% 62%,
+    0% 50%,
+    44% 38%
+  );
+
+  background:
+    radial-gradient(
+      circle at 44% 38%,
+      rgba(255,255,255,1) 0%,
+      rgba(247,242,255,.98) 13%,
+      rgba(207,191,255,.96) 30%,
+      rgba(179,168,240,.95) 48%,
+      rgba(142,124,222,.92) 67%,
+      rgba(168,200,240,.78) 83%,
+      rgba(122,109,212,.75) 100%
+    );
+
+  filter:
+    drop-shadow(0 0 4px rgba(255,255,255,.95))
+    drop-shadow(0 0 8px rgba(179,168,240,.56))
+    drop-shadow(0 0 16px rgba(122,109,212,.32));
+
+  transform-origin:center;
+  animation:sampleSparklePulse 1.45s ease-in-out infinite;
+}
+
+/* 밝은 중심광 */
+.sample-loader-diamond::after{
   content:'';
   position:absolute;
   left:50%;
   top:50%;
-  background:linear-gradient(90deg,transparent,#fff,transparent);
-  transform:translate(-50%,-50%);
-  border-radius:999px;
-}
-
-.sample-loader-star::before{
   width:11px;
-  height:1px;
-}
-
-.sample-loader-star::after{
-  width:1px;
   height:11px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:rgba(255,255,255,.96);
+  box-shadow:
+    0 0 8px rgba(255,255,255,.95),
+    0 0 14px rgba(199,186,255,.78);
 }
 
-.sample-loader-star.s1{
-  left:2px;
-  top:8px;
-  animation:sampleStarTwinkle 1.7s ease-in-out infinite .05s;
+/* 별빛이 살짝 커졌다 작아지는 효과 */
+@keyframes sampleSparklePulse{
+  0%,100%{
+    transform:scale(.78);
+    opacity:.64;
+    filter:
+      drop-shadow(0 0 3px rgba(255,255,255,.75))
+      drop-shadow(0 0 6px rgba(179,168,240,.36))
+      drop-shadow(0 0 12px rgba(122,109,212,.18));
+  }
+  45%{
+    transform:scale(1.08);
+    opacity:1;
+    filter:
+      drop-shadow(0 0 5px rgba(255,255,255,1))
+      drop-shadow(0 0 11px rgba(179,168,240,.72))
+      drop-shadow(0 0 24px rgba(122,109,212,.42));
+  }
+  62%{
+    transform:scale(.98);
+    opacity:.96;
+  }
 }
 
-.sample-loader-star.s2{
-  right:1px;
-  top:17px;
-  animation:sampleStarTwinkle 1.9s ease-in-out infinite .55s;
-}
-
-.sample-loader-star.s3{
-  left:13px;
-  bottom:0;
-  animation:sampleStarTwinkle 2.05s ease-in-out infinite 1.0s;
+/* 외곽 오라도 함께 숨 쉬듯 밝아짐 */
+@keyframes sampleSparkleAura{
+  0%,100%{
+    transform:scale(.82);
+    opacity:.42;
+  }
+  45%{
+    transform:scale(1.18);
+    opacity:.92;
+  }
+  65%{
+    transform:scale(1.02);
+    opacity:.66;
+  }
 }
 
 .sample-loader-text{
@@ -1131,24 +1155,13 @@ html.sale-lightbox-open{
   content:' · RETRY';
 }
 
-@keyframes sampleGemFloat{
-  0%,100%{transform:translateY(1px);}
-  50%{transform:translateY(-3px);}
+50%{transform:translateY(-3px);}
 }
 
-@keyframes sampleDiamondSpin{
-  from{transform:rotate(45deg);}
-  to{transform:rotate(405deg);}
+to{transform:rotate(405deg);}
 }
 
-@keyframes sampleDiamondGlow{
-  0%,100%{
-    filter:brightness(.96);
-    box-shadow:
-      0 0 8px rgba(179,168,240,.14),
-      0 0 18px rgba(168,200,240,.08);
-  }
-  50%{
+50%{
     filter:brightness(1.15);
     box-shadow:
       0 0 13px rgba(179,168,240,.32),
@@ -1156,12 +1169,7 @@ html.sale-lightbox-open{
   }
 }
 
-@keyframes sampleStarTwinkle{
-  0%,100%{
-    opacity:0;
-    transform:scale(.45) rotate(0deg);
-  }
-  35%{
+35%{
     opacity:.95;
     transform:scale(1) rotate(35deg);
   }
@@ -2552,11 +2560,8 @@ function pumpLazySampleVideoQueue() {
 
       lazySampleVideoQueued.delete(video);
 
-      if (isLazySampleVideoVisible(video)) {
-        video.play().catch(() => {});
-      } else {
-        video.pause();
-      }
+      /* 한번 로드가 끝난 영상은 이후 계속 재생 */
+      video.play().catch(() => {});
 
       pumpLazySampleVideoQueue();
     };
@@ -2576,14 +2581,14 @@ function refreshLazySampleVideos() {
   document
     .querySelectorAll('video[data-lazy-video]')
     .forEach(video => {
-      if (!isLazySampleVideoVisible(video)) {
-        video.pause();
+      /* 이미 한번 로드된 영상은 화면 밖으로 나가도 계속 재생 */
+      if (video.dataset.loaded === 'true') {
+        video.play().catch(() => {});
         return;
       }
 
-      /* 이미 로드된 영상은 바로 재생 */
-      if (video.dataset.loaded === 'true') {
-        video.play().catch(() => {});
+      /* 아직 로드 전인 영상만 현재 표시 상태를 기준으로 로딩 */
+      if (!isLazySampleVideoVisible(video)) {
         return;
       }
 
@@ -2608,8 +2613,11 @@ function initLazySampleVideos() {
 
           if (entry.isIntersecting && isLazySampleVideoVisible(video)) {
             queueLazySampleVideo(video);
-          } else {
-            video.pause();
+          }
+
+          /* 이미 로드된 영상은 화면 밖으로 나가도 계속 재생 */
+          if (video.dataset.loaded === 'true') {
+            video.play().catch(() => {});
           }
         });
       },
@@ -2729,9 +2737,6 @@ function renderSamples() {
     return `<div class="sample-item" data-sample-loading="true">
       <div class="sample-loader" aria-hidden="true">
         <div class="sample-loader-gem">
-          <span class="sample-loader-star s1"></span>
-          <span class="sample-loader-star s2"></span>
-          <span class="sample-loader-star s3"></span>
           <span class="sample-loader-diamond"></span>
         </div>
         <div class="sample-loader-text">LOADING</div>
