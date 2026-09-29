@@ -1125,23 +1125,23 @@ section{padding:var(--section-gap) 0;}
   transition:opacity .38s ease, transform .38s ease;
 }
 
-.sample-item.media-ready .sample-load-media{
+[data-sample-loading="true"].media-ready .sample-load-media{
   opacity:1;
   transform:scale(1);
 }
 
-.sample-item.media-ready .sample-loader{
+[data-sample-loading="true"].media-ready .sample-loader{
   opacity:0;
   visibility:hidden;
   pointer-events:none;
 }
 
-.sample-item.media-error .sample-loader-diamond-line{
+[data-sample-loading="true"].media-error .sample-loader-diamond-line{
   animation:none;
   opacity:.45;
 }
 
-.sample-item.media-error .sample-loader-text::after{
+[data-sample-loading="true"].media-error .sample-loader-text::after{
   content:' · RETRY';
 }
 
@@ -1972,8 +1972,37 @@ function renderSaleModels() {
     const mediaSlidesHtml =
       detailImages.length
         ? detailImages.map((image, mediaIndex) => `
-            <div class="sale-media-slide">
+            <div class="sale-media-slide" data-sample-loading="true">
+              <div class="sample-loader" aria-hidden="true">
+                <div class="sample-loader-gem">
+                  <svg class="sample-loader-diamond-svg" viewBox="0 0 48 48" aria-hidden="true">
+                    <defs>
+                      <linearGradient
+                        id="saleDiamondGradient-${modelIndex}-${mediaIndex}"
+                        x1="6" y1="6" x2="42" y2="42"
+                        gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#b3a8f0"/>
+                        <stop offset="38%" stop-color="#a8c8f0"/>
+                        <stop offset="68%" stop-color="#e5b8df"/>
+                        <stop offset="100%" stop-color="#7a6dd4"/>
+                      </linearGradient>
+                    </defs>
+
+                    <path
+                      class="sample-loader-diamond-ghost"
+                      d="M24 5 L43 24 L24 43 L5 24 Z"/>
+
+                    <path
+                      class="sample-loader-diamond-line"
+                      style="stroke:url(#saleDiamondGradient-${modelIndex}-${mediaIndex})"
+                      d="M24 5 L43 24 L24 43 L5 24 Z"/>
+                  </svg>
+                </div>
+                <div class="sample-loader-text">LOADING</div>
+              </div>
+
               <img
+                class="sample-load-media"
                 ${mediaIndex === 0
                   ? `src="${image.src || ''}"`
                   : `data-src="${image.src || ''}"`}
@@ -2612,7 +2641,7 @@ function initLazySampleVideos() {
 /* ── 리깅 샘플 로딩 화면 ── */
 function initSampleMediaLoading() {
   document
-    .querySelectorAll('.sample-item[data-sample-loading="true"]')
+    .querySelectorAll('[data-sample-loading="true"]')
     .forEach(item => {
       const media = item.querySelector('.sample-load-media');
       if (!media) return;
@@ -2860,8 +2889,37 @@ function renderWaitingSlides(mode) {
     slide.className = 'waiting-slide';
 
     slide.innerHTML = `
-      <div class="waiting-video-wrap">
+      <div class="waiting-video-wrap" data-sample-loading="true">
+        <div class="sample-loader" aria-hidden="true">
+          <div class="sample-loader-gem">
+            <svg class="sample-loader-diamond-svg" viewBox="0 0 48 48" aria-hidden="true">
+              <defs>
+                <linearGradient
+                  id="waitingDiamondGradient-${mode}-${i}"
+                  x1="6" y1="6" x2="42" y2="42"
+                  gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#b3a8f0"/>
+                  <stop offset="38%" stop-color="#a8c8f0"/>
+                  <stop offset="68%" stop-color="#e5b8df"/>
+                  <stop offset="100%" stop-color="#7a6dd4"/>
+                </linearGradient>
+              </defs>
+
+              <path
+                class="sample-loader-diamond-ghost"
+                d="M24 5 L43 24 L24 43 L5 24 Z"/>
+
+              <path
+                class="sample-loader-diamond-line"
+                style="stroke:url(#waitingDiamondGradient-${mode}-${i})"
+                d="M24 5 L43 24 L24 43 L5 24 Z"/>
+            </svg>
+          </div>
+          <div class="sample-loader-text">LOADING</div>
+        </div>
+
         <video
+          class="sample-load-media"
           muted
           loop
           playsinline
