@@ -858,15 +858,6 @@ section{padding:var(--section-gap) 0;}
   .sale-lightbox-next{right:8px;}
 }
 
-body.sale-lightbox-open{
-  overflow:hidden !important;
-  touch-action:none;
-}
-
-html.sale-lightbox-open{
-  overflow:hidden !important;
-}
-
 @media(max-width:800px){
   .sale-lightbox{
     padding:58px 16px 22px;
@@ -1038,129 +1029,65 @@ html.sale-lightbox-open{
   pointer-events:none;
 }
 
-/* ── 4방향 별빛 다이아몬드 로더 ── */
+/* ── 라인 드로잉 다이아몬드 로더 ── */
 .sample-loader-gem{
   position:relative;
   z-index:1;
-  width:72px;
-  height:72px;
+  width:54px;
+  height:54px;
   display:flex;
   align-items:center;
   justify-content:center;
+  filter:drop-shadow(0 3px 10px rgba(155,144,224,.12));
 }
 
-/* 뒤쪽 보라빛 오라 */
-.sample-loader-gem::before{
-  content:'';
-  position:absolute;
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  background:
-    radial-gradient(
-      circle,
-      rgba(255,255,255,.88) 0%,
-      rgba(200,190,255,.48) 28%,
-      rgba(179,168,240,.23) 52%,
-      rgba(168,200,240,.10) 68%,
-      transparent 78%
-    );
-  filter:blur(7px);
-  animation:sampleSparkleAura 1.55s ease-in-out infinite;
+.sample-loader-diamond-svg{
+  width:46px;
+  height:46px;
+  overflow:visible;
 }
 
-/* 두 번째 참고 이미지처럼 세로/가로 끝이 길게 뻗은 4방향 별빛 */
-.sample-loader-diamond{
-  position:relative;
-  z-index:2;
-  width:56px;
-  height:56px;
+.sample-loader-diamond-line{
+  fill:none;
+  stroke:url(#sampleDiamondGradient);
+  stroke-width:2.4;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 
-  clip-path:polygon(
-    50% 0%,
-    56% 38%,
-    100% 50%,
-    56% 62%,
-    50% 100%,
-    44% 62%,
-    0% 50%,
-    44% 38%
-  );
-
-  background:
-    radial-gradient(
-      circle at 44% 38%,
-      rgba(255,255,255,1) 0%,
-      rgba(247,242,255,.98) 13%,
-      rgba(207,191,255,.96) 30%,
-      rgba(179,168,240,.95) 48%,
-      rgba(142,124,222,.92) 67%,
-      rgba(168,200,240,.78) 83%,
-      rgba(122,109,212,.75) 100%
-    );
+  /* 마름모 둘레를 따라 선이 그려졌다 사라지는 효과 */
+  stroke-dasharray:120;
+  stroke-dashoffset:120;
 
   filter:
-    drop-shadow(0 0 4px rgba(255,255,255,.95))
-    drop-shadow(0 0 8px rgba(179,168,240,.56))
-    drop-shadow(0 0 16px rgba(122,109,212,.32));
+    drop-shadow(0 0 3px rgba(255,255,255,.85))
+    drop-shadow(0 0 6px rgba(179,168,240,.24));
 
-  transform-origin:center;
-  animation:sampleSparklePulse 1.45s ease-in-out infinite;
+  animation:sampleDiamondDraw 1.65s ease-in-out infinite;
 }
 
-/* 밝은 중심광 */
-.sample-loader-diamond::after{
-  content:'';
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:11px;
-  height:11px;
-  transform:translate(-50%,-50%);
-  border-radius:50%;
-  background:rgba(255,255,255,.96);
-  box-shadow:
-    0 0 8px rgba(255,255,255,.95),
-    0 0 14px rgba(199,186,255,.78);
+/* 안쪽에 아주 얇은 잔광 라인 */
+.sample-loader-diamond-ghost{
+  fill:none;
+  stroke:rgba(179,168,240,.16);
+  stroke-width:1.15;
 }
 
-/* 별빛이 살짝 커졌다 작아지는 효과 */
-@keyframes sampleSparklePulse{
-  0%,100%{
-    transform:scale(.78);
-    opacity:.64;
-    filter:
-      drop-shadow(0 0 3px rgba(255,255,255,.75))
-      drop-shadow(0 0 6px rgba(179,168,240,.36))
-      drop-shadow(0 0 12px rgba(122,109,212,.18));
+@keyframes sampleDiamondDraw{
+  0%{
+    stroke-dashoffset:120;
+    opacity:.30;
   }
   45%{
-    transform:scale(1.08);
+    stroke-dashoffset:0;
     opacity:1;
-    filter:
-      drop-shadow(0 0 5px rgba(255,255,255,1))
-      drop-shadow(0 0 11px rgba(179,168,240,.72))
-      drop-shadow(0 0 24px rgba(122,109,212,.42));
   }
-  62%{
-    transform:scale(.98);
-    opacity:.96;
+  72%{
+    stroke-dashoffset:0;
+    opacity:1;
   }
-}
-
-/* 외곽 오라도 함께 숨 쉬듯 밝아짐 */
-@keyframes sampleSparkleAura{
-  0%,100%{
-    transform:scale(.82);
-    opacity:.42;
-  }
-  45%{
-    transform:scale(1.18);
-    opacity:.92;
-  }
-  65%{
-    transform:scale(1.02);
-    opacity:.66;
+  100%{
+    stroke-dashoffset:-120;
+    opacity:.22;
   }
 }
 
@@ -1191,7 +1118,7 @@ html.sale-lightbox-open{
   pointer-events:none;
 }
 
-.sample-item.media-error .sample-loader-diamond{
+.sample-item.media-error .sample-loader-diamond-line{
   animation:none;
   opacity:.45;
 }
@@ -2359,19 +2286,6 @@ function goSaleMedia(modelIndex, mediaIndex) {
 /* ── 판매 모델 상세 이미지 확대 보기 ── */
 let saleLightboxModelIndex = 0;
 let saleLightboxImageIndex = 0;
-let saleLightboxScrollTop = 0;
-
-function isSaleLightboxOpen() {
-  const lightbox = document.getElementById('sale-lightbox');
-  return !!lightbox && lightbox.classList.contains('open');
-}
-
-function blockSaleLightboxScroll(event) {
-  if (isSaleLightboxOpen()) {
-    event.preventDefault();
-  }
-}
-
 function getSaleLightboxImages(modelIndex) {
   const items = (C.saleModels && C.saleModels.items) || [];
   const item = items[modelIndex] || {};
@@ -2392,25 +2306,28 @@ function openSaleLightbox(modelIndex, imageIndex, triggerImage) {
 
   updateSaleLightbox();
 
-  /* ArtMug에서는 iframe 높이가 매우 길기 때문에
-     position:fixed로 중앙 정렬하면 현재 화면보다 훨씬 아래에 뜰 수 있습니다.
-     따라서 클릭한 상세 이미지의 실제 문서 위치를 기준으로 확대창을 띄웁니다. */
-  saleLightboxScrollTop = window.scrollY || window.pageYOffset || 0;
-
+  /* ArtMug에서는 iframe 자체가 매우 길기 때문에
+     브라우저 화면의 fixed 중앙을 직접 구하기 어렵습니다.
+     대신 사용자가 실제로 클릭한 상세 이미지의 "중심 위치"를 기준으로
+     확대창을 배치해서 현재 보고 있는 영역 한가운데에 가깝게 뜨도록 합니다. */
   const rect = triggerImage?.getBoundingClientRect();
 
   if (rect) {
-    const imageTop =
-      (window.scrollY || window.pageYOffset || 0) + rect.top;
+    const docY = window.scrollY || window.pageYOffset || 0;
+    const imageCenterY =
+      docY + rect.top + (rect.height / 2);
 
     const popupHeight =
       Math.min(
-        Math.max((window.screen && window.screen.availHeight) || 800, 650),
-        900
+        Math.max(
+          Math.round(((window.screen && window.screen.availHeight) || 800) * 0.78),
+          620
+        ),
+        820
       );
 
     const popupTop =
-      Math.max(0, imageTop - 120);
+      Math.max(0, imageCenterY - (popupHeight / 2));
 
     lightbox.style.position = 'absolute';
     lightbox.style.top = `${popupTop}px`;
@@ -2418,13 +2335,11 @@ function openSaleLightbox(modelIndex, imageIndex, triggerImage) {
     lightbox.style.right = '0';
     lightbox.style.bottom = 'auto';
     lightbox.style.height = `${popupHeight}px`;
-    lightbox.style.minHeight = '650px';
+    lightbox.style.minHeight = '0';
   }
 
   lightbox.classList.add('open');
   lightbox.setAttribute('aria-hidden', 'false');
-  document.body.classList.add('sale-lightbox-open');
-  document.documentElement.classList.add('sale-lightbox-open');
 }
 
 function updateSaleLightbox() {
@@ -2490,14 +2405,10 @@ function closeSaleLightbox() {
 
   lightbox.classList.remove('open');
   lightbox.setAttribute('aria-hidden', 'true');
-  document.body.classList.remove('sale-lightbox-open');
-  document.documentElement.classList.remove('sale-lightbox-open');
 
   if (imageEl) {
     imageEl.src = '';
   }
-
-  window.scrollTo({ top: saleLightboxScrollTop, behavior: 'auto' });
 }
 
 document.getElementById('sale-lightbox-close')
@@ -2518,9 +2429,6 @@ document.getElementById('sale-lightbox')
       closeSaleLightbox();
     }
   });
-
-document.addEventListener('wheel', blockSaleLightboxScroll, { passive: false });
-document.addEventListener('touchmove', blockSaleLightboxScroll, { passive: false });
 
 document.addEventListener('keydown', event => {
   const lightbox = document.getElementById('sale-lightbox');
@@ -2782,7 +2690,24 @@ function renderSamples() {
     return `<div class="sample-item" data-sample-loading="true">
       <div class="sample-loader" aria-hidden="true">
         <div class="sample-loader-gem">
-          <span class="sample-loader-diamond"></span>
+          <svg class="sample-loader-diamond-svg" viewBox="0 0 48 48" aria-hidden="true">
+            <defs>
+              <linearGradient id="sampleDiamondGradient" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#b3a8f0"/>
+                <stop offset="38%" stop-color="#a8c8f0"/>
+                <stop offset="68%" stop-color="#e5b8df"/>
+                <stop offset="100%" stop-color="#7a6dd4"/>
+              </linearGradient>
+            </defs>
+
+            <path
+              class="sample-loader-diamond-ghost"
+              d="M24 5 L43 24 L24 43 L5 24 Z"/>
+
+            <path
+              class="sample-loader-diamond-line"
+              d="M24 5 L43 24 L24 43 L5 24 Z"/>
+          </svg>
         </div>
         <div class="sample-loader-text">LOADING</div>
       </div>
