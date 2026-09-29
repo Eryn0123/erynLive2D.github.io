@@ -1269,20 +1269,209 @@ to{transform:rotate(405deg);}
 .collab-name{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:5px;}
 .collab-detail{font-size:12px;color:var(--text-muted);line-height:1.6;}
 
-.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-.plan-name{font-size:16px;font-weight:700;color:var(--text-primary);margin-bottom:6px;}
-.plan-price{
-  font-family:'Outfit',sans-serif;font-size:24px;font-weight:700;margin-bottom:6px;
-  background:linear-gradient(135deg,var(--purple-dark),var(--blue-mid));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+.options-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
 }
-.plan-event{font-size:12px;color:var(--blue-mid);margin-bottom:10px;}
-.plan-desc{font-size:13px;color:var(--text-secondary);line-height:1.7;white-space:pre-line;}
-.included-options-card{grid-column:1/-1;}
-.included-title{font-size:14px;font-weight:600;color:var(--text-secondary);margin-bottom:14px;}
-.options-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
-.option-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-secondary);}
-.option-dot{width:6px;height:6px;border-radius:50%;background:var(--purple-light);flex-shrink:0;}
+
+/* 기본 리깅 플랜 카드 */
+.plan-card{
+  position:relative;
+  overflow:hidden;
+}
+
+.plan-card::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:3px;
+  background:linear-gradient(90deg,var(--purple-light),var(--blue-mid),transparent);
+  opacity:.78;
+}
+
+.plan-name{
+  font-size:16px;
+  font-weight:700;
+  color:var(--text-primary);
+  margin-bottom:7px;
+}
+
+.plan-price{
+  font-family:'Outfit',sans-serif;
+  font-size:25px;
+  font-weight:800;
+  margin-bottom:6px;
+  background:linear-gradient(135deg,var(--purple-dark),var(--blue-mid));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.plan-event{
+  display:inline-flex;
+  width:max-content;
+  max-width:100%;
+  margin-bottom:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(168,200,240,.30);
+  background:rgba(168,200,240,.10);
+  font-size:11px;
+  color:#7f8fc3;
+}
+
+.plan-desc{
+  margin-top:2px;
+  padding-top:12px;
+  border-top:1px solid rgba(179,168,240,.14);
+  font-size:13px;
+  color:var(--text-secondary);
+  line-height:1.75;
+  white-space:pre-line;
+}
+
+/* 기본 포함 옵션 */
+.included-options-card{
+  grid-column:1/-1;
+  padding:22px;
+}
+
+.included-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:16px;
+}
+
+.included-title{
+  font-size:15px;
+  font-weight:700;
+  color:var(--text-primary);
+}
+
+.included-subtitle{
+  margin-top:4px;
+  font-size:11.5px;
+  line-height:1.55;
+  color:var(--text-muted);
+}
+
+.included-all-badge{
+  flex-shrink:0;
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid rgba(179,168,240,.28);
+  background:linear-gradient(
+    135deg,
+    rgba(179,168,240,.12),
+    rgba(168,200,240,.10)
+  );
+  font-size:10px;
+  font-weight:700;
+  color:var(--purple-dark);
+}
+
+.included-category-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+
+.included-category{
+  min-width:0;
+  overflow:hidden;
+  border:1px solid rgba(179,168,240,.20);
+  border-radius:14px;
+  background:rgba(255,255,255,.62);
+  box-shadow:0 3px 12px rgba(120,110,190,.06);
+}
+
+.included-category-head{
+  min-height:78px;
+  padding:13px 14px 11px;
+  border-bottom:1px solid rgba(179,168,240,.15);
+  background:linear-gradient(
+    135deg,
+    rgba(179,168,240,.13),
+    rgba(168,200,240,.08)
+  );
+}
+
+.included-category-title-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.included-category-icon{
+  width:23px;
+  height:23px;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:8px;
+  border:1px solid rgba(179,168,240,.28);
+  background:rgba(255,255,255,.72);
+  color:var(--purple-mid);
+  font-size:8px;
+  box-shadow:0 2px 7px rgba(120,110,190,.05);
+}
+
+.included-category-title{
+  font-size:13px;
+  font-weight:700;
+  color:var(--text-primary);
+}
+
+.included-category-desc{
+  margin-top:6px;
+  font-size:10.5px;
+  line-height:1.5;
+  color:var(--text-muted);
+  word-break:keep-all;
+}
+
+.included-option-list{
+  display:flex;
+  flex-direction:column;
+  padding:7px 12px 10px;
+}
+
+.included-option-item{
+  position:relative;
+  display:flex;
+  align-items:flex-start;
+  min-height:38px;
+  padding:10px 6px 9px 20px;
+  border-bottom:1px solid rgba(179,168,240,.11);
+  font-size:11.5px;
+  line-height:1.55;
+  color:var(--text-secondary);
+  word-break:keep-all;
+}
+
+.included-option-item:last-child{
+  border-bottom:none;
+}
+
+.included-option-item::before{
+  content:'◆';
+  position:absolute;
+  left:4px;
+  top:13px;
+  font-size:6px;
+  color:var(--purple-light);
+}
+
+.included-category:hover{
+  border-color:rgba(122,109,212,.30);
+  background:rgba(255,255,255,.78);
+}
 
 .add-options-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
 .add-option-group{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:14px;padding:18px;box-shadow:var(--shadow-sm);}
@@ -1510,20 +1699,7 @@ to{transform:rotate(405deg);}
   min-width:0;
 }
 
-.notice-highlight-badge{
-  display:inline-flex;
-  align-items:center;
-  margin-bottom:5px;
-  padding:2px 7px;
-  border-radius:999px;
-  background:rgba(122,109,212,.11);
-  border:1px solid rgba(122,109,212,.20);
-  font-family:'Outfit','Paperozi',sans-serif;
-  font-size:9px;
-  font-weight:700;
-  letter-spacing:.4px;
-  color:var(--purple-dark);
-}
+
 
 .notice-row.is-highlight .notice-text{
   padding-top:0;
@@ -1772,12 +1948,12 @@ to{transform:rotate(405deg);}
   .slots-btns{flex-direction:row;}
   .options-grid{grid-template-columns:1fr;}
   .included-options-card{grid-column:1;}
+  .included-category-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
   .add-options-grid{grid-template-columns:1fr;}
   .collab-grid{grid-template-columns:repeat(2,1fr);}
   .process-grid{grid-template-columns:repeat(2,1fr);}
   .form-estimate-wrap{grid-template-columns:1fr;}
   .estimate-sticky{position:static;margin-top:20px;}
-  .options-list{grid-template-columns:1fr;}
 }
 @media(max-width:600px){
   :root{--section-gap:48px;}
@@ -1787,6 +1963,8 @@ to{transform:rotate(405deg);}
   .form-grid{grid-template-columns:1fr;}
   .form-group.full{grid-column:1;}
   .sample-grid{grid-template-columns:repeat(2,1fr);}
+  .included-category-grid{grid-template-columns:1fr;}
+  .included-head{align-items:flex-start;flex-direction:column;gap:8px;}
   .nav-actions .btn-secondary{display:none;}
 }
 
@@ -3270,18 +3448,99 @@ function renderCollabs() {
 
 /* ── Base Options ── */
 function renderBaseOptions() {
-  const bo = C.baseOptions||{}, grid = document.getElementById('base-options-grid');
-  (bo.plans||[]).forEach(plan => {
-    const card = document.createElement('div'); card.className = 'glass-card';
-    const ev = plan.eventDiscount?`<div class="plan-event">*현재 ${fmt(plan.eventDiscount)} 이벤트 할인 가능*</div>`:'';
-    card.innerHTML = `<div class="plan-name">${plan.name}</div><div class="plan-price">${fmt(plan.price)}</div>${ev}<div class="plan-desc">${plan.description}</div>`;
+  const bo = C.baseOptions || {};
+  const grid = document.getElementById('base-options-grid');
+  if (!grid) return;
+
+  grid.innerHTML = '';
+
+  (bo.plans || []).forEach(plan => {
+    const card = document.createElement('div');
+    card.className = 'glass-card plan-card';
+
+    const ev = plan.eventDiscount
+      ? `<div class="plan-event">현재 ${fmt(plan.eventDiscount)} 이벤트 할인 가능</div>`
+      : '';
+
+    card.innerHTML = `
+      <div class="plan-name">${plan.name}</div>
+      <div class="plan-price">${fmt(plan.price)}</div>
+      ${ev}
+      <div class="plan-desc">${plan.description}</div>
+    `;
+
     grid.appendChild(card);
   });
-  if ((bo.includedOptions||[]).length) {
-    const card = document.createElement('div'); card.className = 'glass-card included-options-card';
-    card.innerHTML = `<div class="included-title">리깅 옵션 목록</div><div class="options-list">${bo.includedOptions.map(o=>`<div class="option-item"><div class="option-dot"></div>${o}</div>`).join('')}</div>`;
-    grid.appendChild(card);
+
+  let categories = Array.isArray(bo.includedOptions)
+    ? bo.includedOptions
+    : [];
+
+  /* 예전 문자열 배열 구조도 호환 */
+  if (
+    categories.length &&
+    typeof categories[0] === 'string'
+  ) {
+    categories = [
+      {
+        id:'all',
+        title:'기본 포함 옵션',
+        description:'기본 리깅에 포함되는 기능입니다.',
+        items:categories
+      }
+    ];
   }
+
+  if (!categories.length) return;
+
+  const card = document.createElement('div');
+  card.className = 'glass-card included-options-card';
+
+  const categoryHtml = categories.map(category => {
+    const items = Array.isArray(category.items) ? category.items : [];
+
+    return `
+      <div class="included-category">
+        <div class="included-category-head">
+          <div class="included-category-title-row">
+            <span class="included-category-icon">◆</span>
+            <span class="included-category-title">${category.title || ''}</span>
+          </div>
+
+          ${
+            category.description
+              ? `<div class="included-category-desc">${category.description}</div>`
+              : ''
+          }
+        </div>
+
+        <div class="included-option-list">
+          ${items.map(option => `
+            <div class="included-option-item">${option}</div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  card.innerHTML = `
+    <div class="included-head">
+      <div>
+        <div class="included-title">리깅 기본 포함 옵션</div>
+        <div class="included-subtitle">
+          기본 리깅에 아래 기능이 모두 포함됩니다.
+        </div>
+      </div>
+
+      <div class="included-all-badge">기본 포함</div>
+    </div>
+
+    <div class="included-category-grid">
+      ${categoryHtml}
+    </div>
+  `;
+
+  grid.appendChild(card);
 }
 
 /* ── Add Options ── */
@@ -3344,7 +3603,6 @@ function renderNotices() {
           ${
             isHighlight
               ? `<div class="notice-highlight-wrap">
-                   <span class="notice-highlight-badge">IMPORTANT</span>
                    <div class="notice-text">${escapeNoticeText(normalized.text || '')}</div>
                  </div>`
               : `<div class="notice-text">${escapeNoticeText(normalized.text || '')}</div>`
