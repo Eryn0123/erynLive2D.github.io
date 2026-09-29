@@ -149,13 +149,133 @@ section{padding:var(--section-gap) 0;}
 }
 .glass-card:hover{border-color:var(--glass-border-hover);background:var(--glass-bg-hover);box-shadow:var(--shadow-md);}
 
-.hero-top{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;align-items:start;}
-.artist-intro{font-size:13.5px;line-height:1.85;color:var(--text-secondary);white-space:pre-line;}
-.artist-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+.hero-top{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-bottom:18px;
+  align-items:start;
+}
+
+/* ── 작가 소개 ── */
+.artist-card{
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.80) 0%,
+      rgba(249,248,255,.76) 62%,
+      rgba(239,244,255,.72) 100%
+    );
+  border-color:rgba(179,168,240,.30);
+}
+
+.artist-card::before{
+  content:'';
+  position:absolute;
+  width:190px;
+  height:190px;
+  left:-92px;
+  bottom:-112px;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle,
+      rgba(179,168,240,.20) 0%,
+      rgba(168,200,240,.10) 48%,
+      transparent 72%
+    );
+  pointer-events:none;
+}
+
+.artist-card::after{
+  content:'◇';
+  position:absolute;
+  right:25px;
+  bottom:18px;
+  font-family:'Outfit',sans-serif;
+  font-size:48px;
+  font-weight:300;
+  line-height:1;
+  color:rgba(155,144,224,.08);
+  pointer-events:none;
+}
+
+.artist-content{
+  position:relative;
+  z-index:1;
+}
+
+.artist-profile-label{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:12px;
+  padding:4px 9px;
+  border-radius:999px;
+  border:1px solid rgba(179,168,240,.26);
+  background:linear-gradient(
+    135deg,
+    rgba(179,168,240,.12),
+    rgba(168,200,240,.10)
+  );
+  font-family:'Outfit','Paperozi',sans-serif;
+  font-size:9.5px;
+  font-weight:700;
+  letter-spacing:.45px;
+  color:var(--purple-dark);
+}
+
+.artist-profile-label::before{
+  content:'◇';
+  font-size:8px;
+  color:var(--purple-mid);
+}
+
+.artist-intro{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  color:var(--text-secondary);
+}
+
+.artist-intro-main{
+  font-size:14px;
+  font-weight:700;
+  line-height:1.6;
+  color:var(--text-primary);
+}
+
+.artist-intro-line{
+  font-size:12.5px;
+  line-height:1.7;
+  color:var(--text-secondary);
+}
+
+.artist-tags{
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid rgba(179,168,240,.14);
+}
+
 .tag{
-  font-size:12px;color:var(--purple-dark);
-  background:rgba(179,168,240,0.16);border:1px solid rgba(179,168,240,0.32);
-  padding:4px 12px;border-radius:20px;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  min-height:25px;
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid rgba(179,168,240,.28);
+  background:rgba(255,255,255,.56);
+  font-size:10.5px;
+  color:var(--purple-dark);
+  box-shadow:0 2px 7px rgba(120,110,190,.04);
 }
 
 /* ─────────────────────────────────────────
@@ -313,44 +433,119 @@ section{padding:var(--section-gap) 0;}
   align-items:stretch;
 }
 
+#slot-info-card{
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.75),
+      rgba(247,247,255,.72)
+    );
+}
+
+#slot-info-card::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:3px;
+  background:linear-gradient(
+    90deg,
+    var(--purple-light),
+    var(--blue-mid),
+    transparent
+  );
+  opacity:.72;
+}
+
 .slot-info-blocks{
+  overflow:hidden;
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:0;
+  border:1px solid rgba(179,168,240,.20);
+  border-radius:14px;
+  background:rgba(255,255,255,.48);
+  box-shadow:
+    0 3px 12px rgba(120,110,190,.045),
+    0 0 0 1px rgba(255,255,255,.40) inset;
 }
 
 .slot-info-block{
-  background:var(--glass-bg);
-  border:1px solid var(--glass-border);
-  border-radius:14px;
-  padding:18px 20px;
-  display:flex;
-  align-items:flex-start;
-  gap:14px;
-  box-shadow:var(--shadow-sm);
-  transition:all .2s;
+  position:relative;
+  display:grid;
+  grid-template-columns:34px minmax(0,1fr);
+  align-items:center;
+  gap:11px;
+  min-height:66px;
+  padding:13px 15px;
+  background:transparent;
+  border:none;
+  border-bottom:1px solid rgba(179,168,240,.13);
+  border-radius:0;
+  box-shadow:none;
+  transition:background .2s;
+}
+
+.slot-info-block:last-child{
+  border-bottom:none;
 }
 
 .slot-info-block:hover{
-  background:var(--glass-bg-hover);
-  border-color:var(--glass-border-hover);
-  box-shadow:var(--shadow-md);
+  background:
+    linear-gradient(
+      90deg,
+      rgba(179,168,240,.065),
+      rgba(168,200,240,.035)
+    );
+  border-color:rgba(179,168,240,.13);
+  box-shadow:none;
 }
 
 .slot-info-num{
-  font-family:"Outfit",sans-serif;
-  font-size:18px;
+  width:30px;
+  height:30px;
+  min-width:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:9px;
+  border:1px solid rgba(179,168,240,.24);
+  background:linear-gradient(
+    135deg,
+    rgba(179,168,240,.17),
+    rgba(168,200,240,.12)
+  );
+  font-family:'Outfit','Paperozi',sans-serif;
+  font-size:10px;
   font-weight:800;
-  color:var(--purple-light);
-  flex-shrink:0;
-  line-height:1.3;
-  min-width:28px;
+  line-height:1;
+  color:var(--purple-dark);
+  box-shadow:0 2px 7px rgba(122,109,212,.06);
 }
 
 .slot-info-text{
-  font-size:13px;
+  min-width:0;
+  font-size:12px;
+  line-height:1.72;
   color:var(--text-secondary);
-  line-height:1.75;
+  word-break:keep-all;
+}
+
+@media(max-width:600px){
+  .slot-info-block{
+    grid-template-columns:30px minmax(0,1fr);
+    gap:9px;
+    padding:12px;
+  }
+
+  .slot-info-num{
+    width:27px;
+    height:27px;
+    min-width:27px;
+  }
 }
 
 
@@ -2409,10 +2604,14 @@ to{transform:rotate(405deg);}
 
   <section id="hero">
     <div class="hero-top">
-      <div class="glass-card fade-in">
+      <div class="glass-card artist-card fade-in">
         <div class="section-title" style="font-size:17px;margin-bottom:12px;">작가 소개</div>
-        <p class="artist-intro" id="artist-intro"></p>
-        <div class="artist-tags" id="artist-tags"></div>
+
+        <div class="artist-content">
+          <div class="artist-profile-label" id="artist-profile-label"></div>
+          <div class="artist-intro" id="artist-intro"></div>
+          <div class="artist-tags" id="artist-tags"></div>
+        </div>
       </div>
       <div class="glass-card event-card fade-in" id="event-card">
         <div class="section-title" style="font-size:17px;margin-bottom:14px;">이벤트 안내</div>
@@ -2654,11 +2853,34 @@ function init() {
 /* ── Artist ── */
 function renderArtist() {
   const a = C.artist || {};
-  document.getElementById('artist-intro').textContent = a.intro || '';
+
+  const label = document.getElementById('artist-profile-label');
+  if (label) {
+    label.textContent = `${a.name || 'Eryn'} · ${a.title || 'Live2D 리거'}`;
+  }
+
+  const intro = document.getElementById('artist-intro');
+  if (intro) {
+    const lines = String(a.intro || '')
+      .split('\n')
+      .map(line => line.trim())
+      .filter(Boolean);
+
+    intro.innerHTML = lines.map((line, index) =>
+      `<div class="${index === 0 ? 'artist-intro-main' : 'artist-intro-line'}">${line}</div>`
+    ).join('');
+  }
+
   const el = document.getElementById('artist-tags');
-  (a.tags || []).forEach(t => {
-    const s = document.createElement('span'); s.className = 'tag'; s.textContent = t; el.appendChild(s);
-  });
+  if (el) {
+    el.innerHTML = '';
+    (a.tags || []).forEach(t => {
+      const s = document.createElement('span');
+      s.className = 'tag';
+      s.textContent = t;
+      el.appendChild(s);
+    });
+  }
 }
 
 /* ── Event ── */
@@ -2711,7 +2933,7 @@ function renderSlotInfo() {
   ];
   el.innerHTML = notices.map((n, i) =>
     '<div class="slot-info-block">' +
-      '<div class="slot-info-num">' + (i+1) + '.</div>' +
+      '<div class="slot-info-num">' + String(i+1).padStart(2, '0') + '</div>' +
       '<div class="slot-info-text">' + n + '</div>' +
     '</div>'
   ).join('');
