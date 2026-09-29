@@ -149,7 +149,7 @@ section{padding:var(--section-gap) 0;}
 }
 .glass-card:hover{border-color:var(--glass-border-hover);background:var(--glass-bg-hover);box-shadow:var(--shadow-md);}
 
-.hero-top{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
+.hero-top{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;align-items:start;}
 .artist-intro{font-size:13.5px;line-height:1.85;color:var(--text-secondary);white-space:pre-line;}
 .artist-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
 .tag{
@@ -207,7 +207,7 @@ section{padding:var(--section-gap) 0;}
   z-index:1;
   display:flex;
   flex-direction:column;
-  min-height:175px;
+  min-height:0;
 }
 
 .event-promo-top{
@@ -297,51 +297,6 @@ section{padding:var(--section-gap) 0;}
   background-clip:text;
 }
 
-.event-promo-bottom{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:16px;
-  margin-top:auto;
-  padding-top:18px;
-}
-
-.event-title-small{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  font-size:11px;
-  line-height:1.5;
-  color:var(--text-muted);
-}
-
-.event-title-small::before{
-  content:'';
-  width:18px;
-  height:1px;
-  flex-shrink:0;
-  background:linear-gradient(90deg,var(--purple-light),var(--blue-mid));
-}
-
-.event-cta{
-  flex-shrink:0;
-  border:1px solid rgba(122,109,212,.18);
-  border-radius:10px;
-  padding:8px 13px;
-  background:linear-gradient(135deg,var(--purple-light),var(--purple-dark));
-  color:#fff;
-  font-family:'Paperozi','Noto Sans KR',sans-serif;
-  font-size:11px;
-  font-weight:700;
-  cursor:pointer;
-  box-shadow:0 4px 14px rgba(122,109,212,.18);
-  transition:transform .2s,box-shadow .2s;
-}
-
-.event-cta:hover{
-  transform:translateY(-1px);
-  box-shadow:0 6px 18px rgba(122,109,212,.28);
-}
 
 
 /* ─────────────────────────────────────────
@@ -500,7 +455,7 @@ section{padding:var(--section-gap) 0;}
 
 .slot-row{
   display:grid;
-  grid-template-columns:minmax(92px,.8fr) auto minmax(165px,1.25fr);
+  grid-template-columns:minmax(110px,.78fr) minmax(0,1.45fr);
   align-items:center;
   gap:10px;
   min-height:55px;
@@ -539,27 +494,6 @@ section{padding:var(--section-gap) 0;}
   color:var(--text-muted);
 }
 
-.slot-availability{
-  min-width:62px;
-  padding:4px 8px;
-  border-radius:999px;
-  text-align:center;
-  font-size:9px;
-  font-weight:700;
-  white-space:nowrap;
-}
-
-.slot-availability.is-open{
-  color:#6d5fc0;
-  background:rgba(179,168,240,.13);
-  border:1px solid rgba(179,168,240,.25);
-}
-
-.slot-availability.is-full{
-  color:#8e8ca9;
-  background:rgba(148,148,188,.08);
-  border:1px solid rgba(148,148,188,.16);
-}
 
 .slot-icons{
   display:grid;
@@ -651,15 +585,13 @@ section{padding:var(--section-gap) 0;}
   .event-benefit{font-size:31px;}
   .event-promo-top{align-items:flex-start;}
   .event-meta-pills{max-width:58%;}
-  .event-promo-bottom{align-items:flex-start;flex-direction:column;}
-  .event-cta{width:100%;}
 
   .slots-overview{align-items:flex-start;flex-direction:column;}
   .slot-row{
-    grid-template-columns:1fr auto;
+    grid-template-columns:1fr;
   }
   .slot-icons{
-    grid-column:1/-1;
+    grid-column:1;
   }
   .slots-btns{
     grid-template-columns:1fr;
@@ -2436,7 +2368,6 @@ to{transform:rotate(405deg);}
   
 .event-benefit,
 .event-service,
-.event-title-small,
 .showcase-caption-main,
 .all-cat-label,
 .collab-name,
@@ -2501,13 +2432,7 @@ to{transform:rotate(405deg);}
           <div class="event-service" id="event-service"></div>
           <div class="event-benefit" id="event-benefit"></div>
 
-          <div class="event-promo-bottom">
-            <div class="event-title-small" id="event-title"></div>
-            <button class="event-cta" type="button"
-              onclick="scrollToSiteSection('form')">
-              견적 문의하기 →
-            </button>
-          </div>
+
         </div>
       </div>
     </div>
@@ -2765,7 +2690,6 @@ function renderEvent() {
       : `${ev.endDate}까지`;
   }
 
-  document.getElementById('event-title').textContent = ev.title || '';
   document.getElementById('event-badge').textContent = ev.badge || '';
   document.getElementById('event-service').textContent = service;
   document.getElementById('event-benefit').textContent = benefit;
@@ -2818,11 +2742,6 @@ function renderSlots() {
     const emptyCount = slots.filter(sl => sl.type === 'empty').length;
     totalEmpty += emptyCount;
 
-    const availabilityText =
-      emptyCount > 0
-        ? `${emptyCount}자리 가능`
-        : '예약 마감';
-
     const row = document.createElement('div');
     row.className = 'slot-row';
 
@@ -2831,10 +2750,6 @@ function renderSlots() {
         <span class="slot-month">${m.month}</span>
         <span class="slot-month-sub">WORK SLOT</span>
       </div>
-
-      <span class="slot-availability ${emptyCount > 0 ? 'is-open' : 'is-full'}">
-        ${availabilityText}
-      </span>
 
       <span class="slot-icons">
         ${slots.map(sl => `
