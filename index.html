@@ -157,68 +157,514 @@ section{padding:var(--section-gap) 0;}
   background:rgba(179,168,240,0.16);border:1px solid rgba(179,168,240,0.32);
   padding:4px 12px;border-radius:20px;
 }
-.event-card .event-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px;}
+
+/* ─────────────────────────────────────────
+   HERO EVENT PROMO
+   ───────────────────────────────────────── */
+.event-card{
+  position:relative;
+  overflow:hidden;
+  min-height:100%;
+  background:
+    linear-gradient(135deg,
+      rgba(250,250,255,.94) 0%,
+      rgba(239,238,253,.90) 48%,
+      rgba(236,246,255,.88) 100%);
+  border-color:rgba(179,168,240,.34);
+}
+
+.event-card::before{
+  content:'';
+  position:absolute;
+  width:230px;
+  height:230px;
+  right:-80px;
+  top:-105px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle,
+      rgba(179,168,240,.28) 0%,
+      rgba(168,200,240,.14) 46%,
+      transparent 72%);
+  pointer-events:none;
+}
+
+.event-card::after{
+  content:'◇';
+  position:absolute;
+  right:38px;
+  bottom:22px;
+  font-family:'Outfit',sans-serif;
+  font-size:78px;
+  line-height:1;
+  color:rgba(179,168,240,.09);
+  transform:rotate(45deg);
+  pointer-events:none;
+}
+
+.event-promo{
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  min-height:175px;
+}
+
+.event-promo-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:17px;
+}
+
+.event-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:4px 10px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--purple-dark),var(--purple-mid));
+  color:#fff;
+  font-family:'Outfit','Paperozi',sans-serif;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.15px;
+  box-shadow:0 4px 14px rgba(122,109,212,.18);
+}
+
+.event-kicker::before{
+  content:'✦';
+  font-size:8px;
+}
+
+.event-meta-pills{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:6px;
+}
+
+.event-badge,
+.event-date{
+  display:inline-flex;
+  align-items:center;
+  min-height:25px;
+  padding:4px 9px;
+  border-radius:999px;
+  font-size:9.5px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
 .event-badge{
-  font-size:11px;background:linear-gradient(135deg,var(--blue-mid),var(--purple-dark));
-  color:#fff;padding:3px 10px;border-radius:20px;font-weight:600;white-space:nowrap;flex-shrink:0;
-}
-.event-card h3{font-size:30px;font-weight:1000;color:var(--text-primary);margin-bottom:8px;}
-.event-desc {
-   font-size: 20px; font-weight: 700;
-   text-decoration: underline; text-underline-offset: 4px;
-   text-decoration-thickness: 1.5px; letter-spacing: -0.2px;
-   background: linear-gradient(90deg,
-     var(--purple-dark) 0%, var(--blue-mid) 30%,
-     #c8a8f0 50%, var(--blue-mid) 70%,
-     var(--purple-dark) 100%);
-   background-size: 200% auto;
-   -webkit-background-clip: text;
-   -webkit-text-fill-color: transparent;
-   background-clip: text;
-   animation: shimmerText 2.8s linear infinite;
-   text-decoration-color: var(--purple-light);
-}
-@keyframes shimmerText {
-  0%   { background-position: 0% center; }
-  100% { background-position: 200% center; }
+  color:var(--purple-dark);
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(179,168,240,.34);
 }
 
-.hero-bottom{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch;}
-.slots-layout{display:flex;flex-direction:column;height:100%;gap:16px;}
-.slots-months-wrap{flex:1;}
-@media(max-width:900px){.hero-bottom{grid-template-columns:1fr;}}
+.event-date{
+  color:#6879aa;
+  background:rgba(168,200,240,.12);
+  border:1px solid rgba(168,200,240,.30);
+}
 
-.slot-info-blocks{display:flex;flex-direction:column;gap:10px;}
+.event-service{
+  margin-bottom:3px;
+  font-size:13px;
+  font-weight:700;
+  line-height:1.5;
+  color:var(--text-secondary);
+}
+
+.event-benefit{
+  width:max-content;
+  max-width:100%;
+  font-family:'Outfit','Paperozi',sans-serif;
+  font-size:36px;
+  font-weight:800;
+  line-height:1.12;
+  letter-spacing:-1px;
+  background:linear-gradient(
+    90deg,
+    var(--purple-dark) 0%,
+    var(--purple-mid) 32%,
+    var(--blue-mid) 68%,
+    #8f84db 100%
+  );
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.event-promo-bottom{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:16px;
+  margin-top:auto;
+  padding-top:18px;
+}
+
+.event-title-small{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:11px;
+  line-height:1.5;
+  color:var(--text-muted);
+}
+
+.event-title-small::before{
+  content:'';
+  width:18px;
+  height:1px;
+  flex-shrink:0;
+  background:linear-gradient(90deg,var(--purple-light),var(--blue-mid));
+}
+
+.event-cta{
+  flex-shrink:0;
+  border:1px solid rgba(122,109,212,.18);
+  border-radius:10px;
+  padding:8px 13px;
+  background:linear-gradient(135deg,var(--purple-light),var(--purple-dark));
+  color:#fff;
+  font-family:'Paperozi','Noto Sans KR',sans-serif;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(122,109,212,.18);
+  transition:transform .2s,box-shadow .2s;
+}
+
+.event-cta:hover{
+  transform:translateY(-1px);
+  box-shadow:0 6px 18px rgba(122,109,212,.28);
+}
+
+
+/* ─────────────────────────────────────────
+   HERO LOWER GRID / 안내사항
+   ───────────────────────────────────────── */
+.hero-bottom{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  align-items:stretch;
+}
+
+.slot-info-blocks{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
 .slot-info-block{
-  background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:14px;
-  padding:18px 20px;display:flex;align-items:flex-start;gap:14px;
-  box-shadow:var(--shadow-sm);transition:all .2s;
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
+  border-radius:14px;
+  padding:18px 20px;
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  box-shadow:var(--shadow-sm);
+  transition:all .2s;
 }
-.slot-info-block:hover{background:var(--glass-bg-hover);border-color:var(--glass-border-hover);box-shadow:var(--shadow-md);}
-.slot-info-num{
-  font-family:"Outfit",sans-serif;font-size:18px;font-weight:800;
-  color:var(--purple-light);flex-shrink:0;line-height:1.3;min-width:28px;
-}
-.slot-info-text{font-size:13px;color:var(--text-secondary);line-height:1.75;}
 
-.slots-legend{display:flex;gap:16px;margin-bottom:14px;}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);}
-.legend-dot{width:10px;height:10px;border-radius:50%;}
-.dot-empty{border:2px solid var(--purple-light);background:transparent;}
-.dot-done{background:var(--purple-light);}
-.slot-rows{display:flex;flex-direction:column;gap:8px;}
-.slot-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:12px 18px;border-radius:12px;gap:20px;
-  background:rgba(179,168,240,0.08);border:1px solid rgba(179,168,240,0.18);transition:all .2s;
+.slot-info-block:hover{
+  background:var(--glass-bg-hover);
+  border-color:var(--glass-border-hover);
+  box-shadow:var(--shadow-md);
 }
-.slot-row:hover{background:rgba(179,168,240,0.18);}
-.slot-month{font-size:14px;font-weight:600;color:var(--text-primary);}
-.slot-icons{display:flex;gap:8px;}
-.slot-icon{font-size:16px;color:var(--purple-light);}
-.slots-footer-notice{font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6;}
-.slots-btns{display:flex;flex-direction:column;gap:10px;}
-.slots-btns .btn-primary,.slots-btns .btn-secondary{white-space:nowrap;font-size:13px;padding:10px 16px;text-align:center;}
+
+.slot-info-num{
+  font-family:"Outfit",sans-serif;
+  font-size:18px;
+  font-weight:800;
+  color:var(--purple-light);
+  flex-shrink:0;
+  line-height:1.3;
+  min-width:28px;
+}
+
+.slot-info-text{
+  font-size:13px;
+  color:var(--text-secondary);
+  line-height:1.75;
+}
+
+
+/* ─────────────────────────────────────────
+   WORK SLOTS
+   ───────────────────────────────────────── */
+#slots-card{
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(145deg,
+      rgba(255,255,255,.73),
+      rgba(246,246,255,.72));
+}
+
+#slots-card::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:3px;
+  background:linear-gradient(90deg,var(--purple-light),var(--blue-mid),transparent);
+  opacity:.78;
+}
+
+.slots-layout{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  gap:14px;
+}
+
+.slots-months-wrap{
+  flex:1;
+}
+
+.slots-overview{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.slots-legend{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:0;
+}
+
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:10.5px;
+  color:var(--text-muted);
+}
+
+.legend-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  flex-shrink:0;
+}
+
+.dot-empty{
+  background:
+    radial-gradient(circle at 35% 30%,#fff 0%,#fff 20%,#ece8fa 52%,#c8c0ec 100%);
+  border:1px solid rgba(179,168,240,.28);
+  box-shadow:0 1px 4px rgba(120,110,190,.10);
+}
+
+.dot-done{
+  border:none;
+  background:
+    radial-gradient(circle at 35% 30%,#bfaeff 0%,#927be1 48%,#6f58bc 100%);
+  box-shadow:0 2px 6px rgba(111,88,188,.20);
+}
+
+.slots-summary{
+  flex-shrink:0;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:4px 9px;
+  border-radius:999px;
+  background:rgba(179,168,240,.10);
+  border:1px solid rgba(179,168,240,.22);
+  font-size:9.5px;
+  font-weight:700;
+  color:var(--purple-dark);
+}
+
+.slots-summary strong{
+  font-family:'Outfit','Paperozi',sans-serif;
+  font-size:11px;
+}
+
+.slot-rows{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.slot-row{
+  display:grid;
+  grid-template-columns:minmax(92px,.8fr) auto minmax(165px,1.25fr);
+  align-items:center;
+  gap:10px;
+  min-height:55px;
+  padding:9px 12px 9px 14px;
+  border-radius:13px;
+  background:rgba(255,255,255,.58);
+  border:1px solid rgba(179,168,240,.18);
+  box-shadow:0 2px 9px rgba(120,110,190,.045);
+  transition:all .2s;
+}
+
+.slot-row:hover{
+  transform:translateY(-1px);
+  background:rgba(255,255,255,.82);
+  border-color:rgba(122,109,212,.28);
+  box-shadow:0 5px 14px rgba(120,110,190,.08);
+}
+
+.slot-month-wrap{
+  min-width:0;
+}
+
+.slot-month{
+  display:block;
+  font-family:'Outfit','Paperozi',sans-serif;
+  font-size:14px;
+  font-weight:800;
+  color:var(--text-primary);
+}
+
+.slot-month-sub{
+  display:block;
+  margin-top:1px;
+  font-size:8.5px;
+  letter-spacing:.5px;
+  color:var(--text-muted);
+}
+
+.slot-availability{
+  min-width:62px;
+  padding:4px 8px;
+  border-radius:999px;
+  text-align:center;
+  font-size:9px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+.slot-availability.is-open{
+  color:#6d5fc0;
+  background:rgba(179,168,240,.13);
+  border:1px solid rgba(179,168,240,.25);
+}
+
+.slot-availability.is-full{
+  color:#8e8ca9;
+  background:rgba(148,148,188,.08);
+  border:1px solid rgba(148,148,188,.16);
+}
+
+.slot-icons{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:6px;
+}
+
+.slot-chip{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  min-height:29px;
+  padding:5px 7px;
+  border-radius:9px;
+  font-size:9px;
+  font-weight:600;
+  white-space:nowrap;
+}
+
+.slot-chip::before{
+  content:'';
+  width:7px;
+  height:7px;
+  flex-shrink:0;
+  border-radius:50%;
+}
+
+.slot-chip.is-empty{
+  color:#665ca2;
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(179,168,240,.22);
+}
+
+.slot-chip.is-empty::before{
+  background:
+    radial-gradient(circle at 35% 30%,#fff 0%,#fff 20%,#ece8fa 52%,#c8c0ec 100%);
+  border:1px solid rgba(179,168,240,.24);
+}
+
+.slot-chip.is-done{
+  color:#fff;
+  background:linear-gradient(135deg,#a99ae9,#806bd0);
+  border:1px solid rgba(122,109,212,.16);
+  box-shadow:0 2px 7px rgba(122,109,212,.12);
+}
+
+.slot-chip.is-done::before{
+  background:rgba(255,255,255,.80);
+}
+
+.slots-footer-notice{
+  margin-top:10px;
+  padding:8px 10px;
+  border-radius:9px;
+  background:rgba(168,200,240,.07);
+  border:1px solid rgba(168,200,240,.15);
+  font-size:10.5px;
+  line-height:1.55;
+  color:var(--text-muted);
+}
+
+.slots-footer-notice::before{
+  content:'✦';
+  margin-right:5px;
+  color:var(--purple-light);
+}
+
+.slots-btns{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.slots-btns .btn-primary,
+.slots-btns .btn-secondary{
+  white-space:nowrap;
+  font-size:11px;
+  padding:9px 11px;
+  text-align:center;
+}
+
+@media(max-width:900px){
+  .hero-bottom{grid-template-columns:1fr;}
+}
+
+@media(max-width:600px){
+  .event-benefit{font-size:31px;}
+  .event-promo-top{align-items:flex-start;}
+  .event-meta-pills{max-width:58%;}
+  .event-promo-bottom{align-items:flex-start;flex-direction:column;}
+  .event-cta{width:100%;}
+
+  .slots-overview{align-items:flex-start;flex-direction:column;}
+  .slot-row{
+    grid-template-columns:1fr auto;
+  }
+  .slot-icons{
+    grid-column:1/-1;
+  }
+  .slots-btns{
+    grid-template-columns:1fr;
+  }
+}
 
 .showcase-slider{position:relative;}
 .showcase-track{overflow:hidden;border-radius:var(--card-radius);box-shadow:var(--shadow-md);}
@@ -1988,8 +2434,9 @@ to{transform:rotate(405deg);}
   font-weight:700;
 }
   
-.event-card h3,
-.event-desc,
+.event-benefit,
+.event-service,
+.event-title-small,
 .showcase-caption-main,
 .all-cat-label,
 .collab-name,
@@ -2039,12 +2486,29 @@ to{transform:rotate(405deg);}
         <div class="artist-tags" id="artist-tags"></div>
       </div>
       <div class="glass-card event-card fade-in" id="event-card">
-        <div class="section-title" style="font-size:17px;margin-bottom:12px;">이벤트 안내</div>
-        <div class="event-header">
-          <h3 id="event-title"></h3>
-          <span class="event-badge" id="event-badge"></span>
+        <div class="section-title" style="font-size:17px;margin-bottom:14px;">이벤트 안내</div>
+
+        <div class="event-promo">
+          <div class="event-promo-top">
+            <span class="event-kicker">EVENT</span>
+
+            <div class="event-meta-pills">
+              <span class="event-badge" id="event-badge"></span>
+              <span class="event-date" id="event-date"></span>
+            </div>
+          </div>
+
+          <div class="event-service" id="event-service"></div>
+          <div class="event-benefit" id="event-benefit"></div>
+
+          <div class="event-promo-bottom">
+            <div class="event-title-small" id="event-title"></div>
+            <button class="event-cta" type="button"
+              onclick="scrollToSiteSection('form')">
+              견적 문의하기 →
+            </button>
+          </div>
         </div>
-        <p class="event-desc" id="event-desc"></p>
       </div>
     </div>
 
@@ -2057,13 +2521,19 @@ to{transform:rotate(405deg);}
         <div class="section-title" style="font-size:17px;margin-bottom:16px;">작업 슬롯</div>
         <div class="slots-layout">
           <div class="slots-months-wrap">
-            <div class="slots-legend">
-              <div class="legend-item">⚪ 빈 슬롯</div>
-              <div class="legend-item">🟣 예약 완료</div>
+            <div class="slots-overview">
+              <div class="slots-legend">
+                <div class="legend-item"><span class="legend-dot dot-empty"></span>빈 슬롯</div>
+                <div class="legend-item"><span class="legend-dot dot-done"></span>예약 완료</div>
+              </div>
+
+              <div class="slots-summary" id="slots-summary"></div>
             </div>
+
             <div class="slot-rows" id="slots-list"></div>
             <p class="slots-footer-notice" id="slots-footer-notice"></p>
           </div>
+
           <div class="slots-btns" style="margin-top:auto;">
             <button class="btn-primary" onclick="scrollToSiteSection('form')">문의 작성하러 가기</button>
             <button class="btn-secondary" onclick="scrollToSiteSection('samples')">리깅 샘플 보러가기</button>
@@ -2271,10 +2741,40 @@ function renderArtist() {
 /* ── Event ── */
 function renderEvent() {
   const ev = C.event || {};
-  if (!ev.enabled) { document.getElementById('event-card').style.display = 'none'; return; }
+  const card = document.getElementById('event-card');
+
+  if (!ev.enabled) {
+    if (card) card.style.display = 'none';
+    return;
+  }
+
+  const desc = ev.description || '';
+
+  const fallbackBenefitMatch = desc.match(/(\d+\s*만원\s*할인)/);
+  const benefit = ev.benefit
+    || (fallbackBenefitMatch ? fallbackBenefitMatch[1] : desc);
+
+  const service = ev.service
+    || desc.replace(benefit, '').trim();
+
+  let dateLabel = '';
+  if (ev.endDate) {
+    const parts = String(ev.endDate).split('-');
+    dateLabel = parts.length === 3
+      ? `${parts[0]}.${parts[1]}.${parts[2]}까지`
+      : `${ev.endDate}까지`;
+  }
+
   document.getElementById('event-title').textContent = ev.title || '';
   document.getElementById('event-badge').textContent = ev.badge || '';
-  document.getElementById('event-desc').textContent = ev.description || '';
+  document.getElementById('event-service').textContent = service;
+  document.getElementById('event-benefit').textContent = benefit;
+
+  const dateEl = document.getElementById('event-date');
+  if (dateEl) {
+    dateEl.textContent = dateLabel;
+    dateEl.style.display = dateLabel ? 'inline-flex' : 'none';
+  }
 }
 
 /* ── 안내사항 블럭 ── */
@@ -2298,15 +2798,65 @@ function renderSlotInfo() {
 /* ── Slots ── */
 function renderSlots() {
   const s = C.slots || {};
-  if (!s.enabled) { document.getElementById('slots-card').style.display = 'none'; return; }
+  const card = document.getElementById('slots-card');
+
+  if (!s.enabled) {
+    if (card) card.style.display = 'none';
+    return;
+  }
+
   const list = document.getElementById('slots-list');
-  (s.months || []).forEach(m => {
-    const row = document.createElement('div'); row.className = 'slot-row';
-    row.innerHTML = `<span class="slot-month">${m.month}</span>
-      <span class="slot-icons">${m.slots.map(sl=>`<span class="slot-icon">${sl.type==='empty'?'⚪':'🟣'}</span>`).join('')}</span>`;
+  if (!list) return;
+
+  list.innerHTML = '';
+
+  const months = s.months || [];
+  let totalEmpty = 0;
+
+  months.forEach(m => {
+    const slots = Array.isArray(m.slots) ? m.slots : [];
+    const emptyCount = slots.filter(sl => sl.type === 'empty').length;
+    totalEmpty += emptyCount;
+
+    const availabilityText =
+      emptyCount > 0
+        ? `${emptyCount}자리 가능`
+        : '예약 마감';
+
+    const row = document.createElement('div');
+    row.className = 'slot-row';
+
+    row.innerHTML = `
+      <div class="slot-month-wrap">
+        <span class="slot-month">${m.month}</span>
+        <span class="slot-month-sub">WORK SLOT</span>
+      </div>
+
+      <span class="slot-availability ${emptyCount > 0 ? 'is-open' : 'is-full'}">
+        ${availabilityText}
+      </span>
+
+      <span class="slot-icons">
+        ${slots.map(sl => `
+          <span class="slot-chip ${sl.type === 'empty' ? 'is-empty' : 'is-done'}">
+            ${sl.type === 'empty' ? '빈 슬롯' : '예약 완료'}
+          </span>
+        `).join('')}
+      </span>
+    `;
+
     list.appendChild(row);
   });
-  document.getElementById('slots-footer-notice').textContent = s.notice || '';
+
+  const summary = document.getElementById('slots-summary');
+  if (summary) {
+    summary.innerHTML = totalEmpty > 0
+      ? `예약 가능 <strong>${totalEmpty}</strong>자리`
+      : `현재 <strong>예약 마감</strong>`;
+  }
+
+  const footer = document.getElementById('slots-footer-notice');
+  if (footer) footer.textContent = s.notice || '';
 }
 
 /* ── Showcase ── */

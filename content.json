@@ -19,7 +19,9 @@
     "title": "2026년 리깅 이벤트",
     "badge": "협업 할인 중복 가능",
     "description": "Live2D LD 전신 Full Body 리깅 10만원 할인",
-    "endDate": "2026-12-31"
+    "endDate": "2026-12-31",
+    "service": "Live2D LD 전신 Full Body 리깅",
+    "benefit": "10만원 할인"
   },
   "slots": {
     "enabled": true,
