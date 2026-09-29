@@ -192,13 +192,17 @@ section{padding:var(--section-gap) 0;}
 .event-card::after{
   content:'◇';
   position:absolute;
-  right:38px;
-  bottom:22px;
+  right:34px;
+  bottom:18px;
   font-family:'Outfit',sans-serif;
-  font-size:78px;
+  font-size:72px;
+  font-weight:300;
   line-height:1;
-  color:rgba(179,168,240,.09);
-  transform:rotate(45deg);
+  color:rgba(155,144,224,.12);
+  transform:none;
+  text-shadow:
+    0 0 14px rgba(179,168,240,.12),
+    0 0 28px rgba(168,200,240,.08);
   pointer-events:none;
 }
 
@@ -249,10 +253,10 @@ section{padding:var(--section-gap) 0;}
 .event-date{
   display:inline-flex;
   align-items:center;
-  min-height:25px;
-  padding:4px 9px;
+  min-height:29px;
+  padding:5px 11px;
   border-radius:999px;
-  font-size:9.5px;
+  font-size:11px;
   font-weight:700;
   white-space:nowrap;
 }
@@ -486,13 +490,7 @@ section{padding:var(--section-gap) 0;}
   color:var(--text-primary);
 }
 
-.slot-month-sub{
-  display:block;
-  margin-top:1px;
-  font-size:8.5px;
-  letter-spacing:.5px;
-  color:var(--text-muted);
-}
+
 
 
 .slot-icons{
@@ -2748,7 +2746,6 @@ function renderSlots() {
     row.innerHTML = `
       <div class="slot-month-wrap">
         <span class="slot-month">${m.month}</span>
-        <span class="slot-month-sub">WORK SLOT</span>
       </div>
 
       <span class="slot-icons">
