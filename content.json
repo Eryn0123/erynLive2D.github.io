@@ -3,7 +3,11 @@
     "name": "Eryn",
     "title": "Live2D 리거",
     "intro": "안녕하세요 Live2D 리거 에린 Eryn 입니다.\n캐릭터의 개성을 살려 자연스럽고 예쁘게 움직이도록 작업하고 있습니다.\n방문해주셔서 감사드립니다!",
-    "tags": ["#말랑한 리깅", "#자연스러운 움직임", "#빠르고 꼼꼼하게"],
+    "tags": [
+      "#말랑한 리깅",
+      "#자연스러운 움직임",
+      "#빠르고 꼼꼼하게"
+    ],
     "socialLinks": {
       "twitter": "#",
       "youtube": "#",
@@ -30,24 +34,42 @@
         "month": "2026-10",
         "status": "available",
         "slots": [
-          { "type": "fullm", "label": "예약 완료" },
-          { "type": "fullm", "label": "예약 완료" }
+          {
+            "type": "fullm",
+            "label": "예약 완료"
+          },
+          {
+            "type": "fullm",
+            "label": "예약 완료"
+          }
         ]
       },
       {
         "month": "2026-11",
         "status": "available",
         "slots": [
-          { "type": "fullm", "label": "예약 완료" },
-          { "type": "empty", "label": "빈 슬롯" }
+          {
+            "type": "fullm",
+            "label": "예약 완료"
+          },
+          {
+            "type": "empty",
+            "label": "빈 슬롯"
+          }
         ]
       },
       {
         "month": "2026-12",
         "status": "available",
         "slots": [
-          { "type": "empty", "label": "빈 슬롯" },
-          { "type": "empty", "label": "빈 슬롯" }
+          {
+            "type": "empty",
+            "label": "빈 슬롯"
+          },
+          {
+            "type": "empty",
+            "label": "빈 슬롯"
+          }
         ]
       }
     ]
@@ -62,7 +84,7 @@
       "illust": "Nae",
       "rig": "ERYN"
     },
-     {
+    {
       "id": 2,
       "title": "요루네 마논님",
       "subtitle": "요루네 마논님 리깅 작업 진행",
@@ -259,60 +281,127 @@
       "id": "free",
       "label": "자유 움직임",
       "samples": [
-        { "src": "images/free_move/fm_4.mp4", "alt": "자유 움직임 샘플 1", "caption": "" },
-        { "src": "images/free_move/fm_5.mp4", "alt": "자유 움직임 샘플 2", "caption": "" },
-        { "src": "images/free_move/fm_2.mp4", "alt": "자유 움직임 샘플 3", "caption": "" },
-        { "src": "images/free_move/fm_3.mp4", "alt": "자유 움직임 샘플 4", "caption": "" },
-        { "src": "images/free_move/fm_1.mp4", "alt": "자유 움직임 샘플 5", "caption": "" }
+        {
+          "src": "images/free_move/fm_4.mp4",
+          "alt": "자유 움직임 샘플 1",
+          "caption": ""
+        },
+        {
+          "src": "images/free_move/fm_5.mp4",
+          "alt": "자유 움직임 샘플 2",
+          "caption": ""
+        },
+        {
+          "src": "images/free_move/fm_2.mp4",
+          "alt": "자유 움직임 샘플 3",
+          "caption": ""
+        },
+        {
+          "src": "images/free_move/fm_3.mp4",
+          "alt": "자유 움직임 샘플 4",
+          "caption": ""
+        },
+        {
+          "src": "images/free_move/fm_1.mp4",
+          "alt": "자유 움직임 샘플 5",
+          "caption": ""
+        }
       ]
     },
     {
       "id": "animal",
       "label": "동물 파츠 움직임",
       "description": "특정 신체 부위 움직임에 따른 움직임 구현이 가능합니다. \nEX) 웃을 때 꼬리/날개 움직임 증가, 눈썹 높낮이에 따른 동물 귀 반응",
-
       "samples": [
-        { "src": "images/animal_parts/ap1.gif", "alt": "동물 파츠 움직임 샘플 1", "caption": "날개 움직임" },
-        { "src": "images/animal_parts/ap2.gif", "alt": "동물 파츠 움직임 샘플 2", "caption": "동물 귀" },
-        { "src": "images/animal_parts/ap3.gif", "alt": "동물 파츠 움직임 샘플 3", "caption": "동물 꼬리" }
-
+        {
+          "src": "images/animal_parts/ap1.gif",
+          "alt": "동물 파츠 움직임 샘플 1",
+          "caption": "날개 움직임"
+        },
+        {
+          "src": "images/animal_parts/ap2.gif",
+          "alt": "동물 파츠 움직임 샘플 2",
+          "caption": "동물 귀"
+        },
+        {
+          "src": "images/animal_parts/ap3.gif",
+          "alt": "동물 파츠 움직임 샘플 3",
+          "caption": "동물 꼬리"
+        }
       ]
     },
     {
       "id": "clothes",
       "label": "옷 상세 움직임",
       "samples": [
-        { "src": "images/clothes_detail/cd_1.mp4", "alt": "옷 상세 움직임 샘플 1", "caption": "리본 움직임" },
-        { "src": "images/clothes_detail/cd_2.mp4", "alt": "옷 상세 움직임 샘플 2", "caption": "치마 움직임" },
-        { "src": "images/clothes_detail/cd_3.mp4", "alt": "옷 상세 움직임 샘플 3", "caption": "옷 장신구 움직임" }
-
+        {
+          "src": "images/clothes_detail/cd_1.mp4",
+          "alt": "옷 상세 움직임 샘플 1",
+          "caption": "리본 움직임"
+        },
+        {
+          "src": "images/clothes_detail/cd_2.mp4",
+          "alt": "옷 상세 움직임 샘플 2",
+          "caption": "치마 움직임"
+        },
+        {
+          "src": "images/clothes_detail/cd_3.mp4",
+          "alt": "옷 상세 움직임 샘플 3",
+          "caption": "옷 장신구 움직임"
+        }
       ]
     },
     {
       "id": "headxyz",
       "label": "머리 XYZ",
       "samples": [
-        { "src": "images/head_xyz/X_1.mp4", "alt": "머리 xyz 샘플 1", "caption": "머리 X" },
-        { "src": "images/head_xyz/Y_1.mp4", "alt": "머리 xyz 샘플 2", "caption": "머리 Y" },
-        { "src": "images/head_xyz/Z_1.mp4", "alt": "머리 xyz 샘플 3", "caption": "머리 Z" }
-
+        {
+          "src": "images/head_xyz/X_1.mp4",
+          "alt": "머리 xyz 샘플 1",
+          "caption": "머리 X"
+        },
+        {
+          "src": "images/head_xyz/Y_1.mp4",
+          "alt": "머리 xyz 샘플 2",
+          "caption": "머리 Y"
+        },
+        {
+          "src": "images/head_xyz/Z_1.mp4",
+          "alt": "머리 xyz 샘플 3",
+          "caption": "머리 Z"
+        }
       ]
     },
     {
       "id": "bodyxyz",
       "label": "몸 XYZ",
       "samples": [
-        { "src": "images/body_xyz/X_1.mp4", "alt": "몸 xyz 샘플 1", "caption": "몸 X" },
-        { "src": "images/body_xyz/Y_1.mp4", "alt": "몸 xyz 샘플 2", "caption": "몸 Y" },
-        { "src": "images/body_xyz/Z_1.mp4", "alt": "몸 xyz 샘플 3", "caption": "몸 Z" }
-
+        {
+          "src": "images/body_xyz/X_1.mp4",
+          "alt": "몸 xyz 샘플 1",
+          "caption": "몸 X"
+        },
+        {
+          "src": "images/body_xyz/Y_1.mp4",
+          "alt": "몸 xyz 샘플 2",
+          "caption": "몸 Y"
+        },
+        {
+          "src": "images/body_xyz/Z_1.mp4",
+          "alt": "몸 xyz 샘플 3",
+          "caption": "몸 Z"
+        }
       ]
     },
     {
       "id": "sd",
       "label": "SD 모델",
       "samples": [
-        { "src": "images/sd_move/sd_1.mp4", "alt": "SD 모델 샘플 1", "caption": "" }
+        {
+          "src": "images/sd_move/sd_1.mp4",
+          "alt": "SD 모델 샘플 1",
+          "caption": ""
+        }
       ]
     }
   ],
@@ -415,73 +504,290 @@
   },
   "additionalOptions": {
     "optionAdd": [
-      { "id": "hair_simple", "name": "헤어 [단순] 추가", "price": 80000 },
-      { "id": "hair_complex", "name": "헤어 [복잡] 추가", "price": 120000 },
-      { "id": "outfit_simple", "name": "의상 [단순] 추가", "price": 120000 },
-      { "id": "outfit_complex", "name": "의상 [복잡] 추가", "price": 160000 }
+      {
+        "id": "hair_simple",
+        "name": "헤어 [단순] 추가",
+        "price": 80000
+      },
+      {
+        "id": "hair_complex",
+        "name": "헤어 [복잡] 추가",
+        "price": 120000
+      },
+      {
+        "id": "outfit_simple",
+        "name": "의상 [단순] 추가",
+        "price": 120000
+      },
+      {
+        "id": "outfit_complex",
+        "name": "의상 [복잡] 추가",
+        "price": 160000
+      }
     ],
     "expressionPose": [
-      { "id": "expr_single", "name": "표정 [단순] 추가", "price": 10000 },
-      { "id": "expr_anim", "name": "표정 [애니메이션] 추가", "price": 15000 },
-      { "id": "kazikoi", "name": "가치코이 (앞으로 내밀기)", "price": 40000 }
+      {
+        "id": "expr_single",
+        "name": "표정 [단순] 추가",
+        "price": 10000
+      },
+      {
+        "id": "expr_anim",
+        "name": "표정 [애니메이션] 추가",
+        "price": 15000
+      },
+      {
+        "id": "kazikoi",
+        "name": "가치코이 (앞으로 내밀기)",
+        "price": 40000
+      }
     ],
     "iosPhysics": [
-      { "id": "blowing", "name": "볼빵빵", "price": 10000 },
-      { "id": "tongue", "name": "혀 메롱", "price": 10000 },
-      { "id": "mouth_x", "name": "입 X", "price": 10000 },
-      { "id": "vbridger", "name": "VBridger", "price": 60000 }
+      {
+        "id": "blowing",
+        "name": "볼빵빵",
+        "price": 10000
+      },
+      {
+        "id": "tongue",
+        "name": "혀 메롱",
+        "price": 10000
+      },
+      {
+        "id": "mouth_x",
+        "name": "입 X",
+        "price": 10000
+      },
+      {
+        "id": "vbridger",
+        "name": "VBridger",
+        "price": 60000
+      }
     ],
     "partsAdd": [
-      { "id": "arm_simple", "name": "팔 [단순] 파츠", "price": 20000 },
-      { "id": "arm_complex", "name": "팔 [복잡] 파츠 (게임기 등)", "price": 50000 },
-      { "id": "item", "name": "소품 (인형, 가방 등)", "price": 50000 }
+      {
+        "id": "arm_simple",
+        "name": "팔 [단순] 파츠",
+        "price": 20000
+      },
+      {
+        "id": "arm_complex",
+        "name": "팔 [복잡] 파츠 (게임기 등)",
+        "price": 50000
+      },
+      {
+        "id": "item",
+        "name": "소품 (인형, 가방 등)",
+        "price": 50000
+      }
     ],
     "animalParts": [
-      { "id": "ear_tail", "name": "동물 귀+꼬리", "price": 50000 },
-      { "id": "wing", "name": "날개", "price": 50000 }
+      {
+        "id": "ear_tail",
+        "name": "동물 귀+꼬리",
+        "price": 50000
+      },
+      {
+        "id": "wing",
+        "name": "날개",
+        "price": 50000
+      }
     ],
     "other": [
-      { "id": "extra_revision", "name": "추가 수정 횟수", "price": 10000 },
-      { "id": "delay_reveal", "name": "작업 60일 이후 공개", "price": 50000 }
+      {
+        "id": "extra_revision",
+        "name": "추가 수정 횟수",
+        "price": 10000
+      },
+      {
+        "id": "delay_reveal",
+        "name": "작업 60일 이후 공개",
+        "price": 50000
+      }
     ]
   },
   "notices": [
     {
       "id": "payment",
       "title": "견적/결제",
-      "content": "• 결제 전 문의 먼저 부탁드립니다.\n• PSD 파일을 첨부해주시면 빠른 견적 확인이 가능하며, 해당 신청을 우선으로 진행합니다.\n• 작업 도중 단순 변심으로 인한 환불은 불가합니다.\n• 분할 결제를 원하실 경우 사전 문의 부탁드립니다.\n• 예약하신 이후 갑작스러운 작업 취소 시 위약금 10%를 지불하셔야 합니다."
+      "summary": "견적 및 결제 전에 확인해주세요.",
+      "items": [
+        {
+          "text": "결제 전 문의 먼저 부탁드립니다.",
+          "highlight": false
+        },
+        {
+          "text": "PSD 파일을 첨부해주시면 빠른 견적 확인이 가능하며, 해당 신청을 우선으로 진행합니다.",
+          "highlight": false
+        },
+        {
+          "text": "작업 도중 단순 변심으로 인한 환불은 불가합니다.",
+          "highlight": false
+        },
+        {
+          "text": "분할 결제를 원하실 경우 사전 문의 부탁드립니다.",
+          "highlight": false
+        },
+        {
+          "text": "예약하신 이후 갑작스러운 작업 취소 시 위약금 10%를 지불하셔야 합니다.",
+          "highlight": false
+        }
+      ]
     },
     {
       "id": "work",
       "title": "작업 안내",
-      "content": "• 작업은 PSD 파일을 전달 받고, 결제 완료된 순서대로 진행됩니다.\n• PSD 파일 확인 후 파츠 분리가 매우 미흡할 경우 일러스트레이터분과 상의가 필요합니다.\n• 캐릭터 일러스트를 담당하신 일러스트레이터분의 닉네임과 관련 링크를 꼭 알려주세요.\n• 작업은 VTube Studio 및 VBridger를 기준으로 제작하고 있습니다.\n• iOS 트래킹을 권장드리며, 웹캠 트래킹은 인식 퀄리티가 떨어질 수 있습니다.\n• 원하시는 움직임이 있으시다면 해당 자료를 첨부해주시면 좋습니다.\n• 완료된 작업은 유튜브/SNS 등 포트폴리오 및 샘플로 사용될 수 있습니다.\n• 작업 비공개 요청은 받고 있지 않습니다. 완료 후 60일 이후로 공개 요청을 할 시에 추가금이 발생할 수 있습니다."
+      "summary": "작업 진행 방식과 트래킹·공개 기준을 안내합니다.",
+      "items": [
+        {
+          "text": "작업은 PSD 파일을 전달 받고, 결제 완료된 순서대로 진행됩니다.",
+          "highlight": false
+        },
+        {
+          "text": "PSD 파일 확인 후 파츠 분리가 매우 미흡할 경우 일러스트레이터분과 상의가 필요합니다.",
+          "highlight": false
+        },
+        {
+          "text": "캐릭터 일러스트를 담당하신 일러스트레이터분의 닉네임과 관련 링크를 꼭 알려주세요.",
+          "highlight": false
+        },
+        {
+          "text": "작업은 VTube Studio 및 VBridger를 기준으로 제작하고 있습니다.",
+          "highlight": false
+        },
+        {
+          "text": "iOS 트래킹을 권장드리며, 웹캠 트래킹은 인식 퀄리티가 떨어질 수 있습니다.",
+          "highlight": false
+        },
+        {
+          "text": "원하시는 움직임이 있으시다면 해당 자료를 첨부해주시면 좋습니다.",
+          "highlight": false
+        },
+        {
+          "text": "완료된 작업은 유튜브/SNS 등 포트폴리오 및 샘플로 사용될 수 있습니다.",
+          "highlight": false
+        },
+        {
+          "text": "작업 비공개 요청은 받고 있지 않습니다. 완료 후 60일 이후로 공개 요청을 할 시에 추가금이 발생할 수 있습니다.",
+          "highlight": false
+        }
+      ]
     },
     {
       "id": "files",
       "title": "파일 전달",
-      "content": "• 작업 완료 후 전달드리는 파일은 .moc3, .json, .png 입니다.\n• VTube Studio 실행용 파일을 zip 압축 형태로 전달해드리기 때문에 바로 사용이 가능합니다.\n• 수정이 가능한 .cmo3 파일은 제공 및 판매하지 않습니다.\n• 작업자의 사전 동의 없이 파일을 역복원하거나 추출, 무단 판매, 2차 수정 및 유포하는 행위는 일절 허용하지 않습니다."
+      "summary": "완료 후 전달되는 파일과 이용 범위를 안내합니다.",
+      "items": [
+        {
+          "text": "작업 완료 후 전달드리는 파일은 .moc3, .json, .png 입니다.",
+          "highlight": false
+        },
+        {
+          "text": "VTube Studio 실행용 파일을 zip 압축 형태로 전달해드리기 때문에 바로 사용이 가능합니다.",
+          "highlight": false
+        },
+        {
+          "text": "수정이 가능한 .cmo3 파일은 제공 및 판매하지 않습니다.",
+          "highlight": false
+        },
+        {
+          "text": "작업자의 사전 동의 없이 파일을 역복원하거나 추출, 무단 판매, 2차 수정 및 유포하는 행위는 일절 허용하지 않습니다.",
+          "highlight": false
+        }
+      ]
     },
     {
       "id": "aftercare",
       "title": "사후 관리",
-      "content": "• 작업이 완료되면 VTube Studio 세팅을 도와드립니다.\n• 추후 모니터링을 통해 리깅 오류 발견 시에는 무료로 수정해드립니다.\n• 리깅 오류를 발견하셨다면 언제든지 문의해주시길 바랍니다.\n• 동일 캐릭터의 추가 리깅(신의상, 파츠 추가 등) 진행 시 곧바로 작업에 들어가며 할인 혜택도 적용됩니다."
+      "summary": "작업 완료 후 지원 및 추가 작업 안내입니다.",
+      "items": [
+        {
+          "text": "작업이 완료되면 VTube Studio 세팅을 도와드립니다.",
+          "highlight": false
+        },
+        {
+          "text": "추후 모니터링을 통해 리깅 오류 발견 시에는 무료로 수정해드립니다.",
+          "highlight": false
+        },
+        {
+          "text": "리깅 오류를 발견하셨다면 언제든지 문의해주시길 바랍니다.",
+          "highlight": false
+        },
+        {
+          "text": "동일 캐릭터의 추가 리깅(신의상, 파츠 추가 등) 진행 시 곧바로 작업에 들어가며 할인 혜택도 적용됩니다.",
+          "highlight": false
+        }
+      ]
     }
   ],
   "workProcess": [
-    { "step": 1, "title": "문의", "items": ["문의 양식 제출"] },
-    { "step": 2, "title": "안내 및 입금", "items": ["견적 안내 및 입금 진행"] },
-    { "step": 3, "title": "얼굴 리깅", "items": ["눈 / 입 / 표정"] },
-    { "step": 4, "title": "머리 리깅", "items": ["머리 XYZ + 머리/머리카락 물리 연산"] },
-    { "step": 5, "title": "1차 컨펌", "items": ["수정 사항 반영"] },
-    { "step": 6, "title": "몸 리깅", "items": ["몸 XYZ + 몸/의상 물리 연산"] },
-    { "step": 7, "title": "2차 컨펌", "items": ["수정 사항 반영"] },
-    { "step": 8, "title": "작업 완성", "items": ["작업 전달 및 세팅 안내"] }
+    {
+      "step": 1,
+      "title": "문의",
+      "items": [
+        "문의 양식 제출"
+      ]
+    },
+    {
+      "step": 2,
+      "title": "안내 및 입금",
+      "items": [
+        "견적 안내 및 입금 진행"
+      ]
+    },
+    {
+      "step": 3,
+      "title": "얼굴 리깅",
+      "items": [
+        "눈 / 입 / 표정"
+      ]
+    },
+    {
+      "step": 4,
+      "title": "머리 리깅",
+      "items": [
+        "머리 XYZ + 머리/머리카락 물리 연산"
+      ]
+    },
+    {
+      "step": 5,
+      "title": "1차 컨펌",
+      "items": [
+        "수정 사항 반영"
+      ]
+    },
+    {
+      "step": 6,
+      "title": "몸 리깅",
+      "items": [
+        "몸 XYZ + 몸/의상 물리 연산"
+      ]
+    },
+    {
+      "step": 7,
+      "title": "2차 컨펌",
+      "items": [
+        "수정 사항 반영"
+      ]
+    },
+    {
+      "step": 8,
+      "title": "작업 완성",
+      "items": [
+        "작업 전달 및 세팅 안내"
+      ]
+    }
   ],
   "formFields": {
     "characterNamePlaceholder": "캐릭터 이름을 적어주세요.",
     "artistNamePlaceholder": "일러스트 작가님 이름/사이트 링크를 적어주세요.",
-    "layerFileOptions": ["YES", "NO"],
-    "revealOptions": ["작업완료 최소 60일 (기본)"],
+    "layerFileOptions": [
+      "YES",
+      "NO"
+    ],
+    "revealOptions": [
+      "작업완료 최소 60일 (기본)"
+    ],
     "contactPlaceholder": "추가 문의 사항을 적어주세요.",
     "reservationNoticePlaceholder": "예상 견적을 복사하시고 문의글에 붙여넣기를 해주세요!"
   }

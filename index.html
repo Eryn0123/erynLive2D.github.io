@@ -1294,20 +1294,282 @@ to{transform:rotate(405deg);}
 .add-option-name{color:var(--text-secondary);}
 .add-option-price{color:var(--purple-dark);font-weight:600;font-family:'Outfit',sans-serif;}
 
-.notice-list{display:flex;flex-direction:column;gap:10px;}
-.notice-item{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm);}
-.notice-header{
-  width:100%;display:flex;justify-content:space-between;align-items:center;
-  padding:16px 20px;background:none;border:none;color:var(--text-primary);
-  font-size:15px;font-weight:600;cursor:pointer;text-align:left;
-  font-family:'Paperozi','Noto Sans KR',sans-serif;transition:background .2s;
+/* ─────────────────────────────────────────
+   공지사항
+   JSON에서 각 항목의 "highlight": true 로 중요 표시 가능
+   ───────────────────────────────────────── */
+.notice-list{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
 }
-.notice-header:hover{background:rgba(179,168,240,0.07);}
-.notice-chevron{transition:transform .3s;color:var(--text-muted);font-size:12px;}
-.notice-item.open .notice-chevron{transform:rotate(180deg);}
-.notice-body{display:none;padding:0 20px 18px;}
-.notice-item.open .notice-body{display:block;}
-.notice-content{font-size:13px;color:var(--text-secondary);line-height:1.9;white-space:pre-line;}
+
+.notice-item{
+  position:relative;
+  overflow:hidden;
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(179,168,240,.28);
+  border-radius:16px;
+  box-shadow:0 4px 18px rgba(120,110,190,.08);
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+
+.notice-item:hover{
+  border-color:rgba(122,109,212,.34);
+  box-shadow:0 6px 22px rgba(120,110,190,.12);
+}
+
+.notice-header{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:17px 18px;
+  background:transparent;
+  border:none;
+  color:var(--text-primary);
+  cursor:pointer;
+  text-align:left;
+  font-family:'Paperozi','Noto Sans KR',sans-serif;
+  transition:background .2s;
+}
+
+.notice-header:hover{
+  background:linear-gradient(
+    90deg,
+    rgba(179,168,240,.07),
+    rgba(168,200,240,.04)
+  );
+}
+
+.notice-header-left{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.notice-header-icon{
+  width:32px;
+  height:32px;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  color:var(--purple-dark);
+  background:linear-gradient(
+    135deg,
+    rgba(179,168,240,.18),
+    rgba(168,200,240,.16)
+  );
+  border:1px solid rgba(179,168,240,.28);
+  font-size:11px;
+}
+
+.notice-header-text{
+  min-width:0;
+}
+
+.notice-title{
+  font-size:15px;
+  font-weight:700;
+  color:var(--text-primary);
+  line-height:1.35;
+}
+
+.notice-summary{
+  margin-top:3px;
+  font-size:11px;
+  font-weight:400;
+  line-height:1.5;
+  color:var(--text-muted);
+}
+
+.notice-toggle{
+  flex-shrink:0;
+  width:30px;
+  height:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  border:1px solid rgba(179,168,240,.28);
+  background:rgba(255,255,255,.72);
+  color:var(--purple-mid);
+  box-shadow:0 2px 8px rgba(120,110,190,.06);
+  transition:all .25s ease;
+}
+
+.notice-header:hover .notice-toggle{
+  border-color:rgba(122,109,212,.38);
+  background:#fff;
+}
+
+.notice-chevron{
+  font-size:11px;
+  line-height:1;
+  transition:transform .3s ease;
+}
+
+.notice-item.open .notice-toggle{
+  background:rgba(179,168,240,.13);
+}
+
+.notice-item.open .notice-chevron{
+  transform:rotate(180deg);
+}
+
+.notice-body{
+  display:none;
+  padding:0 18px 18px;
+}
+
+.notice-item.open .notice-body{
+  display:block;
+  animation:noticeBodyIn .22s ease both;
+}
+
+.notice-content{
+  overflow:hidden;
+  border:1px solid rgba(179,168,240,.18);
+  border-radius:13px;
+  background:rgba(250,250,255,.62);
+}
+
+.notice-row{
+  position:relative;
+  display:grid;
+  grid-template-columns:38px minmax(0,1fr);
+  gap:10px;
+  align-items:start;
+  padding:12px 14px;
+  border-bottom:1px solid rgba(179,168,240,.13);
+  transition:background .2s,border-color .2s;
+}
+
+.notice-row:last-child{
+  border-bottom:none;
+}
+
+.notice-row:hover{
+  background:rgba(179,168,240,.045);
+}
+
+.notice-num{
+  width:28px;
+  height:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:9px;
+  background:rgba(179,168,240,.11);
+  border:1px solid rgba(179,168,240,.20);
+  font-family:'Outfit','Paperozi',sans-serif;
+  font-size:10px;
+  font-weight:700;
+  color:var(--purple-mid);
+}
+
+.notice-text{
+  min-width:0;
+  padding-top:4px;
+  font-size:12.5px;
+  line-height:1.72;
+  color:var(--text-secondary);
+  word-break:keep-all;
+}
+
+/* JSON에서 highlight:true 로 지정한 항목 */
+.notice-row.is-highlight{
+  margin:7px;
+  padding:11px 12px;
+  border:1px solid rgba(155,144,224,.32);
+  border-radius:11px;
+  background:linear-gradient(
+    135deg,
+    rgba(179,168,240,.15),
+    rgba(168,200,240,.10)
+  );
+  box-shadow:0 3px 12px rgba(122,109,212,.07);
+}
+
+.notice-row.is-highlight + .notice-row{
+  border-top:none;
+}
+
+.notice-row.is-highlight .notice-num{
+  background:linear-gradient(135deg,var(--purple-light),var(--purple-dark));
+  border-color:transparent;
+  color:#fff;
+  box-shadow:0 2px 8px rgba(122,109,212,.18);
+}
+
+.notice-highlight-wrap{
+  min-width:0;
+}
+
+.notice-highlight-badge{
+  display:inline-flex;
+  align-items:center;
+  margin-bottom:5px;
+  padding:2px 7px;
+  border-radius:999px;
+  background:rgba(122,109,212,.11);
+  border:1px solid rgba(122,109,212,.20);
+  font-family:'Outfit','Paperozi',sans-serif;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.4px;
+  color:var(--purple-dark);
+}
+
+.notice-row.is-highlight .notice-text{
+  padding-top:0;
+  color:#4d4785;
+  font-weight:600;
+}
+
+@keyframes noticeBodyIn{
+  from{opacity:0;transform:translateY(-4px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+@media(max-width:700px){
+  .notice-header{
+    padding:15px 14px;
+  }
+
+  .notice-header-icon{
+    width:30px;
+    height:30px;
+  }
+
+  .notice-summary{
+    display:none;
+  }
+
+  .notice-body{
+    padding:0 12px 14px;
+  }
+
+  .notice-row{
+    grid-template-columns:32px minmax(0,1fr);
+    gap:8px;
+    padding:11px 10px;
+  }
+
+  .notice-num{
+    width:25px;
+    height:25px;
+    border-radius:8px;
+  }
+
+  .notice-text{
+    font-size:12px;
+  }
+}
 
 .process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
 .process-step{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:14px;padding:18px;transition:all .2s;box-shadow:var(--shadow-sm);}
@@ -3037,13 +3299,90 @@ function renderAddOptions() {
 }
 
 /* ── Notices ── */
+function escapeNoticeText(value='') {
+  return String(value)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+}
+
 function renderNotices() {
   const list = document.getElementById('notice-list');
-  (C.notices||[]).forEach(n => {
-    const item = document.createElement('div'); item.className = 'notice-item';
-    item.innerHTML = `<button class="notice-header"><span>${n.title}</span><span class="notice-chevron">▼</span></button>
-      <div class="notice-body"><div class="notice-content">${n.content}</div></div>`;
-    item.querySelector('.notice-header').onclick = ()=>item.classList.toggle('open');
+  if (!list) return;
+
+  list.innerHTML = '';
+
+  (C.notices||[]).forEach((n, noticeIndex) => {
+    /* 새 JSON 구조(items)를 우선 사용.
+       예전 content 문자열도 그대로 호환됩니다. */
+    let rows = Array.isArray(n.items) ? n.items : [];
+
+    if (!rows.length && n.content) {
+      rows = String(n.content)
+        .split('\n')
+        .map(line => line.trim().replace(/^[•·-]\s*/, ''))
+        .filter(Boolean)
+        .map(text => ({ text, highlight:false }));
+    }
+
+    const item = document.createElement('div');
+    item.className = 'notice-item';
+
+    const rowHtml = rows.map((row, index) => {
+      const normalized =
+        typeof row === 'string'
+          ? { text: row, highlight:false }
+          : row;
+
+      const isHighlight = normalized.highlight === true;
+
+      return `
+        <div class="notice-row${isHighlight ? ' is-highlight' : ''}">
+          <div class="notice-num">${String(index + 1).padStart(2,'0')}</div>
+          ${
+            isHighlight
+              ? `<div class="notice-highlight-wrap">
+                   <span class="notice-highlight-badge">IMPORTANT</span>
+                   <div class="notice-text">${escapeNoticeText(normalized.text || '')}</div>
+                 </div>`
+              : `<div class="notice-text">${escapeNoticeText(normalized.text || '')}</div>`
+          }
+        </div>`;
+    }).join('');
+
+    item.innerHTML = `
+      <button class="notice-header" type="button" aria-expanded="false">
+        <span class="notice-header-left">
+          <span class="notice-header-icon">◇</span>
+          <span class="notice-header-text">
+            <span class="notice-title">${escapeNoticeText(n.title || '')}</span>
+            ${
+              n.summary
+                ? `<span class="notice-summary">${escapeNoticeText(n.summary)}</span>`
+                : ''
+            }
+          </span>
+        </span>
+
+        <span class="notice-toggle" aria-hidden="true">
+          <span class="notice-chevron">▼</span>
+        </span>
+      </button>
+
+      <div class="notice-body">
+        <div class="notice-content">
+          ${rowHtml}
+        </div>
+      </div>`;
+
+    const header = item.querySelector('.notice-header');
+    header.onclick = () => {
+      const isOpen = item.classList.toggle('open');
+      header.setAttribute('aria-expanded', String(isOpen));
+    };
+
     list.appendChild(item);
   });
 }
