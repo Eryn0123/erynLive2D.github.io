@@ -292,9 +292,9 @@
       "id": "headxyz",
       "label": "머리 XYZ",
       "samples": [
-        { "src": "images/head_xyz/headx.gif", "alt": "머리 xyz 샘플 1", "caption": "머리 X" },
-        { "src": "images/head_xyz/heady.gif", "alt": "머리 xyz 샘플 2", "caption": "머리 Y" },
-        { "src": "images/head_xyz/headz.gif", "alt": "머리 xyz 샘플 3", "caption": "머리 Z" }
+        { "src": "images/head_xyz/X_1.mp4", "alt": "머리 xyz 샘플 1", "caption": "머리 X" },
+        { "src": "images/head_xyz/Y_1.mp4", "alt": "머리 xyz 샘플 2", "caption": "머리 Y" },
+        { "src": "images/head_xyz/Z_1.mp4", "alt": "머리 xyz 샘플 3", "caption": "머리 Z" }
 
       ]
     },
@@ -302,9 +302,9 @@
       "id": "bodyxyz",
       "label": "몸 XYZ",
       "samples": [
-        { "src": "images/body_xyz/bodyx.gif", "alt": "몸 xyz 샘플 1", "caption": "몸 X" },
-        { "src": "images/body_xyz/bodyy.gif", "alt": "몸 xyz 샘플 2", "caption": "몸 Y" },
-        { "src": "images/body_xyz/bodyz.gif", "alt": "몸 xyz 샘플 3", "caption": "몸 Z" }
+        { "src": "images/body_xyz/X_1.mp4", "alt": "몸 xyz 샘플 1", "caption": "몸 X" },
+        { "src": "images/body_xyz/Y_1.mp4", "alt": "몸 xyz 샘플 2", "caption": "몸 Y" },
+        { "src": "images/body_xyz/Z_1.mp4", "alt": "몸 xyz 샘플 3", "caption": "몸 Z" }
 
       ]
     },
