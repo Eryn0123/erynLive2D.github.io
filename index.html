@@ -249,6 +249,16 @@ section{padding:var(--section-gap) 0;}
 }
 .slider-btn:hover{background:#fff;color:var(--purple-dark);}
 .slider-prev{left:12px;}.slider-next{right:12px;}
+
+/* Showcase 좌우 버튼만 영상 바깥쪽으로 이동 */
+#showcase .slider-prev{left:-36px;}
+#showcase .slider-next{right:-36px;}
+
+@media(max-width:800px){
+  /* 작은 화면에서는 잘리지 않도록 다시 안쪽으로 배치 */
+  #showcase .slider-prev{left:10px;}
+  #showcase .slider-next{right:10px;}
+}
 .slider-dots{display:flex;justify-content:center;gap:8px;margin-top:14px;}
 .slider-dot{
   width:8px;height:8px;border-radius:50%;
@@ -612,8 +622,8 @@ section{padding:var(--section-gap) 0;}
   background:#fff;
   transform:translateY(-50%) scale(1.05);
 }
-.sale-model-outer-prev{left:-14px;}
-.sale-model-outer-next{right:-14px;}
+.sale-model-outer-prev{left:-36px;}
+.sale-model-outer-next{right:-36px;}
 .sale-model-dots{
   display:flex;
   justify-content:center;
