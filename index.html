@@ -195,18 +195,7 @@ section{padding:var(--section-gap) 0;}
   pointer-events:none;
 }
 
-.artist-card::after{
-  content:'◇';
-  position:absolute;
-  right:25px;
-  bottom:18px;
-  font-family:'Outfit',sans-serif;
-  font-size:48px;
-  font-weight:300;
-  line-height:1;
-  color:rgba(155,144,224,.08);
-  pointer-events:none;
-}
+
 
 .artist-content{
   position:relative;
@@ -318,22 +307,7 @@ section{padding:var(--section-gap) 0;}
   pointer-events:none;
 }
 
-.event-card::after{
-  content:'◇';
-  position:absolute;
-  right:34px;
-  bottom:18px;
-  font-family:'Outfit',sans-serif;
-  font-size:72px;
-  font-weight:300;
-  line-height:1;
-  color:rgba(155,144,224,.12);
-  transform:none;
-  text-shadow:
-    0 0 14px rgba(179,168,240,.12),
-    0 0 28px rgba(168,200,240,.08);
-  pointer-events:none;
-}
+
 
 .event-promo{
   position:relative;
@@ -492,8 +466,8 @@ section{padding:var(--section-gap) 0;}
   grid-template-columns:34px minmax(0,1fr);
   align-items:center;
   gap:11px;
-  min-height:82px;
-  padding:16px 16px;
+  min-height:64px;
+  padding:13px 16px;
   background:transparent;
   border:none;
   border-bottom:1px solid rgba(179,168,240,.13);
@@ -542,7 +516,7 @@ section{padding:var(--section-gap) 0;}
 .slot-info-text{
   min-width:0;
   font-size:12.5px;
-  line-height:1.78;
+  line-height:1.70;
   color:var(--text-secondary);
   word-break:keep-all;
 }
@@ -551,7 +525,8 @@ section{padding:var(--section-gap) 0;}
   .slot-info-block{
     grid-template-columns:30px minmax(0,1fr);
     gap:9px;
-    padding:12px;
+    min-height:58px;
+    padding:11px 12px;
   }
 
   .slot-info-num{
