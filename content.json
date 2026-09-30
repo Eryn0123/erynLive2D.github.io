@@ -283,6 +283,7 @@
     {
       "id": "free",
       "label": "자유 움직임",
+      "description": "지금까지 작업한 모델의 자유 움직임입니다.",
       "samples": [
         {
           "src": "images/free_move/fm_4.mp4",
@@ -308,28 +309,6 @@
           "src": "images/free_move/fm_1.mp4",
           "alt": "자유 움직임 샘플 5",
           "caption": ""
-        }
-      ]
-    },
-    {
-      "id": "animal",
-      "label": "동물 파츠 움직임",
-      "description": "특정 신체 부위 움직임에 따른 움직임 구현이 가능합니다. \nEX) 웃을 때 꼬리/날개 움직임 증가, 눈썹 높낮이에 따른 동물 귀 반응",
-      "samples": [
-        {
-          "src": "images/animal_parts/ap1.gif",
-          "alt": "동물 파츠 움직임 샘플 1",
-          "caption": "날개 움직임"
-        },
-        {
-          "src": "images/animal_parts/ap2.gif",
-          "alt": "동물 파츠 움직임 샘플 2",
-          "caption": "동물 귀"
-        },
-        {
-          "src": "images/animal_parts/ap3.gif",
-          "alt": "동물 파츠 움직임 샘플 3",
-          "caption": "동물 꼬리"
         }
       ]
     },
