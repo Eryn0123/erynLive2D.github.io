@@ -346,17 +346,17 @@
         {
           "src": "images/clothes_detail/cd1.mp4",
           "alt": "옷 상세 움직임 샘플 1",
-          "caption": ""
+          "caption": "가디건&치마 움직임"
         },
         {
           "src": "images/clothes_detail/cd2.mp4",
           "alt": "옷 상세 움직임 샘플 2",
-          "caption": ""
+          "caption": "옷 악세서리 움직임"
         },
         {
           "src": "images/clothes_detail/cd3.mp4",
           "alt": "옷 상세 움직임 샘플 3",
-          "caption": ""
+          "caption": "리본&치마 움직임"
         }
       ]
     },
