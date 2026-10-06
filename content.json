@@ -286,28 +286,54 @@
       "description": "지금까지 작업한 모델의 자유 움직임입니다.",
       "samples": [
         {
-          "src": "images/free_move/fm_4.mp4",
+          "src": "images/free_move/fm1.mp4",
           "alt": "자유 움직임 샘플 1",
           "caption": ""
         },
         {
-          "src": "images/free_move/fm_5.mp4",
+          "src": "images/free_move/fm2.mp4",
           "alt": "자유 움직임 샘플 2",
           "caption": ""
         },
         {
-          "src": "images/free_move/fm_2.mp4",
+          "src": "images/free_move/fm3.mp4",
           "alt": "자유 움직임 샘플 3",
           "caption": ""
         },
         {
-          "src": "images/free_move/fm_3.mp4",
+          "src": "images/free_move/fm4.mp4",
           "alt": "자유 움직임 샘플 4",
           "caption": ""
         },
         {
-          "src": "images/free_move/fm_1.mp4",
+          "src": "images/free_move/fm5.mp4",
           "alt": "자유 움직임 샘플 5",
+          "caption": ""
+        },
+        {
+          "src": "images/free_move/fm6.mp4",
+          "alt": "자유 움직임 샘플 6",
+          "caption": ""
+        }
+      ]
+    },
+    {
+      "id": "face",
+      "label": "얼굴 표정",
+      "samples": [
+        {
+          "src": "images/face_detail/fd1.mp4",
+          "alt": "얼굴 표정 샘플 1",
+          "caption": ""
+        },
+         {
+          "src": "images/face_detail/fd2.mp4",
+          "alt": "얼굴 표정 샘플 2",
+          "caption": ""
+        },
+        {
+          "src": "images/face_detail/fd3.mp4",
+          "alt": "얼굴 표정 샘플 3",
           "caption": ""
         }
       ]
@@ -317,19 +343,19 @@
       "label": "옷 상세 움직임",
       "samples": [
         {
-          "src": "images/clothes_detail/cd_1.mp4",
+          "src": "images/clothes_detail/cd1.mp4",
           "alt": "옷 상세 움직임 샘플 1",
-          "caption": "리본 움직임"
+          "caption": ""
         },
         {
-          "src": "images/clothes_detail/cd_2.mp4",
+          "src": "images/clothes_detail/cd2.mp4",
           "alt": "옷 상세 움직임 샘플 2",
-          "caption": "치마 움직임"
+          "caption": ""
         },
         {
-          "src": "images/clothes_detail/cd_3.mp4",
+          "src": "images/clothes_detail/cd3.mp4",
           "alt": "옷 상세 움직임 샘플 3",
-          "caption": "옷 장신구 움직임"
+          "caption": ""
         }
       ]
     },
