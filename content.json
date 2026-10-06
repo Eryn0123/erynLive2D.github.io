@@ -320,6 +320,7 @@
     {
       "id": "face",
       "label": "얼굴 표정",
+      "description": "다양한 얼굴 표정 움직임입니다",
       "samples": [
         {
           "src": "images/face_detail/fd1.mp4",
