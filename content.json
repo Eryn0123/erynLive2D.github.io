@@ -320,7 +320,7 @@
     {
       "id": "face",
       "label": "얼굴 표정",
-      "description": "다양한 얼굴 표정 움직임입니다",
+      "description": "ios페이셜&VBridger가 적용된 다양한 얼굴 표정 움직임입니다.",
       "samples": [
         {
           "src": "images/face_detail/fd1.mp4",
@@ -340,8 +340,9 @@
       ]
     },
     {
-      "id": "clothes",
-      "label": "옷 상세 움직임",
+      "id": "phys",
+      "label": "물리 디테일",
+      "description": "움직임에 따른 자연스러운 물리 디테일입니다",
       "samples": [
         {
           "src": "images/clothes_detail/cd1.mp4",
@@ -367,17 +368,17 @@
         {
           "src": "images/body_xyz/X_1.mp4",
           "alt": "몸 xyz 샘플 1",
-          "caption": "몸 X"
+          "caption": "X 움직임"
         },
         {
           "src": "images/body_xyz/Y_1.mp4",
           "alt": "몸 xyz 샘플 2",
-          "caption": "몸 Y"
+          "caption": "Y 움직임"
         },
         {
           "src": "images/body_xyz/Z_1.mp4",
           "alt": "몸 xyz 샘플 3",
-          "caption": "몸 Z"
+          "caption": "Z 움직임"
         }
       ]
     },
