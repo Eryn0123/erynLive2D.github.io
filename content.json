@@ -320,7 +320,7 @@
     {
       "id": "face",
       "label": "얼굴 표정",
-      "description": "ios페이셜&VBridger가 적용된 다양한 얼굴 표정 움직임입니다.",
+      "description": "ios페이셜 & VBridger가 적용된 다양한 얼굴 표정 움직임입니다.",
       "samples": [
         {
           "src": "images/face_detail/fd1.mp4",
@@ -342,7 +342,7 @@
     {
       "id": "phys",
       "label": "물리 디테일",
-      "description": "움직임에 따른 자연스러운 물리 디테일입니다.",
+      "description": "움직임에 따라 자연스럽게 반응하 물리 디테일입니다.",
       "samples": [
         {
           "src": "images/clothes_detail/cd1.mp4",
