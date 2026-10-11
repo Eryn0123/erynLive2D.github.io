@@ -52,8 +52,8 @@
         "status": "available",
         "slots": [
           {
-            "type": "fullm",
-            "label": "예약 완료"
+            "type": "empty",
+            "label": "빈 슬롯"
           },
           {
             "type": "empty",
@@ -66,8 +66,8 @@
         "status": "available",
         "slots": [
           {
-            "type": "empty",
-            "label": "빈 슬롯"
+            "type": "fullm",
+            "label": "예약 완료"
           },
           {
             "type": "empty",
