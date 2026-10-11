@@ -384,12 +384,12 @@
       ]
     },
     {
-      "id": "sd",
-      "label": "SD 모델",
+      "id": "chibi",
+      "label": "Chibi 변환",
       "samples": [
         {
-          "src": "images/sd_move/sd_1.mp4",
-          "alt": "SD 모델 샘플 1",
+          "src": "images/chibi/ch1.mp4",
+          "alt": "chibi 변환 샘플1",
           "caption": ""
         }
       ]
