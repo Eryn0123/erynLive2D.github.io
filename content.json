@@ -390,7 +390,7 @@
     },
     {
       "id": "chibi",
-      "label": "Chibi 변환",
+      "label": "치비(SD) 변환",
       "samples": [
         {
           "src": "images/chibi/ch1.mp4",
@@ -510,7 +510,7 @@
       {
         "id": "basic",
         "title": "기본 기능",
-        "description": "방송에 필요한 기본 토글과 호흡 기능이 포함됩니다.",
+        "description": "기본 의상 ON&OFF 토글과 호흡 기능이 포함됩니다.",
         "items": [
           "기본 호흡",
           "기본 의상/악세서리 ON&OFF 기능"
@@ -556,7 +556,13 @@
         "id": "kazikoi",
         "name": "가치코이 (앞으로 내밀기)",
         "price": 40000
+      },
+      {
+        "id": "chibi",
+        "name": "치비 변환 (SD 변환)",
+        "price": 100000
       }
+      
     ],
     "iosPhysics": [
       {
