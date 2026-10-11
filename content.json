@@ -81,7 +81,7 @@
     {
       "id": 1,
       "title": "나에 작가님 협업 판매 모델",
-      "subtitle": "[일러 90 + 리깅 80] 170만원 판매 중",
+      "subtitle": "[일러 90 + 리깅 90] 180만원 판매 중",
       "videoUrl": "https://www.youtube.com/embed/bGxJeHw--hA",
       "thumbnail": "",
       "illust": "Nae",
@@ -181,7 +181,7 @@
         "badge": "1인 한정 판매",
         "sold": false,
         "illustrationPrice": 900000,
-        "riggingPrice": 800000,
+        "riggingPrice": 900000,
         "description": "나에 작가님과 협업하여 제작한 민트 고양이 소녀 Live2D 모델입니다.",
         "illust": "Nae",
         "rig": "ERYN",
@@ -222,6 +222,11 @@
             "src": "images/sale_models/mint_cat_girl/06_tail.png",
             "alt": "Mint Cat Girl 꼬리 움직임",
             "caption": "꼬리 움직임"
+          },
+          {
+            "src": "images/sale_models/mint_cat_girl/07_chibi.png",
+            "alt": "Mint Cat Girl 치비 변환",
+            "caption": "치비 변환"
           }
         ]
       },
