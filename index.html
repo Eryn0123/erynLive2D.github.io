@@ -2602,6 +2602,28 @@ to{transform:rotate(405deg);}
 @media(max-width:960px){.hero-reimagined .hero-top{grid-template-columns:1fr 1fr;}.hero-video-stage{aspect-ratio:6/5;}.hero-reimagined .hero-bottom{grid-template-columns:1fr 1fr;}}
 @media(max-width:720px){.hero-reimagined .hero-top,.hero-reimagined .hero-bottom{grid-template-columns:1fr;}.hero-video-stage{aspect-ratio:6/5;}.hero-feature{padding:23px;}.hero-inline-event{padding:16px;}}
 
+/* Both rows share precisely the same column grid and gutter.
+   The top and bottom card edges now align as a clean 2×2 layout. */
+@media(min-width:721px){
+  .hero-reimagined .hero-top,
+  .hero-reimagined .hero-bottom{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+    align-items:stretch;
+  }
+  .hero-reimagined .hero-top > .glass-card,
+  .hero-reimagined .hero-bottom > .glass-card{
+    min-width:0;
+    width:100%;
+    height:100%;
+  }
+}
+
+/* Bottom row: notices on the left, available slots on the right. */
+.hero-reimagined #slot-info-card{order:1;}
+.hero-reimagined #slots-card{order:2;}
+
 .section-title {
   font-family:'Outfit','Paperozi','Noto Sans KR',sans-serif;
   font-weight:700;
