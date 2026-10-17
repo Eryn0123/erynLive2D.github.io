@@ -516,7 +516,22 @@
           "기본 의상/악세서리 ON&OFF 기능"
         ]
       }
-    ]
+    ],
+    "planOptionChanges": {
+      "halfbody": {
+        "note": "LD 반신 리깅에는 LD 전신과 동일한 기본 옵션이 포함됩니다."
+      },
+      "sdbody": {
+        "replace": {
+          "입 모양 12점": "입 모양 9점"
+        },
+        "exclude": [
+          "기본 호흡",
+          "기본 의상/악세서리 ON&OFF 기능"
+        ],
+        "note": "SD 전신 리깅에는 기본 호흡 및 기본 의상/악세서리 ON&OFF 기능이 포함되지 않습니다."
+      }
+    }
   },
   "additionalOptions": {
     "optionAdd": [
