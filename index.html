@@ -2018,17 +2018,6 @@ to{transform:rotate(405deg);}
   grid-template-columns:repeat(2,minmax(0,1fr));
 }
 
-.included-plan-note{
-  margin-top:14px;
-  padding:11px 14px;
-  border:1px solid rgba(179,168,240,.22);
-  border-radius:10px;
-  background:rgba(240,237,252,.55);
-  font-size:11.5px;
-  line-height:1.65;
-  color:var(--text-secondary);
-}
-
 .included-category{
   min-width:0;
   overflow:hidden;
@@ -2652,9 +2641,6 @@ to{transform:rotate(405deg);}
 .hero-video-play{position:absolute;z-index:2;top:50%;left:50%;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.75);background:rgba(255,255,255,.83);backdrop-filter:blur(18px);color:#6657ae;border-radius:999px;padding:13px 19px;display:flex;align-items:center;gap:10px;font-family:'Outfit',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.25px;box-shadow:0 12px 40px rgba(65,53,119,.17);cursor:pointer;white-space:nowrap;transition:background .25s,box-shadow .25s,transform .25s;}
 .hero-video-play:hover{background:#fff;box-shadow:0 16px 45px rgba(65,53,119,.24);transform:translate(-50%,-50%) scale(1.06);}
 .hero-play-symbol{display:grid;place-items:center;border-radius:50%;height:28px;width:28px;background:#8c7bdb;color:white;font-size:11px;padding-left:2px;}
-.hero-video-footer{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 8px 4px;font-size:12px;font-weight:700;}
-.hero-video-footer button{border:none;background:none;color:#8475cf;font:inherit;font-size:11px;cursor:pointer;white-space:nowrap;}
-.hero-video-footer button:hover{text-decoration:underline;}
 .hero-reimagined .event-card,.hero-reimagined #slots-card{min-height:0;}
 .hero-reimagined .event-benefit{font-size:33px;}
 .hero-reimagined #slots-card .slot-row{padding-top:7px;padding-bottom:7px;}
@@ -2691,7 +2677,6 @@ to{transform:rotate(405deg);}
 .hero-video-stage video{width:100%;height:100%;position:absolute;inset:0;object-fit:contain;display:block;}
 .hero-video-state{position:absolute;inset:auto 12px 12px;z-index:4;color:#6359a3;background:rgba(255,255,255,.9);border:1px solid rgba(155,144,224,.25);border-radius:10px;padding:10px 13px;font-size:11px;text-align:center;}
 .hero-video-state a{color:#7566ce;}
-.hero-video-footer{margin-top:auto;}
 .hero-reimagined .hero-bottom{grid-template-columns:1fr 1fr;}
 .hero-reimagined #slot-info-card{min-height:0;}
 .hero-reimagined #slot-info-card .slot-info-block{min-height:61px;padding:10px 12px;}
@@ -2948,7 +2933,6 @@ to{transform:rotate(405deg);}
       <div class="glass-card hero-video-card hero-entrance">
         <div class="hero-video-topline"><span><span class="hero-sparkle">✦</span> FREE MOVEMENT SAMPLE</span><span class="hero-video-note">LIVE2D · MOTION</span></div>
         <div class="hero-video-stage" id="hero-video-stage"></div>
-        <div class="hero-video-footer"><span id="hero-video-title">자유 움직임 · 리깅 샘플</span><button onclick="scrollToSiteSection('samples')">리깅 샘플 더 보기 ↗</button></div>
       </div>
     </div>
     <div class="hero-bottom">
@@ -3172,7 +3156,6 @@ function init() {
    Muted + playsinline enables autoplay on supported devices. */
 function initFeaturedShowcase() {
   const stage = document.getElementById('hero-video-stage');
-  const title = document.getElementById('hero-video-title');
   if (!stage) return;
   const group = (C.sampleCategories || []).find(category => category.id === 'free');
   const item = group && Array.isArray(group.samples) ? group.samples[0] : null;
@@ -3180,7 +3163,6 @@ function initFeaturedShowcase() {
     stage.textContent = '자유 움직임 샘플을 준비 중입니다.';
     return;
   }
-  if (title) title.textContent = item.alt || '자유 움직임 · 리깅 샘플';
   const video = document.createElement('video');
   video.src = item.src;
   video.autoplay = true;
@@ -4612,9 +4594,6 @@ function renderBaseOptions() {
         <div class="included-category-grid" data-count="${includedCategories.length}">
           ${categoryHtml}
         </div>
-        ${changes.note
-          ? `<div class="included-plan-note">${escapeNoticeText(changes.note)}</div>`
-          : ''}
       </div>
     `;
   }
