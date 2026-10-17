@@ -1578,18 +1578,18 @@ section{padding:var(--section-gap) 0;}
 }
 .sample-item:hover{border-color:var(--glass-border-hover);transform:translateY(-2px);box-shadow:var(--shadow-md);}
 
-/* 카테고리를 열 때 카드가 차례로 올라옵니다. 흐림 효과는 사용하지 않습니다. */
+/* 카테고리 진입 시에만 은은한 블러가 풀리며 천천히 나타납니다. */
 @keyframes sampleCategoryCardEnter{
-  from{opacity:0;transform:translate3d(0,14px,0) scale(.99);}
-  to{opacity:1;transform:translate3d(0,0,0) scale(1);}
+  from{opacity:0;transform:translate3d(0,8px,0) scale(.995);filter:blur(3px);}
+  to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0);}
 }
 .sample-category.sample-enter .sample-item,
 .sample-category.sample-enter .waiting-block{
-  animation:sampleCategoryCardEnter .68s cubic-bezier(.22,.72,.32,1) backwards;
+  animation:sampleCategoryCardEnter .82s cubic-bezier(.42,0,.58,1) backwards;
 }
 .sample-category.sample-enter > .sample-cat-desc,
 .sample-category.sample-enter > .animal-desc{
-  animation:sampleCategoryCardEnter .50s cubic-bezier(.22,.72,.32,1) backwards;
+  animation:sampleCategoryCardEnter .62s cubic-bezier(.42,0,.58,1) backwards;
 }
 .sample-category.sample-enter .sample-item:nth-child(2){animation-delay:70ms;}
 .sample-category.sample-enter .sample-item:nth-child(3){animation-delay:140ms;}
@@ -1997,12 +1997,12 @@ to{transform:rotate(405deg);}
 }
 
 .included-details-enter{
-  animation:includedDetailsIn .64s cubic-bezier(.22,.72,.32,1) both;
+  animation:includedDetailsIn .82s cubic-bezier(.42,0,.58,1) backwards;
 }
 
 @keyframes includedDetailsIn{
-  from{opacity:0;transform:translate3d(0,10px,0);}
-  to{opacity:1;transform:translate3d(0,0,0);}
+  from{opacity:0;transform:translate3d(0,8px,0);filter:blur(2.5px);}
+  to{opacity:1;transform:translate3d(0,0,0);filter:blur(0);}
 }
 
 .included-head{
@@ -2246,11 +2246,11 @@ to{transform:rotate(405deg);}
   font-family:'Outfit',sans-serif;
 }
 .add-option-details-enter{
-  animation:addOptionDetailsIn .64s cubic-bezier(.22,.72,.32,1) both;
+  animation:addOptionDetailsIn .82s cubic-bezier(.42,0,.58,1) backwards;
 }
 @keyframes addOptionDetailsIn{
-  from{opacity:0;transform:translate3d(0,10px,0);}
-  to{opacity:1;transform:translate3d(0,0,0);}
+  from{opacity:0;transform:translate3d(0,8px,0);filter:blur(2.5px);}
+  to{opacity:1;transform:translate3d(0,0,0);filter:blur(0);}
 }
 @media(hover:hover) and (pointer:fine){
   .add-option-tab:hover{
