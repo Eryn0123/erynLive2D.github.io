@@ -2624,6 +2624,83 @@ to{transform:rotate(405deg);}
 .hero-reimagined #slot-info-card{order:1;}
 .hero-reimagined #slots-card{order:2;}
 
+/* Polished entrance + interactive lavender lighting on the four hero cards. */
+.hero-reimagined .hero-top > .glass-card,
+.hero-reimagined .hero-bottom > .glass-card{
+  position:relative;
+  isolation:isolate;
+  will-change:auto;
+  transition:
+    opacity .9s cubic-bezier(.16,1,.3,1),
+    transform .9s cubic-bezier(.16,1,.3,1),
+    filter .9s cubic-bezier(.16,1,.3,1),
+    box-shadow .46s cubic-bezier(.2,.75,.2,1),
+    border-color .46s ease,
+    background .46s ease;
+}
+.hero-reimagined .hero-top > .fade-in:not(.visible),
+.hero-reimagined .hero-bottom > .fade-in:not(.visible){
+  opacity:0;
+  transform:translate3d(0,38px,0) scale(.975);
+  filter:blur(8px);
+}
+.hero-reimagined .hero-top > .fade-in.visible,
+.hero-reimagined .hero-bottom > .fade-in.visible{
+  opacity:1;
+  transform:translate3d(0,0,0) scale(1);
+  filter:blur(0);
+}
+.hero-reimagined .hero-top > .hero-feature{transition-delay:.06s;}
+.hero-reimagined .hero-top > .hero-video-card{transition-delay:.18s;}
+.hero-reimagined #slot-info-card{transition-delay:.30s;}
+.hero-reimagined #slots-card{transition-delay:.42s;}
+.hero-reimagined .hero-top > .glass-card::after,
+.hero-reimagined .hero-bottom > .glass-card::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:0;
+  border-radius:inherit;
+  pointer-events:none;
+  opacity:0;
+  background:radial-gradient(380px circle at var(--glow-x,50%) var(--glow-y,50%),rgba(179,156,255,.20),rgba(178,191,251,.08) 38%,transparent 72%);
+  transition:opacity .4s ease;
+}
+.hero-reimagined .hero-top > .glass-card > *,
+.hero-reimagined .hero-bottom > .glass-card > *{position:relative;z-index:1;}
+@media(hover:hover) and (pointer:fine){
+  .hero-reimagined .hero-top > .glass-card.visible:hover,
+  .hero-reimagined .hero-bottom > .glass-card.visible:hover{
+    transform:translate3d(0,-7px,0) scale(1.008);
+    border-color:rgba(139,119,224,.64);
+    box-shadow:0 20px 52px rgba(102,87,187,.18),0 0 0 1px rgba(178,153,247,.18);
+  }
+  .hero-reimagined .hero-top > .glass-card:hover::after,
+  .hero-reimagined .hero-bottom > .glass-card:hover::after{opacity:1;}
+  .hero-reimagined .hero-video-card:hover .hero-video-topline{color:#6655ba;}
+  .hero-reimagined .hero-feature-actions .btn-primary:hover,
+  .hero-reimagined #slots-card .btn-primary:hover{
+    background-position:100% 50%;
+    box-shadow:0 9px 25px rgba(122,109,212,.34);
+  }
+}
+.hero-reimagined .hero-feature-actions .btn-primary,
+.hero-reimagined #slots-card .btn-primary{
+  background-size:180% 180%;
+  transition:background-position .5s ease,transform .3s ease,box-shadow .3s ease;
+}
+.hero-reimagined .hero-feature-actions .btn-primary span{display:inline-block;transition:transform .3s ease;}
+.hero-reimagined .hero-feature-actions .btn-primary:hover span{transform:translate(3px,-3px);}
+@media(prefers-reduced-motion:reduce){
+  .hero-reimagined .hero-top > .glass-card,
+  .hero-reimagined .hero-bottom > .glass-card{
+    opacity:1!important;transform:none!important;filter:none!important;
+    transition:none!important;
+  }
+  .hero-reimagined .hero-top > .glass-card::after,
+  .hero-reimagined .hero-bottom > .glass-card::after{display:none!important;}
+}
+
 .section-title {
   font-family:'Outfit','Paperozi','Noto Sans KR',sans-serif;
   font-weight:700;
@@ -2709,8 +2786,8 @@ to{transform:rotate(405deg);}
         <div class="hero-video-footer"><span id="hero-video-title">자유 움직임 · 리깅 샘플</span><button onclick="scrollToSiteSection('samples')">리깅 샘플 더 보기 ↗</button></div>
       </div>
     </div>
-    <div class="hero-bottom fade-in">
-      <div class="glass-card" id="slots-card" style="display:flex;flex-direction:column;">
+    <div class="hero-bottom">
+      <div class="glass-card fade-in" id="slots-card" style="display:flex;flex-direction:column;">
         <div class="section-title" style="font-size:17px;margin-bottom:16px;">작업 슬롯</div>
         <div class="slots-layout">
           <div class="slots-months-wrap">
@@ -2733,7 +2810,7 @@ to{transform:rotate(405deg);}
           </div>
         </div>
       </div>
-      <div class="glass-card" id="slot-info-card">
+      <div class="glass-card fade-in" id="slot-info-card">
         <div class="section-title" style="font-size:17px;margin-bottom:16px;">안내사항</div>
         <div class="slot-info-blocks" id="slot-info-blocks"></div>
       </div>
@@ -2923,7 +3000,36 @@ function init() {
   initFeaturedShowcase();
   renderShowcase(); renderSaleModels(); renderSamples(); initSampleMediaLoading(); initLazySampleVideos(); renderCollabs();
   renderBaseOptions(); renderAddOptions(); renderNotices();
-  renderProcess(); renderForm(); initScrollFade();
+  renderProcess(); renderForm(); initScrollFade(); initHeroCardLighting();
+}
+
+function initHeroCardLighting() {
+  if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches ||
+      window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const cards = document.querySelectorAll(
+    '.hero-reimagined .hero-top > .glass-card, .hero-reimagined .hero-bottom > .glass-card'
+  );
+  cards.forEach(card => {
+    let pendingFrame = 0;
+    let x = 50, y = 50;
+    card.addEventListener('pointermove', event => {
+      const bounds = card.getBoundingClientRect();
+      x = ((event.clientX - bounds.left) / bounds.width) * 100;
+      y = ((event.clientY - bounds.top) / bounds.height) * 100;
+      if (pendingFrame) return;
+      pendingFrame = requestAnimationFrame(() => {
+        card.style.setProperty('--glow-x', x.toFixed(1) + '%');
+        card.style.setProperty('--glow-y', y.toFixed(1) + '%');
+        pendingFrame = 0;
+      });
+    }, {passive:true});
+    card.addEventListener('pointerleave', () => {
+      if (pendingFrame) cancelAnimationFrame(pendingFrame);
+      pendingFrame = 0;
+      card.style.removeProperty('--glow-x');
+      card.style.removeProperty('--glow-y');
+    });
+  });
 }
 
 /* Use the same first free-movement clip as the samples section.
