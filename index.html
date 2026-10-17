@@ -94,9 +94,14 @@ select{
 
 .wrapper{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 24px;}
 section{padding:var(--section-gap) 0;}
+/* 포트폴리오와 안내 영역은 각 쌍을 하나의 흐름으로 읽을 수 있도록 간격을 통일 */
+#showcase{padding-bottom:26px;}
+#showcase + #samples{padding-top:26px;}
 /* 기본/추가 리깅 옵션은 하나의 가격 안내 흐름처럼 조금 더 가깝게 배치 */
 #pricing{padding-bottom:26px;}
 #pricing + #add-options{padding-top:26px;}
+#notices{padding-bottom:26px;}
+#notices + #process{padding-top:26px;}
 
 .nav{
   position:sticky;top:0;z-index:100;
@@ -3025,8 +3030,8 @@ to{transform:rotate(405deg);}
     <div class="nav-logo">ERYN</div>
     <div class="nav-links">
       <a class="nav-link" href="javascript:void(0)" onclick="scrollToSiteSection('showcase')">Showcase</a>
-      <a class="nav-link" href="javascript:void(0)" onclick="scrollToSiteSection('sale-models')">판매 모델</a>
       <a class="nav-link" href="javascript:void(0)" onclick="scrollToSiteSection('samples')">샘플</a>
+      <a class="nav-link" href="javascript:void(0)" onclick="scrollToSiteSection('sale-models')">판매 모델</a>
       <a class="nav-link" href="javascript:void(0)" onclick="scrollToSiteSection('pricing')">가격</a>
       <a class="nav-link" href="javascript:void(0)" onclick="scrollToSiteSection('notices')">공지</a>
       
@@ -3122,6 +3127,13 @@ to{transform:rotate(405deg);}
   </section>
 
 
+  <section id="samples">
+    <div class="section-title fade-in">리깅 작업 샘플</div>
+    <p class="section-desc fade-in">카테고리별로 다양한 리깅 움직임을 확인해보세요.</p>
+    <div class="sample-tabs" id="sample-tabs"></div>
+    <div id="sample-categories"></div>
+  </section>
+
   <section id="sale-models" style="display:none;">
     <div class="section-title fade-in">판매 모델</div>
     <p class="section-desc fade-in" id="sale-model-desc"></p>
@@ -3135,19 +3147,6 @@ to{transform:rotate(405deg);}
     <div class="sale-model-dots" id="sale-model-dots"></div>
   </section>
 
-  <section id="samples">
-    <div class="section-title fade-in">리깅 작업 샘플</div>
-    <p class="section-desc fade-in">카테고리별로 다양한 리깅 움직임을 확인해보세요.</p>
-    <div class="sample-tabs" id="sample-tabs"></div>
-    <div id="sample-categories"></div>
-  </section>
-
-  <section id="collabs">
-    <div class="section-title fade-in">협업 작가</div>
-    <p class="section-desc fade-in">카드를 클릭하면 해당 작가님 페이지로 이동합니다.</p>
-    <div class="collab-grid" id="collab-grid"></div>
-  </section>
-
   <section id="pricing">
     <div class="section-title fade-in">리깅 기본 옵션</div>
     <div class="options-grid fade-in" id="base-options-grid"></div>
@@ -3156,6 +3155,12 @@ to{transform:rotate(405deg);}
   <section id="add-options">
     <div class="section-title fade-in">리깅 추가 옵션</div>
     <div class="add-options-grid fade-in" id="add-options-grid"></div>
+  </section>
+
+  <section id="collabs">
+    <div class="section-title fade-in">협업 작가</div>
+    <p class="section-desc fade-in">카드를 클릭하면 해당 작가님 페이지로 이동합니다.</p>
+    <div class="collab-grid" id="collab-grid"></div>
   </section>
 
   <section id="notices">
@@ -4148,25 +4153,35 @@ document.addEventListener('keydown', event => {
 
 
 
-/* ── 샘플 영상 지연 / 순차 로딩 ──
-   ArtMug에서는 iframe 높이가 매우 길어서 화면 판정만으로는
-   많은 영상이 동시에 보이는 것으로 처리될 수 있습니다.
-   그래서 실제 로딩은 최대 2개씩만 순차 진행합니다. */
+/* ── 샘플 영상: 선택한 카테고리만 지연 로딩 / 재생 ──
+   ArtMug의 긴 iframe에서도 동시 로딩량을 제한합니다. */
 let lazySampleVideoObserver = null;
 const lazySampleVideoQueue = [];
 const lazySampleVideoQueued = new WeakSet();
+const lazySampleVideoIntersections = new WeakMap();
 let lazySampleVideoLoadingCount = 0;
-const LAZY_SAMPLE_VIDEO_MAX_LOADING = 3;
+const LAZY_SAMPLE_VIDEO_MAX_LOADING = 2;
 
 function isLazySampleVideoVisible(video) {
-  return !!video && video.offsetParent !== null;
+  return !!video && !!video.closest('.sample-category.active') &&
+    video.offsetParent !== null;
+}
+
+function syncLazySampleVideoPlayback(video) {
+  if (!video || video.dataset.loaded !== 'true') return;
+
+  const shouldPlay = isLazySampleVideoVisible(video) && !document.hidden &&
+    (!lazySampleVideoObserver || lazySampleVideoIntersections.get(video) === true);
+
+  if (shouldPlay && video.paused) video.play().catch(() => {});
+  else if (!shouldPlay && !video.paused) video.pause();
 }
 
 function queueLazySampleVideo(video) {
-  if (!video || video.dataset.loaded === 'true') {
-    if (video && isLazySampleVideoVisible(video)) {
-      video.play().catch(() => {});
-    }
+  if (!isLazySampleVideoVisible(video)) return;
+
+  if (video.dataset.loaded === 'true') {
+    syncLazySampleVideoPlayback(video);
     return;
   }
 
@@ -4202,7 +4217,10 @@ function pumpLazySampleVideoQueue() {
     lazySampleVideoLoadingCount += 1;
     video.dataset.loading = 'true';
 
+    let settled = false;
     const finishLoading = () => {
+      if (settled) return;
+      settled = true;
       if (video.dataset.loading === 'true') {
         delete video.dataset.loading;
         lazySampleVideoLoadingCount =
@@ -4211,8 +4229,8 @@ function pumpLazySampleVideoQueue() {
 
       lazySampleVideoQueued.delete(video);
 
-      /* 한번 로드가 끝난 영상은 이후 계속 재생 */
-      video.play().catch(() => {});
+      /* 다른 카테고리로 이동한 동안 로딩이 끝나도 재생하지 않습니다. */
+      syncLazySampleVideoPlayback(video);
 
       pumpLazySampleVideoQueue();
     };
@@ -4232,19 +4250,15 @@ function refreshLazySampleVideos() {
   document
     .querySelectorAll('video[data-lazy-video]')
     .forEach(video => {
-      /* 이미 한번 로드된 영상은 화면 밖으로 나가도 계속 재생 */
       if (video.dataset.loaded === 'true') {
-        video.play().catch(() => {});
+        syncLazySampleVideoPlayback(video);
         return;
       }
 
-      /* 아직 로드 전인 영상만 현재 표시 상태를 기준으로 로딩 */
-      if (!isLazySampleVideoVisible(video)) {
-        return;
-      }
+      if (!isLazySampleVideoVisible(video) || document.hidden) return;
 
-      /* observer가 없는 환경에서도 순차 로딩 가능 */
-      if (!lazySampleVideoObserver) {
+      /* 선택된 탭의 화면 안 영상만 로딩 (observer 미지원 시 탭 기준) */
+      if (!lazySampleVideoObserver || lazySampleVideoIntersections.get(video) === true) {
         queueLazySampleVideo(video);
       }
     });
@@ -4261,15 +4275,13 @@ function initLazySampleVideos() {
       entries => {
         entries.forEach(entry => {
           const video = entry.target;
+          lazySampleVideoIntersections.set(video, entry.isIntersecting);
 
-          if (entry.isIntersecting && isLazySampleVideoVisible(video)) {
+          if (entry.isIntersecting && isLazySampleVideoVisible(video) && !document.hidden) {
             queueLazySampleVideo(video);
           }
 
-          /* 이미 로드된 영상은 화면 밖으로 나가도 계속 재생 */
-          if (video.dataset.loaded === 'true') {
-            video.play().catch(() => {});
-          }
+          syncLazySampleVideoPlayback(video);
         });
       },
       {
@@ -4286,6 +4298,9 @@ function initLazySampleVideos() {
 
   /* 현재 활성 탭의 영상만 초기 대상 */
   refreshLazySampleVideos();
+
+  /* 브라우저 탭이 숨겨진 동안은 샘플을 재생하지 않습니다. */
+  document.addEventListener('visibilitychange', refreshLazySampleVideos);
 }
 
 
@@ -4424,66 +4439,46 @@ function renderSamples() {
   }
 */
   function activate(id) {
-    document.querySelectorAll('.sample-tab').forEach(t=>t.classList.remove('active'));
-    document.querySelectorAll('.sample-category').forEach(c=>c.classList.remove('active'));
-    document.querySelector(`.sample-tab[data-id="${id}"]`).classList.add('active');
-    document.getElementById('cat-'+id).classList.add('active');
+    const selectedTab = tabsEl.querySelector(`.sample-tab[data-id="${id}"]`);
+    const selectedCategory = document.getElementById('cat-' + id);
+    if (!selectedTab || !selectedCategory) return;
 
-    /* 숨겨진 탭의 영상은 정지하고,
-       새로 열린 탭의 영상은 필요한 순서대로 불러옵니다. */
+    tabsEl.querySelectorAll('.sample-tab').forEach(tab => {
+      const selected = tab === selectedTab;
+      tab.classList.toggle('active', selected);
+      tab.setAttribute('aria-pressed', String(selected));
+    });
+    catsEl.querySelectorAll('.sample-category').forEach(category => {
+      category.classList.toggle('active', category === selectedCategory);
+    });
+
+    /* 이전 카테고리는 즉시 일시정지하고, 새 카테고리만 로딩합니다. */
+    refreshLazySampleVideos();
     requestAnimationFrame(() => refreshLazySampleVideos());
   }
-  function buildWaitingBlock(mode, showLabel = true) {
-    const labelHtml = showLabel
-      ? `<div class="all-cat-label">대기화면</div>
-         <div class="sample-cat-desc">Live2D를 활용한 대기화면 및 화면전환 연출 샘플입니다.</div>`
-      : `<div class="sample-cat-desc">Live2D를 활용한 대기화면 및 화면전환 연출 샘플입니다.</div>`;
-
+  function buildWaitingBlock() {
     return `
       <div class="all-cat-block waiting-block">
-        ${labelHtml}
+        <div class="sample-cat-desc">Live2D를 활용한 대기화면 및 화면전환 연출 샘플입니다.</div>
 
         <div class="waiting-slider">
           <div class="waiting-track">
-            <div class="waiting-slides" id="waiting-${mode}-slides"></div>
+            <div class="waiting-slides" id="waiting-cat-slides"></div>
           </div>
 
-          <button type="button" class="sale-model-outer-btn sale-model-outer-prev" id="waiting-${mode}-prev" aria-label="이전 대기화면">‹</button>
-          <button type="button" class="sale-model-outer-btn sale-model-outer-next" id="waiting-${mode}-next" aria-label="다음 대기화면">›</button>
+          <button type="button" class="sale-model-outer-btn sale-model-outer-prev" id="waiting-cat-prev" aria-label="이전 대기화면">‹</button>
+          <button type="button" class="sale-model-outer-btn sale-model-outer-next" id="waiting-cat-next" aria-label="다음 대기화면">›</button>
         </div>
 
-        <div class="slider-dots" id="waiting-${mode}-dots"></div>
+        <div class="slider-dots" id="waiting-cat-dots"></div>
       </div>
     `;
   }
-  const allTab = document.createElement('button');
-  allTab.className = 'sample-tab active'; allTab.dataset.id = 'all';
-  allTab.textContent = '전체보기'; allTab.onclick = ()=>activate('all');
-  tabsEl.appendChild(allTab);
-
-  const allDiv = document.createElement('div');
-  allDiv.className = 'sample-category active'; allDiv.id = 'cat-all';
-  
   const waitingItems = C.waitingScreens || [];
-  allDiv.innerHTML =
-    cats.map(cat => {
-      const grid = (cat.samples&&cat.samples.length) ? buildGrid(cat.samples) : '';
-      const desc = cat.description
-        ? (cat.samples&&cat.samples.length
-            ? `<div class="sample-cat-desc">${cat.description}</div>`
-            : `<div class="animal-desc">${cat.description}</div>`)
-        : '';
-
-      return `<div class="all-cat-block">
-        <div class="all-cat-label">${cat.label}</div>
-        ${desc}${grid}
-      </div>`;
-    }).join('')
-    + (waitingItems.length ? buildWaitingBlock('all', true) : '');
-  catsEl.appendChild(allDiv);
 
   cats.forEach(cat => {
     const tab = document.createElement('button');
+    tab.type = 'button';
     tab.className = 'sample-tab'; tab.dataset.id = cat.id;
     tab.textContent = cat.label; tab.onclick = ()=>activate(cat.id);
     tabsEl.appendChild(tab);
@@ -4497,8 +4492,9 @@ function renderSamples() {
     div.innerHTML = html; catsEl.appendChild(div);
   });
 
-    if (waitingItems.length) {
+  if (waitingItems.length) {
     const waitingTab = document.createElement('button');
+    waitingTab.type = 'button';
     waitingTab.className = 'sample-tab';
     waitingTab.dataset.id = 'waiting';
     waitingTab.textContent = '대기화면';
@@ -4508,18 +4504,21 @@ function renderSamples() {
     const waitingDiv = document.createElement('div');
     waitingDiv.className = 'sample-category';
     waitingDiv.id = 'cat-waiting';
-    waitingDiv.innerHTML = buildWaitingBlock('cat', false);
+    waitingDiv.innerHTML = buildWaitingBlock();
 
     catsEl.appendChild(waitingDiv);
 
-    renderWaitingSlides('all');
     renderWaitingSlides('cat');
   }
+
+  /* 가장 먼저 보여줄 샘플은 자유 움직임, 없으면 첫 카테고리입니다. */
+  const initialId = cats.find(cat => cat.id === 'free')?.id ||
+    cats[0]?.id || (waitingItems.length ? 'waiting' : null);
+  if (initialId) activate(initialId);
 }
 
 /* ── Waiting Screen Slides ── */
 const waitingIdxMap = {
-  all: 0,
   cat: 0
 };
 
