@@ -2543,6 +2543,18 @@ to{transform:rotate(405deg);}
 .form-select option{background:#f0f1fb;color:var(--text-primary);}
 .form-textarea{resize:vertical;min-height:80px;}
 
+/* 문의 양식의 리깅 종류는 한 줄 선택형으로 표시합니다. */
+.form-plan-select-wrap{position:relative;min-width:0;}
+.form-plan-select-wrap::after{
+  content:'';position:absolute;right:16px;top:50%;width:8px;height:8px;
+  border-right:2px solid var(--purple-dark);border-bottom:2px solid var(--purple-dark);
+  transform:translateY(-70%) rotate(45deg);pointer-events:none;
+}
+.form-plan-select{
+  width:100%;min-height:41px;padding-right:38px;appearance:none;cursor:pointer;
+}
+.form-plan-select:has(option:checked[value=""]){color:var(--text-muted);}
+
 .form-radio-group{display:flex;gap:8px;flex-wrap:wrap;}
 .form-radio-label{
   display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;
@@ -2578,6 +2590,40 @@ to{transform:rotate(405deg);}
 .form-checkbox-label.checked .form-checkbox-box{background:var(--purple-light);border-color:var(--purple-light);}
 .form-checkbox-label.checked .form-checkbox-box::after{content:'✓';color:#fff;font-size:11px;line-height:1;}
 .form-section-title{font-size:13px;font-weight:600;color:var(--purple-dark);margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid rgba(179,168,240,0.22);}
+.form-section-subtitle{font-size:11px;font-weight:400;color:var(--text-muted);margin-left:8px;}
+.form-addon-accordion{display:flex;flex-direction:column;gap:8px;}
+.form-addon-card{
+  overflow:hidden;border:1px solid rgba(179,168,240,.25);border-radius:12px;
+  background:rgba(255,255,255,.55);transition:border-color .24s,box-shadow .24s;
+}
+.form-addon-card:hover{border-color:rgba(155,144,224,.48);}
+.form-addon-card.is-open{
+  border-color:rgba(155,144,224,.55);box-shadow:0 5px 17px rgba(122,109,212,.08);
+  background:rgba(255,255,255,.77);
+}
+.form-addon-toggle{
+  width:100%;min-height:49px;padding:12px 16px;border:0;background:transparent;
+  display:flex;align-items:center;gap:10px;text-align:left;cursor:pointer;
+  font-family:'Paperozi','Noto Sans KR',sans-serif;font-size:12.5px;
+  font-weight:600;color:var(--text-primary);
+}
+.form-addon-toggle:focus-visible{outline:2px solid var(--purple-mid);outline-offset:-4px;border-radius:11px;}
+.form-addon-name{flex:1;}
+.form-addon-count{
+  border-radius:999px;padding:4px 8px;background:rgba(179,168,240,.17);
+  font-size:10.5px;color:var(--purple-dark);font-weight:700;white-space:nowrap;
+}
+.form-addon-count[hidden]{display:none;}
+.form-addon-chevron{width:16px;font-size:17px;line-height:1;color:var(--purple-mid);transition:transform .28s ease;}
+.form-addon-card.is-open .form-addon-chevron{transform:rotate(180deg);}
+.form-addon-panel{padding:12px 16px 15px;border-top:1px solid rgba(179,168,240,.17);animation:formAddonPanelIn .38s cubic-bezier(.2,.75,.2,1) both;}
+.form-addon-panel[hidden]{display:none;}
+.form-addon-panel .form-qty-row:last-child{margin-bottom:0;}
+@keyframes formAddonPanelIn{
+  from{opacity:0;transform:translateY(6px);filter:blur(2px);}
+  to{opacity:1;transform:translateY(0);filter:blur(0);}
+}
+@media(prefers-reduced-motion:reduce){.form-addon-panel{animation:none;}.form-addon-chevron{transition:none;}}
 .form-qty-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;padding:10px 14px;border-radius:12px;background:rgba(179,168,240,0.06);border:1px solid rgba(179,168,240,0.14);transition:all .2s;}
 .form-qty-row:hover{background:rgba(179,168,240,0.12);border-color:rgba(179,168,240,0.26);}
 .form-qty-row.active{background:rgba(179,168,240,0.16);border-color:var(--purple-light);}
@@ -5006,21 +5052,47 @@ function renderForm() {
         <div class="form-radio-group" id="f-layer"></div>
       </div>
       <div class="form-group">
-        <label class="form-label">리깅 옵션 <span class="required">*</span></label>
-        <div class="form-radio-group" id="f-plan"></div>
+        <label class="form-label" for="f-plan-select">리깅 옵션 <span class="required">*</span></label>
+        <div class="form-plan-select-wrap">
+          <select class="form-select form-plan-select" id="f-plan-select">
+            <option value="">리깅 종류를 선택해주세요</option>
+          </select>
+        </div>
       </div>
 
       <div class="form-group"><label class="form-label">희망 마감일</label><input class="form-input" type="date" id="f-deadline" oninput="updateInfoField('deadline', this.value, '희망 마감일')"></div>
       <div class="form-group"><label class="form-label">작업과정 공개</label><div class="form-radio-group" id="f-workpublic"></div></div>
 
 
-      <div class="form-group full"><div class="form-section-title">추가 옵션</div></div>
-      <div class="form-group"><label class="form-label">옵션 추가</label><div id="f-option-add-wrap"></div></div>
-      <div class="form-group"><label class="form-label">표정 및 자세</label><div id="f-expr-wrap"></div></div>
-      <div class="form-group"><label class="form-label">IOS 페이셜</label><div id="f-ios-wrap"></div></div>
-      <div class="form-group"><label class="form-label">파츠 추가</label><div id="f-parts-wrap"></div></div>
-      <div class="form-group"><label class="form-label">동물 파츠</label><div id="f-animal-wrap"></div></div>
-      <div class="form-group"><label class="form-label">기타</label><div id="f-other-wrap"></div></div>
+      <div class="form-group full">
+        <div class="form-section-title">추가 옵션 <span class="form-section-subtitle">원하는 카테고리만 펼쳐서 선택해주세요.</span></div>
+        <div class="form-addon-accordion" id="f-addon-accordion">
+          <div class="form-addon-card" data-addon-prefix="optionAdd-">
+            <button class="form-addon-toggle" type="button" aria-expanded="false" aria-controls="f-option-add-wrap"><span class="form-addon-name">옵션 추가</span><span class="form-addon-count" hidden></span><span class="form-addon-chevron" aria-hidden="true">⌄</span></button>
+            <div class="form-addon-panel" id="f-option-add-wrap" hidden></div>
+          </div>
+          <div class="form-addon-card" data-addon-prefix="expr-">
+            <button class="form-addon-toggle" type="button" aria-expanded="false" aria-controls="f-expr-wrap"><span class="form-addon-name">표정 및 자세</span><span class="form-addon-count" hidden></span><span class="form-addon-chevron" aria-hidden="true">⌄</span></button>
+            <div class="form-addon-panel" id="f-expr-wrap" hidden></div>
+          </div>
+          <div class="form-addon-card" data-addon-prefix="ios-">
+            <button class="form-addon-toggle" type="button" aria-expanded="false" aria-controls="f-ios-wrap"><span class="form-addon-name">iOS 페이셜</span><span class="form-addon-count" hidden></span><span class="form-addon-chevron" aria-hidden="true">⌄</span></button>
+            <div class="form-addon-panel" id="f-ios-wrap" hidden></div>
+          </div>
+          <div class="form-addon-card" data-addon-prefix="parts-">
+            <button class="form-addon-toggle" type="button" aria-expanded="false" aria-controls="f-parts-wrap"><span class="form-addon-name">파츠 추가</span><span class="form-addon-count" hidden></span><span class="form-addon-chevron" aria-hidden="true">⌄</span></button>
+            <div class="form-addon-panel" id="f-parts-wrap" hidden></div>
+          </div>
+          <div class="form-addon-card" data-addon-prefix="animal-">
+            <button class="form-addon-toggle" type="button" aria-expanded="false" aria-controls="f-animal-wrap"><span class="form-addon-name">동물 파츠</span><span class="form-addon-count" hidden></span><span class="form-addon-chevron" aria-hidden="true">⌄</span></button>
+            <div class="form-addon-panel" id="f-animal-wrap" hidden></div>
+          </div>
+          <div class="form-addon-card" data-addon-prefix="other-">
+            <button class="form-addon-toggle" type="button" aria-expanded="false" aria-controls="f-other-wrap"><span class="form-addon-name">기타</span><span class="form-addon-count" hidden></span><span class="form-addon-chevron" aria-hidden="true">⌄</span></button>
+            <div class="form-addon-panel" id="f-other-wrap" hidden></div>
+          </div>
+        </div>
+      </div>
       <div class="form-group full"><label class="form-label">협업 작가님</label><div class="form-radio-group" id="f-collabartist"></div></div>
 
       
@@ -5083,11 +5155,18 @@ function renderForm() {
   });
 
   const plans = bo.plans||[];
-  makeRadios('f-plan', plans.map(p=>p.name), (val,idx) => {
+  const planSelect = document.getElementById('f-plan-select');
+  plans.forEach(plan => {
+    const option = document.createElement('option');
+    option.value = plan.id;
+    option.textContent = plan.name;
+    planSelect.appendChild(option);
+  });
+  planSelect.addEventListener('change', () => {
     Object.keys(estimate).forEach(k=>{ if(k.startsWith('plan-')) delete estimate[k]; });
     delete estimate['event-discount'];
-    if (val !== null && plans[idx]) {
-      const plan = plans[idx];
+    const plan = plans.find(p => p.id === planSelect.value);
+    if (plan) {
       estimate['plan-'+plan.id] = { name:plan.name, price:plan.price };
       const discount = (C.event && C.event.enabled)
         ? Number(plan.eventDiscount || 0) : 0;
@@ -5108,8 +5187,38 @@ function renderForm() {
   makeQtySelect('f-parts-wrap', ao.partsAdd||[], 'parts');
   makeCheckboxes('f-animal-wrap', ao.animalParts||[], 'animal');
   makeCheckboxes('f-other-wrap', ao.other||[], 'other');
+  initFormAddonAccordions();
 
   document.getElementById('btn-reset').onclick = resetForm;
+}
+
+/* 추가 옵션 카테고리는 하나씩 펼치고, 선택한 옵션 개수는 접힌 상태에서도 보여줍니다. */
+function initFormAddonAccordions() {
+  const cards = [...document.querySelectorAll('#f-addon-accordion .form-addon-card')];
+  cards.forEach(card => {
+    const toggle = card.querySelector('.form-addon-toggle');
+    toggle.addEventListener('click', () => {
+      const shouldOpen = toggle.getAttribute('aria-expanded') !== 'true';
+      cards.forEach(other => {
+        const expanded = shouldOpen && other === card;
+        other.classList.toggle('is-open', expanded);
+        other.querySelector('.form-addon-toggle').setAttribute('aria-expanded', String(expanded));
+        other.querySelector('.form-addon-panel').hidden = !expanded;
+      });
+    });
+  });
+  updateFormAddonCounts();
+}
+
+function updateFormAddonCounts() {
+  const selectedKeys = Object.keys(estimate);
+  document.querySelectorAll('#f-addon-accordion .form-addon-card').forEach(card => {
+    const prefix = card.dataset.addonPrefix;
+    const count = selectedKeys.filter(key => key.startsWith(prefix)).length;
+    const badge = card.querySelector('.form-addon-count');
+    badge.hidden = count === 0;
+    badge.textContent = count ? `선택 ${count}개` : '';
+  });
 }
 
 /* ── 텍스트 입력 → 견적 인포 박스 반영 (캐릭터명, 작가명) ── */
@@ -5247,6 +5356,7 @@ function getOrderedEstimatePrices(items) {
 }
 
 function updateEstimate() {
+  updateFormAddonCounts();
   const list = document.getElementById('estimate-list');
   const totalEl = document.getElementById('estimate-total');
   const items = Object.entries(estimate);
@@ -5367,6 +5477,13 @@ function resetForm() {
   estimate = {}; updateEstimate();
   document.querySelectorAll('.form-radio-label').forEach(l=>l.classList.remove('selected'));
   document.querySelectorAll('.form-checkbox-label').forEach(l=>l.classList.remove('checked'));
+  const planSelect = document.getElementById('f-plan-select');
+  if (planSelect) planSelect.value = '';
+  document.querySelectorAll('#f-addon-accordion .form-addon-card').forEach(card => {
+    card.classList.remove('is-open');
+    card.querySelector('.form-addon-toggle').setAttribute('aria-expanded', 'false');
+    card.querySelector('.form-addon-panel').hidden = true;
+  });
   /* 스테퍼 초기화: makeQtySelect 재호출로 완전 리셋 */
   const bo = C.baseOptions||{}, ao = C.additionalOptions||{};
   makeQtySelect('f-option-add-wrap', ao.optionAdd||[], 'optionAdd');
