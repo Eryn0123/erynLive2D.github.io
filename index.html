@@ -1578,6 +1578,31 @@ section{padding:var(--section-gap) 0;}
 }
 .sample-item:hover{border-color:var(--glass-border-hover);transform:translateY(-2px);box-shadow:var(--shadow-md);}
 
+/* 카테고리를 열 때 카드가 차례로 올라옵니다. 흐림 효과는 사용하지 않습니다. */
+@keyframes sampleCategoryCardEnter{
+  from{opacity:0;transform:translate3d(0,14px,0) scale(.99);}
+  to{opacity:1;transform:translate3d(0,0,0) scale(1);}
+}
+.sample-category.sample-enter .sample-item,
+.sample-category.sample-enter .waiting-block{
+  animation:sampleCategoryCardEnter .46s cubic-bezier(.16,1,.3,1) backwards;
+}
+.sample-category.sample-enter > .sample-cat-desc,
+.sample-category.sample-enter > .animal-desc{
+  animation:sampleCategoryCardEnter .34s cubic-bezier(.16,1,.3,1) backwards;
+}
+.sample-category.sample-enter .sample-item:nth-child(2){animation-delay:55ms;}
+.sample-category.sample-enter .sample-item:nth-child(3){animation-delay:110ms;}
+.sample-category.sample-enter .sample-item:nth-child(4){animation-delay:165ms;}
+.sample-category.sample-enter .sample-item:nth-child(5){animation-delay:220ms;}
+.sample-category.sample-enter .sample-item:nth-child(n+6){animation-delay:275ms;}
+@media(prefers-reduced-motion:reduce){
+  .sample-category.sample-enter .sample-item,
+  .sample-category.sample-enter .waiting-block,
+  .sample-category.sample-enter > .sample-cat-desc,
+  .sample-category.sample-enter > .animal-desc{animation:none!important;}
+}
+
 /* ── 리깅 샘플 로딩 화면 ── */
 .sample-loader{
   position:absolute;
@@ -4451,6 +4476,11 @@ function renderSamples() {
     catsEl.querySelectorAll('.sample-category').forEach(category => {
       category.classList.toggle('active', category === selectedCategory);
     });
+
+    /* 다시 돌아온 탭에도 순차 등장 애니메이션이 재생되도록 초기화합니다. */
+    selectedCategory.classList.remove('sample-enter');
+    void selectedCategory.offsetWidth;
+    selectedCategory.classList.add('sample-enter');
 
     /* 이전 카테고리는 즉시 일시정지하고, 새 카테고리만 로딩합니다. */
     refreshLazySampleVideos();
