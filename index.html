@@ -2574,6 +2574,34 @@ to{transform:rotate(405deg);}
 @media(max-width:720px){#hero.hero-reimagined{padding-top:28px;}.hero-reimagined .hero-top,.hero-reimagined .hero-bottom{grid-template-columns:1fr;}.hero-video-stage{aspect-ratio:16/10;}.hero-headline p{font-size:29px;}.hero-feature{padding:24px;}.hero-feature-actions .btn-primary{flex:1;}.prebooking-notices .slot-info-blocks{grid-template-columns:1fr;}.prebooking-notices .slot-info-block:nth-child(odd){border-right:0;}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important;}.fade-in{opacity:1!important;filter:none!important;transform:none!important;transition:none!important;}.bg-mesh::before,.live-dot,.hero-headline em{animation:none!important;}.hero-video-poster,.hero-video-play{transition:none!important;}}
 
+/* Refined hero: studio profile + offer, with an instantly moving sample. */
+#hero.hero-reimagined{padding-top:31px;}
+.hero-headline{margin-bottom:16px;}
+.hero-reimagined .hero-top{grid-template-columns:minmax(0,.91fr) minmax(0,1.09fr);align-items:stretch;}
+.hero-feature{min-height:0;padding:26px 28px;}
+.hero-feature .artist-content{flex:0 0 auto;}
+.hero-feature .artist-tags{margin-top:12px;}
+.hero-inline-event{min-height:0;margin-top:20px;padding:17px 19px;border:1px solid rgba(159,145,227,.26);border-radius:14px;background:linear-gradient(135deg,rgba(234,229,251,.75),rgba(236,244,255,.65));}
+.hero-inline-event::before{width:170px;height:170px;}
+.hero-inline-event .event-promo-top{margin-bottom:10px;}
+.hero-inline-event .event-kicker{font-size:9px;}
+.hero-inline-event .event-badge,.hero-inline-event .event-date{font-size:10px;min-height:25px;padding:4px 7px;}
+.hero-inline-event .event-service{font-size:12px;}
+.hero-inline-event .event-benefit{font-size:29px;}
+.hero-feature-actions{margin-top:18px;}
+.hero-video-card{display:flex;flex-direction:column;}
+.hero-video-stage{aspect-ratio:6/5;flex:1;min-height:0;background:linear-gradient(145deg,#f5f3fd,#e8e7f7);}
+.hero-video-stage::before{display:none;}
+.hero-video-stage video{width:100%;height:100%;position:absolute;inset:0;object-fit:contain;display:block;}
+.hero-video-state{position:absolute;inset:auto 12px 12px;z-index:4;color:#6359a3;background:rgba(255,255,255,.9);border:1px solid rgba(155,144,224,.25);border-radius:10px;padding:10px 13px;font-size:11px;text-align:center;}
+.hero-video-state a{color:#7566ce;}
+.hero-video-footer{margin-top:auto;}
+.hero-reimagined .hero-bottom{grid-template-columns:1fr 1fr;}
+.hero-reimagined #slot-info-card{min-height:0;}
+.hero-reimagined #slot-info-card .slot-info-block{min-height:61px;padding:10px 12px;}
+@media(max-width:960px){.hero-reimagined .hero-top{grid-template-columns:1fr 1fr;}.hero-video-stage{aspect-ratio:6/5;}.hero-reimagined .hero-bottom{grid-template-columns:1fr 1fr;}}
+@media(max-width:720px){.hero-reimagined .hero-top,.hero-reimagined .hero-bottom{grid-template-columns:1fr;}.hero-video-stage{aspect-ratio:6/5;}.hero-feature{padding:23px;}.hero-inline-event{padding:16px;}}
+
 .section-title {
   font-family:'Outfit','Paperozi','Noto Sans KR',sans-serif;
   font-weight:700;
@@ -2625,7 +2653,6 @@ to{transform:rotate(405deg);}
   <section id="hero" class="hero-reimagined">
     <div class="hero-headline fade-in">
       <span class="hero-eyebrow"><span class="live-dot"></span> LIVE2D RIGGING COMMISSION · ERYN</span>
-      <p>캐릭터의 개성을, <em>움직임으로.</em></p>
     </div>
     <div class="hero-top">
       <div class="glass-card artist-card fade-in hero-feature">
@@ -2636,41 +2663,31 @@ to{transform:rotate(405deg);}
           <div class="artist-intro" id="artist-intro"></div>
           <div class="artist-tags" id="artist-tags"></div>
         </div>
+        <div class="event-card hero-inline-event" id="event-card">
+          <div class="event-promo">
+            <div class="event-promo-top">
+              <span class="event-kicker">EVENT</span>
+              <div class="event-meta-pills">
+                <span class="event-badge" id="event-badge"></span>
+                <span class="event-date" id="event-date"></span>
+              </div>
+            </div>
+            <div class="event-service" id="event-service"></div>
+            <div class="event-benefit" id="event-benefit"></div>
+          </div>
+        </div>
         <div class="hero-feature-actions">
           <button class="btn-primary" onclick="scrollToSiteSection('form')">커미션 문의하기 <span aria-hidden="true">↗</span></button>
           <button class="btn-secondary" onclick="scrollToSiteSection('samples')">리깅 샘플 보기</button>
         </div>
       </div>
       <div class="glass-card hero-video-card fade-in">
-        <div class="hero-video-topline"><span><span class="hero-sparkle">✦</span> FEATURED SHOWCASE</span><span class="hero-video-note">LIVE2D · MOTION</span></div>
-        <div class="hero-video-stage" id="hero-video-stage">
-          <button class="hero-video-play" id="hero-video-play" aria-label="대표 쇼케이스 재생">
-            <span class="hero-play-symbol">▶</span><span>SHOWCASE PLAY</span>
-          </button>
-        </div>
-        <div class="hero-video-footer"><span id="hero-video-title">대표 리깅 쇼케이스</span><button onclick="scrollToSiteSection('showcase')">전체 쇼케이스 보기 ↗</button></div>
+        <div class="hero-video-topline"><span><span class="hero-sparkle">✦</span> FREE MOVEMENT SAMPLE</span><span class="hero-video-note">LIVE2D · MOTION</span></div>
+        <div class="hero-video-stage" id="hero-video-stage"></div>
+        <div class="hero-video-footer"><span id="hero-video-title">자유 움직임 · 리깅 샘플</span><button onclick="scrollToSiteSection('samples')">리깅 샘플 더 보기 ↗</button></div>
       </div>
     </div>
     <div class="hero-bottom fade-in">
-      <div class="glass-card event-card fade-in" id="event-card">
-        <div class="section-title" style="font-size:17px;margin-bottom:14px;">이벤트 안내</div>
-
-        <div class="event-promo">
-          <div class="event-promo-top">
-            <span class="event-kicker">EVENT</span>
-
-            <div class="event-meta-pills">
-              <span class="event-badge" id="event-badge"></span>
-              <span class="event-date" id="event-date"></span>
-            </div>
-          </div>
-
-          <div class="event-service" id="event-service"></div>
-          <div class="event-benefit" id="event-benefit"></div>
-
-
-        </div>
-      </div>
       <div class="glass-card" id="slots-card" style="display:flex;flex-direction:column;">
         <div class="section-title" style="font-size:17px;margin-bottom:16px;">작업 슬롯</div>
         <div class="slots-layout">
@@ -2693,6 +2710,10 @@ to{transform:rotate(405deg);}
             <button class="btn-secondary" onclick="scrollToSiteSection('samples')">리깅 샘플 보러가기</button>
           </div>
         </div>
+      </div>
+      <div class="glass-card" id="slot-info-card">
+        <div class="section-title" style="font-size:17px;margin-bottom:16px;">안내사항</div>
+        <div class="slot-info-blocks" id="slot-info-blocks"></div>
       </div>
     </div>
   </section>
@@ -2750,10 +2771,6 @@ to{transform:rotate(405deg);}
   <section id="notices">
     <div class="section-title fade-in">공지사항</div>
     <p class="section-desc fade-in">의뢰 전 아래 내용을 꼭 확인해주세요.</p>
-    <div class="glass-card fade-in prebooking-notices" id="slot-info-card">
-      <div class="prebooking-heading">예약 전 안내사항</div>
-      <div class="slot-info-blocks" id="slot-info-blocks"></div>
-    </div>
     <div class="notice-list fade-in" id="notice-list"></div>
   </section>
 
@@ -2887,38 +2904,44 @@ function init() {
   renderProcess(); renderForm(); initScrollFade();
 }
 
-/* Featured video is driven by the first showcase entry in content.json.
-   Loading YouTube only on click keeps the landing view responsive. */
+/* Use the same first free-movement clip as the samples section.
+   Muted + playsinline enables autoplay on supported devices. */
 function initFeaturedShowcase() {
   const stage = document.getElementById('hero-video-stage');
-  const play = document.getElementById('hero-video-play');
   const title = document.getElementById('hero-video-title');
-  const item = (C.showcase || [])[0];
-  if (!stage || !play || !item) return;
-  const match = String(item.videoUrl || '').match(/(?:embed\/|youtu\.be\/|v=)([A-Za-z0-9_-]{11})/);
-  if (!match) {
-    play.textContent = '쇼케이스 보러가기 ↗';
-    play.addEventListener('click', () => scrollToSiteSection('showcase'));
+  if (!stage) return;
+  const group = (C.sampleCategories || []).find(category => category.id === 'free');
+  const item = group && Array.isArray(group.samples) ? group.samples[0] : null;
+  if (!item || !item.src) {
+    stage.textContent = '자유 움직임 샘플을 준비 중입니다.';
     return;
   }
-  const id = match[1];
-  const poster = document.createElement('div');
-  poster.className = 'hero-video-poster';
-  poster.style.backgroundImage = `url("https://i.ytimg.com/vi/${id}/hqdefault.jpg")`;
-  stage.prepend(poster);
-  title.textContent = item.title || '대표 리깅 쇼케이스';
-  play.addEventListener('click', () => {
-    if (stage.classList.contains('has-player')) return;
-    const iframe = document.createElement('iframe');
-    iframe.title = 'ERYN 대표 Live2D 쇼케이스';
-    iframe.loading = 'eager';
-    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-    iframe.allowFullscreen = true;
-    iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
-    stage.classList.add('has-player');
-    stage.appendChild(iframe);
-    play.remove();
-    poster.remove();
+  if (title) title.textContent = item.alt || '자유 움직임 · 리깅 샘플';
+  const video = document.createElement('video');
+  video.src = item.src;
+  video.autoplay = true;
+  video.muted = true;
+  video.defaultMuted = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.preload = 'metadata';
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
+  video.setAttribute('aria-label', item.alt || '자유 움직임 대표 영상');
+  stage.appendChild(video);
+  video.play().catch(() => {
+    const button = document.createElement('button');
+    button.className = 'hero-video-state';
+    button.textContent = '▶ 영상 재생하기';
+    button.onclick = () => video.play().then(() => button.remove()).catch(() => {});
+    stage.appendChild(button);
+  });
+  video.addEventListener('error', () => {
+    if (stage.querySelector('.hero-video-state')) return;
+    const warning = document.createElement('div');
+    warning.className = 'hero-video-state';
+    warning.textContent = '영상을 불러올 수 없습니다. 리깅 샘플 메뉴에서 확인해 주세요.';
+    stage.appendChild(warning);
   });
 }
 
