@@ -94,6 +94,9 @@ select{
 
 .wrapper{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 24px;}
 section{padding:var(--section-gap) 0;}
+/* 기본/추가 리깅 옵션은 하나의 가격 안내 흐름처럼 조금 더 가깝게 배치 */
+#pricing{padding-bottom:26px;}
+#pricing + #add-options{padding-top:26px;}
 
 .nav{
   position:sticky;top:0;z-index:100;
@@ -2645,6 +2648,12 @@ to{transform:rotate(405deg);}
 .estimate-item{display:flex;justify-content:space-between;align-items:flex-start;font-size:12.5px;gap:6px;}
 .estimate-item-name{color:var(--text-secondary);flex:1;line-height:1.4;}
 .estimate-item-price{color:var(--purple-dark);font-family:'Outfit',sans-serif;font-weight:600;white-space:nowrap;}
+.estimate-item-discount{
+  padding:6px 8px;
+  border-radius:8px;
+  background:rgba(179,168,240,.12);
+}
+.estimate-item-discount .estimate-item-price{color:#7768bb;}
 /* ── 견적 메모: 캐릭터 정보·선택 항목 구분 영역 ── */
 .estimate-memo{
   font-size:12px;color:var(--text-secondary);
@@ -5041,10 +5050,19 @@ function renderForm() {
   const plans = bo.plans||[];
   makeRadios('f-plan', plans.map(p=>p.name), (val,idx) => {
     Object.keys(estimate).forEach(k=>{ if(k.startsWith('plan-')) delete estimate[k]; });
+    delete estimate['event-discount'];
     if (val !== null && plans[idx]) {
       const plan = plans[idx];
-      const disc = (C.event&&C.event.enabled&&plan.eventDiscount)?plan.eventDiscount:0;
-      estimate['plan-'+plan.id] = { name:plan.name, price:plan.price-disc };
+      estimate['plan-'+plan.id] = { name:plan.name, price:plan.price };
+      const discount = (C.event && C.event.enabled)
+        ? Number(plan.eventDiscount || 0) : 0;
+      if (discount > 0) {
+        estimate['event-discount'] = {
+          name: '리깅 이벤트 할인',
+          price: -discount,
+          isDiscount: true
+        };
+      }
     }
     updateEstimate();
   });
@@ -5099,6 +5117,7 @@ function makeRadios(containerId, options, onChange) {
         /* 토글 해제 */
         if (containerId === 'f-plan') {
           Object.keys(estimate).forEach(k=>{ if(k.startsWith('plan-')) delete estimate[k]; });
+          delete estimate['event-discount'];
           updateEstimate();
         }
         if (onChange) onChange(null, -1);
@@ -5185,6 +5204,14 @@ function updateMemo() {
 }
 
 /* ── 견적 패널 렌더 ── */
+function getOrderedEstimatePrices(items) {
+  const rank = key => key.startsWith('plan-') ? 0
+    : key === 'event-discount' ? 1
+    : key === 'collab-discount' ? 3 : 2;
+  return items.filter(([key,value]) => !key.startsWith('__') && !value.isMemo)
+    .sort(([keyA],[keyB]) => rank(keyA) - rank(keyB));
+}
+
 function updateEstimate() {
   const list = document.getElementById('estimate-list');
   const totalEl = document.getElementById('estimate-total');
@@ -5199,7 +5226,7 @@ function updateEstimate() {
   /* 렌더 순서: 인포(텍스트입력) → 태그(라디오선택) → 가격항목 → 메모 */
   const infoItems    = items.filter(([k]) => k.startsWith('__info_'));
   const radioItems   = items.filter(([k]) => k.startsWith('__radio_'));
-  const priceItems   = items.filter(([k,v]) => !k.startsWith('__') && !v.isMemo);
+  const priceItems   = getOrderedEstimatePrices(items);
   const memoItem     = items.find(([k]) => k === '__memo');
 
   let html = '';
@@ -5228,8 +5255,8 @@ function updateEstimate() {
   if (priceItems.length) {
     html += priceItems.map(([k,v]) => {
       total += v.price;
-      return `<div class="estimate-item">
-        <span class="estimate-item-name">${v.name}</span>
+      return `<div class="estimate-item${v.isDiscount ? ' estimate-item-discount' : ''}">
+        <span class="estimate-item-name">${escHtml(v.name)}</span>
         <span class="estimate-item-price">${fmt(v.price)}</span>
       </div>`;
     }).join('');
@@ -5264,7 +5291,7 @@ function copyEstimate() {
     lines.push(`• ${v.label}: ${v.value}`);
   });
   /* 가격 항목 */
-  items.filter(([k,v])=>!k.startsWith('__')&&!v.isMemo).forEach(([k,v])=>{
+  getOrderedEstimatePrices(items).forEach(([k,v])=>{
     total += v.price;
     lines.push(`• ${v.name}: ${fmt(v.price)}`);
   });
