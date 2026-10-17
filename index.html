@@ -2110,15 +2110,122 @@ to{transform:rotate(405deg);}
   background:rgba(255,255,255,.78);
 }
 
-.add-options-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-.add-option-group{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:14px;padding:18px;box-shadow:var(--shadow-sm);}
-.add-group-header{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
-.add-group-dot{width:8px;height:8px;border-radius:50%;background:var(--purple-light);}
-.add-group-title{font-size:14px;font-weight:600;color:var(--text-primary);}
-.add-option-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(179,168,240,0.12);font-size:13px;}
-.add-option-item:last-child{border-bottom:none;padding-bottom:0;}
-.add-option-name{color:var(--text-secondary);}
-.add-option-price{color:var(--purple-dark);font-weight:600;font-family:'Outfit',sans-serif;}
+/* 추가 옵션: 왼쪽 카테고리 탐색 + 오른쪽 상세 가격표 */
+.add-options-grid{
+  display:grid;
+  grid-template-columns:minmax(215px,.34fr) minmax(0,1fr);
+  align-items:stretch;
+  gap:16px;
+}
+.add-option-nav{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+  padding:16px;
+}
+.add-option-tab{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  width:100%;
+  min-height:54px;
+  padding:13px 15px;
+  appearance:none;
+  border:1px solid rgba(179,168,240,.20);
+  border-radius:12px;
+  background:rgba(255,255,255,.55);
+  color:var(--text-secondary);
+  font:inherit;
+  font-size:13px;
+  font-weight:600;
+  text-align:left;
+  cursor:pointer;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),
+             background .25s ease,border-color .25s ease,
+             box-shadow .25s ease,color .25s ease;
+}
+.add-option-tab[aria-selected="true"]{
+  border-color:rgba(149,124,221,.66);
+  background:linear-gradient(110deg,rgba(234,228,252,.92),rgba(236,243,255,.75));
+  color:var(--purple-dark);
+  box-shadow:0 5px 15px rgba(112,95,195,.11);
+}
+.add-option-tab:focus-visible{
+  outline:3px solid rgba(123,105,215,.48);
+  outline-offset:2px;
+}
+.add-option-tab-arrow{
+  flex-shrink:0;
+  color:var(--purple-mid);
+  font-size:18px;
+  line-height:1;
+  transition:transform .25s ease;
+}
+.add-option-tab[aria-selected="true"] .add-option-tab-arrow{transform:translateX(2px);}
+.add-option-panel{
+  min-width:0;
+  min-height:100%;
+  padding:26px;
+}
+.add-option-panel-head{
+  padding-bottom:18px;
+  margin-bottom:14px;
+  border-bottom:1px solid rgba(179,168,240,.17);
+}
+.add-option-panel-kicker{
+  display:block;
+  margin-bottom:6px;
+  color:var(--purple-mid);
+  font-family:'Outfit',sans-serif;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:1.5px;
+}
+.add-option-panel-title{
+  color:var(--text-primary);
+  font-size:17px;
+  font-weight:700;
+}
+.add-option-panel-list{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+.add-option-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  min-height:51px;
+  padding:12px 14px;
+  border:1px solid rgba(179,168,240,.16);
+  border-radius:10px;
+  background:rgba(255,255,255,.53);
+  font-size:12.5px;
+}
+.add-option-name{min-width:0;color:var(--text-secondary);word-break:keep-all;}
+.add-option-price{
+  flex-shrink:0;
+  white-space:nowrap;
+  color:var(--purple-dark);
+  font-weight:700;
+  font-family:'Outfit',sans-serif;
+}
+.add-option-details-enter{
+  animation:addOptionDetailsIn .38s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes addOptionDetailsIn{
+  from{opacity:0;transform:translate3d(0,10px,0);}
+  to{opacity:1;transform:translate3d(0,0,0);}
+}
+@media(hover:hover) and (pointer:fine){
+  .add-option-tab:hover{
+    transform:translate3d(0,-2px,0);
+    border-color:rgba(146,127,218,.48);
+    background:rgba(244,240,255,.84);
+  }
+}
 
 /* ─────────────────────────────────────────
    공지사항
@@ -2585,7 +2692,6 @@ to{transform:rotate(405deg);}
   .slots-btns{flex-direction:row;}
   .options-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
   .included-category-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
-  .add-options-grid{grid-template-columns:1fr;}
   .collab-grid{grid-template-columns:repeat(2,1fr);}
   .process-grid{grid-template-columns:repeat(2,1fr);}
   .form-estimate-wrap{grid-template-columns:1fr;}
@@ -2607,6 +2713,15 @@ to{transform:rotate(405deg);}
 @media(max-width:720px){
   .options-grid{grid-template-columns:1fr;}
   .plan-card{height:auto;}
+  .add-options-grid{grid-template-columns:1fr;gap:12px;}
+  .add-option-nav{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+    padding:10px;
+  }
+  .add-option-tab{min-height:47px;padding:11px 12px;font-size:12px;}
+  .add-option-panel{min-height:260px;padding:20px;}
 }
 
 .fade-in{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);}
@@ -2792,7 +2907,7 @@ to{transform:rotate(405deg);}
 /* Shared micro-interactions across portfolio cards and sale-model panels. */
 .sale-model-left,.sale-showcase-panel,.sale-detail-gallery,
 .sample-item,.collab-card,.plan-card,.included-category,
-.add-option-group,.process-step,.notice-item{
+.process-step,.notice-item{
   transition:transform .4s cubic-bezier(.2,.8,.2,1),
              border-color .35s ease,box-shadow .4s ease,background .35s ease;
 }
@@ -2801,9 +2916,8 @@ to{transform:rotate(405deg);}
   transition:transform .28s cubic-bezier(.2,.8,.2,1),
              background .28s ease,border-color .28s ease,box-shadow .28s ease;
 }
-.sale-model-price-row,.add-option-item,.included-option-item{border-radius:8px;}
+.sale-model-price-row,.included-option-item{border-radius:8px;}
 .sale-model-price-row{padding:5px 7px;margin:0 -5px;}
-.add-option-item{padding-left:8px;padding-right:8px;}
 .included-option-item{padding-right:8px;}
 @media(hover:hover) and (pointer:fine){
   /* Keep lift subtle, including the four first-screen cards. */
@@ -2814,7 +2928,7 @@ to{transform:rotate(405deg);}
   }
   .sale-model-left:hover,.sale-showcase-panel:hover,.sale-detail-gallery:hover,
   .sample-item:hover,.collab-card:hover,.plan-card:hover,
-  .included-category:hover,.add-option-group:hover,
+  .included-category:hover,
   .process-step:hover,.notice-item:hover{
     transform:translate3d(0,-3px,0);
     border-color:rgba(140,122,224,.52);
@@ -2844,10 +2958,10 @@ to{transform:rotate(405deg);}
 }
 @media(prefers-reduced-motion:reduce){
   .fade-in.replay-reveal{opacity:1!important;transform:none!important;filter:none!important;transition:none!important;}
-  .sale-panel-enter{animation:none!important;}
+  .sale-panel-enter,.add-option-details-enter{animation:none!important;}
   .sale-model-left,.sale-showcase-panel,.sale-detail-gallery,
   .sample-item,.collab-card,.plan-card,.included-category,
-  .add-option-group,.process-step,.notice-item,
+  .process-step,.notice-item,.add-option-tab,
   .sale-model-feature,.sale-model-price-row,.included-option-item,.add-option-item{transition:none!important;transform:none!important;}
 }
 
@@ -2863,7 +2977,7 @@ to{transform:rotate(405deg);}
 .collab-name,
 .plan-name,
 .included-title,
-.add-group-title,
+.add-option-panel-title,
 .notice-header,
 .process-title,
 .form-section-title,
@@ -4635,16 +4749,90 @@ function renderBaseOptions() {
 
 /* ── Add Options ── */
 function renderAddOptions() {
-  const ao = C.additionalOptions||{}, grid = document.getElementById('add-options-grid');
-  [['optionAdd','옵션 추가'],['expressionPose','표정 및 자세'],
-   ['iosPhysics','IOS 페이셜'],['partsAdd','파츠 추가'],
-   ['animalParts','동물 파츠'],['other','기타']].forEach(([key,title]) => {
-    const items = ao[key]||[]; if (!items.length) return;
-    const div = document.createElement('div'); div.className = 'add-option-group';
-    div.innerHTML = `<div class="add-group-header"><div class="add-group-dot"></div><div class="add-group-title">${title}</div></div>
-      ${items.map(it=>`<div class="add-option-item"><span class="add-option-name">${it.name}</span><span class="add-option-price">${fmt(it.price)}</span></div>`).join('')}`;
-    grid.appendChild(div);
+  const ao = C.additionalOptions || {};
+  const grid = document.getElementById('add-options-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  const categories = [
+    ['optionAdd','옵션 추가'],['expressionPose','표정 및 자세'],
+    ['iosPhysics','iOS 페이셜'],['partsAdd','파츠 추가'],
+    ['animalParts','동물 파츠'],['other','기타']
+  ].filter(([key]) => Array.isArray(ao[key]) && ao[key].length);
+  if (!categories.length) return;
+
+  const navigation = document.createElement('div');
+  navigation.className = 'glass-card add-option-nav';
+  navigation.setAttribute('role', 'tablist');
+  navigation.setAttribute('aria-label', '리깅 추가 옵션 카테고리');
+  navigation.setAttribute('aria-orientation', 'vertical');
+
+  const panel = document.createElement('div');
+  panel.className = 'glass-card add-option-panel';
+  panel.id = 'add-option-detail-panel';
+  panel.setAttribute('role', 'tabpanel');
+  panel.tabIndex = 0;
+
+  const tabs = categories.map(([key,title], index) => {
+    const tab = document.createElement('button');
+    tab.type = 'button';
+    tab.className = 'add-option-tab';
+    tab.id = `add-option-tab-${key}`;
+    tab.setAttribute('role', 'tab');
+    tab.setAttribute('aria-selected', 'false');
+    tab.setAttribute('aria-controls', panel.id);
+    tab.tabIndex = -1;
+    tab.innerHTML = `
+      <span>${escapeNoticeText(title)}</span>
+      <span class="add-option-tab-arrow" aria-hidden="true">→</span>
+    `;
+    tab.addEventListener('click', () => selectCategory(index));
+    tab.addEventListener('keydown', event => {
+      let nextIndex;
+      if (event.key === 'ArrowDown' || event.key === 'ArrowRight')
+        nextIndex = (index + 1) % tabs.length;
+      else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft')
+        nextIndex = (index - 1 + tabs.length) % tabs.length;
+      else if (event.key === 'Home') nextIndex = 0;
+      else if (event.key === 'End') nextIndex = tabs.length - 1;
+      else return;
+      event.preventDefault();
+      selectCategory(nextIndex);
+      tabs[nextIndex].focus();
+    });
+    navigation.appendChild(tab);
+    return tab;
   });
+
+  function selectCategory(index) {
+    const [key,title] = categories[index];
+    tabs.forEach((tab,i) => {
+      const active = i === index;
+      tab.setAttribute('aria-selected', String(active));
+      tab.tabIndex = active ? 0 : -1;
+    });
+    panel.setAttribute('aria-labelledby', tabs[index].id);
+    panel.innerHTML = `
+      <div class="add-option-details-enter">
+        <div class="add-option-panel-head">
+          <span class="add-option-panel-kicker">RIGGING ADD-ONS</span>
+          <div class="add-option-panel-title">${escapeNoticeText(title)}</div>
+        </div>
+        <div class="add-option-panel-list">
+          ${ao[key].map(item => `
+            <div class="add-option-item">
+              <span class="add-option-name">${escapeNoticeText(item.name)}</span>
+              <span class="add-option-price">${fmt(item.price)}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  grid.appendChild(navigation);
+  grid.appendChild(panel);
+  selectCategory(0);
 }
 
 /* ── Notices ── */
