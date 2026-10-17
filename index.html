@@ -2701,6 +2701,86 @@ to{transform:rotate(405deg);}
   .hero-reimagined .hero-bottom > .glass-card::after{display:none!important;}
 }
 
+/* Secondary sections can reveal again after fully leaving the viewport.
+   Keep repeat passes short and blur-free to avoid disrupting sample videos. */
+.fade-in.replay-reveal{
+  transition:opacity .55s cubic-bezier(.22,1,.36,1),
+             transform .55s cubic-bezier(.22,1,.36,1);
+  filter:none;
+}
+.fade-in.replay-reveal:not(.visible){
+  opacity:0;
+  transform:translate3d(0,16px,0);
+  filter:none;
+}
+.fade-in.replay-reveal.visible{
+  opacity:1;
+  transform:translate3d(0,0,0);
+  filter:none;
+}
+
+/* Shared micro-interactions across portfolio cards and sale-model panels. */
+.sale-model-left,.sale-showcase-panel,.sale-detail-gallery,
+.sample-item,.collab-card,.plan-card,.included-category,
+.add-option-group,.process-step,.notice-item{
+  transition:transform .4s cubic-bezier(.2,.8,.2,1),
+             border-color .35s ease,box-shadow .4s ease,background .35s ease;
+}
+.sale-model-feature,.sale-model-price-row,.included-option-item,
+.add-option-item,.sale-model-credit span,.slot-info-block,.slot-row{
+  transition:transform .28s cubic-bezier(.2,.8,.2,1),
+             background .28s ease,border-color .28s ease,box-shadow .28s ease;
+}
+.sale-model-price-row,.add-option-item,.included-option-item{border-radius:8px;}
+.sale-model-price-row{padding:5px 7px;margin:0 -5px;}
+.add-option-item{padding-left:8px;padding-right:8px;}
+.included-option-item{padding-right:8px;}
+@media(hover:hover) and (pointer:fine){
+  /* Keep lift subtle, including the four first-screen cards. */
+  .hero-reimagined .hero-top > .glass-card.visible:hover,
+  .hero-reimagined .hero-bottom > .glass-card.visible:hover{
+    transform:translate3d(0,-3px,0) scale(1.002);
+    box-shadow:0 12px 32px rgba(102,87,187,.14),0 0 0 1px rgba(178,153,247,.13);
+  }
+  .sale-model-left:hover,.sale-showcase-panel:hover,.sale-detail-gallery:hover,
+  .sample-item:hover,.collab-card:hover,.plan-card:hover,
+  .included-category:hover,.add-option-group:hover,
+  .process-step:hover,.notice-item:hover{
+    transform:translate3d(0,-3px,0);
+    border-color:rgba(140,122,224,.52);
+    box-shadow:0 12px 30px rgba(105,89,181,.14);
+  }
+  .sale-model-feature:hover,.sale-model-price-row:hover,
+  .included-option-item:hover,.add-option-item:hover,
+  .slot-info-block:hover,.slot-row:hover{
+    transform:translateX(2px);
+    background:linear-gradient(100deg,rgba(197,182,248,.23),rgba(211,229,255,.16));
+    border-color:rgba(160,139,232,.32);
+    box-shadow:0 3px 11px rgba(125,105,204,.06);
+  }
+  .sale-model-credit span:hover{
+    background:rgba(181,164,244,.25);
+    border-color:rgba(140,122,224,.45);
+  }
+  .sale-model-cover img,.sale-media-slide img{transition:transform .65s cubic-bezier(.2,.8,.2,1);}
+  .sale-model-cover:hover img,.sale-media-slide:hover img{transform:scale(1.018);}
+}
+
+/* Each sale slide reveals its three content panels when selected. */
+.sale-panel-enter{animation:salePanelIn .54s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--sale-delay,0ms);}
+@keyframes salePanelIn{
+  from{opacity:0;transform:translate3d(0,14px,0);}
+  to{opacity:1;transform:translate3d(0,0,0);}
+}
+@media(prefers-reduced-motion:reduce){
+  .fade-in.replay-reveal{opacity:1!important;transform:none!important;filter:none!important;transition:none!important;}
+  .sale-panel-enter{animation:none!important;}
+  .sale-model-left,.sale-showcase-panel,.sale-detail-gallery,
+  .sample-item,.collab-card,.plan-card,.included-category,
+  .add-option-group,.process-step,.notice-item,
+  .sale-model-feature,.sale-model-price-row,.included-option-item,.add-option-item{transition:none!important;transform:none!important;}
+}
+
 .section-title {
   font-family:'Outfit','Paperozi','Noto Sans KR',sans-serif;
   font-weight:700;
@@ -3651,6 +3731,29 @@ function goSaleModel(index) {
     .forEach((dot, dotIndex) => {
       dot.classList.toggle('active', dotIndex === saleModelIdx);
     });
+  if (!window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+    requestAnimationFrame(animateActiveSalePanels);
+  }
+}
+
+function animateActiveSalePanels() {
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const section = document.getElementById('sale-models');
+  if (!section || section.getBoundingClientRect().bottom < 0 ||
+      section.getBoundingClientRect().top > window.innerHeight) return;
+  const slide = document.querySelectorAll('#sale-model-slides .sale-model-slide')[saleModelIdx];
+  if (!slide) return;
+  const panels = slide.querySelectorAll('.sale-model-left,.sale-showcase-panel,.sale-detail-gallery');
+  panels.forEach(panel => panel.classList.remove('sale-panel-enter'));
+  // Restart the subtle stagger when the selected slide changes or returns.
+  void slide.offsetWidth;
+  panels.forEach((panel, index) => {
+    panel.style.setProperty('--sale-delay', `${index * 100}ms`);
+    panel.classList.add('sale-panel-enter');
+    panel.addEventListener('animationend', event => {
+      if (event.animationName === 'salePanelIn') panel.classList.remove('sale-panel-enter');
+    }, {once:true});
+  });
 }
 
 function goSaleMedia(modelIndex, mediaIndex) {
@@ -4946,10 +5049,51 @@ function submitForm() {
 }
 
 function initScrollFade() {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+  const nodes = document.querySelectorAll('.fade-in');
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+    nodes.forEach(el => el.classList.add('visible'));
+    return;
+  }
+
+  // First screen, notices and the enquiry form play only once.
+  const oneTime = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.08});
+
+  // Re-arm only after completely leaving the viewing area; prevents flicker
+  // if the visitor makes small scroll movements near an element's edge.
+  const repeat = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const wasHidden = !entry.target.classList.contains('visible');
+        entry.target.classList.add('visible');
+        if (wasHidden && entry.target.classList.contains('sale-model-slider')) {
+          requestAnimationFrame(animateActiveSalePanels);
+        }
+      } else {
+        entry.target.classList.remove('visible');
+      }
+    });
+  }, {threshold:0, rootMargin:'-3% 0px -3% 0px'});
+
+  const repeatSections = new Set([
+    'showcase','sale-models','samples','collabs','pricing','add-options','process'
+  ]);
+  nodes.forEach(el => {
+    const section = el.closest('section');
+    if (section && repeatSections.has(section.id)) {
+      el.classList.add('replay-reveal');
+      repeat.observe(el);
+    } else {
+      oneTime.observe(el);
+    }
+  });
 }
 
 loadContent();
