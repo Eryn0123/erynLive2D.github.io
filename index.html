@@ -737,20 +737,6 @@ section{padding:var(--section-gap) 0;}
   color:var(--purple-light);
 }
 
-.slots-btns{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-
-.slots-btns .btn-primary,
-.slots-btns .btn-secondary{
-  white-space:nowrap;
-  font-size:11px;
-  padding:9px 11px;
-  text-align:center;
-}
-
 @media(max-width:900px){
   .hero-bottom{grid-template-columns:1fr;}
 }
@@ -766,9 +752,6 @@ section{padding:var(--section-gap) 0;}
   }
   .slot-icons{
     grid-column:1;
-  }
-  .slots-btns{
-    grid-template-columns:1fr;
   }
 }
 
@@ -2745,7 +2728,6 @@ to{transform:rotate(405deg);}
 @media(max-width:960px){
   .hero-top{grid-template-columns:1fr;}
   .slots-layout{grid-template-columns:1fr;gap:16px;}
-  .slots-btns{flex-direction:row;}
   .options-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
   .included-category-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
   .collab-grid{grid-template-columns:repeat(2,1fr);}
@@ -2798,7 +2780,7 @@ to{transform:rotate(405deg);}
 .hero-feature .artist-intro-line{line-height:1.9;}
 .hero-feature .artist-tags{margin-top:24px;}
 .hero-feature-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:26px;position:relative;z-index:1;}
-.hero-feature-actions button{min-height:44px;}
+.hero-feature-actions button{min-height:44px;white-space:nowrap;}
 .hero-video-card{padding:14px;overflow:hidden;position:relative;background:linear-gradient(155deg,rgba(255,255,255,.9),rgba(231,231,251,.8));}
 .hero-video-topline{display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.25px;color:#7569bd;padding:5px 8px 13px;}
 .hero-sparkle{color:#8c80df;margin-right:6px;}
@@ -3100,6 +3082,7 @@ to{transform:rotate(405deg);}
         <div class="hero-feature-actions">
           <button class="btn-primary" onclick="scrollToSiteSection('form')">커미션 문의하기 <span aria-hidden="true">↗</span></button>
           <button class="btn-secondary" onclick="scrollToSiteSection('samples')">리깅 샘플 보기</button>
+          <button class="btn-secondary" onclick="scrollToSiteSection('sale-models')">판매 모델 보기</button>
         </div>
       </div>
       <div class="glass-card hero-video-card hero-entrance">
@@ -3123,11 +3106,6 @@ to{transform:rotate(405deg);}
 
             <div class="slot-rows" id="slots-list"></div>
             <p class="slots-footer-notice" id="slots-footer-notice"></p>
-          </div>
-
-          <div class="slots-btns" style="margin-top:auto;">
-            <button class="btn-primary" onclick="scrollToSiteSection('form')">문의 작성하러 가기</button>
-            <button class="btn-secondary" onclick="scrollToSiteSection('samples')">리깅 샘플 보러가기</button>
           </div>
         </div>
       </div>
