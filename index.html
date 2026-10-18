@@ -1563,7 +1563,7 @@ section{padding:var(--section-gap) 0;}
 
 /* 카테고리 진입 시에만 은은한 블러가 풀리며 천천히 나타납니다. */
 @keyframes sampleCategoryCardEnter{
-  from{opacity:0;transform:translate3d(0,8px,0) scale(.995);filter:blur(3px);}
+  from{opacity:0;transform:translate3d(0,8px,0) scale(.995);filter:blur(2px);}
   to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0);}
 }
 .sample-category.sample-enter .sample-item,
@@ -1984,7 +1984,7 @@ to{transform:rotate(405deg);}
 }
 
 @keyframes includedDetailsIn{
-  from{opacity:0;transform:translate3d(0,8px,0);filter:blur(2.5px);}
+  from{opacity:0;transform:translate3d(0,8px,0);filter:blur(2px);}
   to{opacity:1;transform:translate3d(0,0,0);filter:blur(0);}
 }
 
@@ -2232,7 +2232,7 @@ to{transform:rotate(405deg);}
   animation:addOptionDetailsIn .74s cubic-bezier(.42,0,.58,1) backwards;
 }
 @keyframes addOptionDetailsIn{
-  from{opacity:0;transform:translate3d(0,8px,0);filter:blur(2.5px);}
+  from{opacity:0;transform:translate3d(0,8px,0);filter:blur(2px);}
   to{opacity:1;transform:translate3d(0,0,0);filter:blur(0);}
 }
 @media(hover:hover) and (pointer:fine){
@@ -3106,6 +3106,150 @@ to{transform:rotate(405deg);}
   font-weight:700;
 }
 
+/* Soft Lavender Motion: headings lead, details follow, then the content settles. */
+.section-title.fade-in{
+  transition:opacity .65s cubic-bezier(.22,1,.36,1),
+             transform .65s cubic-bezier(.22,1,.36,1),
+             filter .65s ease;
+}
+.section-title.fade-in:not(.visible){
+  transform:translate3d(0,12px,0);
+  filter:blur(1.6px);
+}
+.section-title.fade-in.visible{transform:translate3d(0,0,0);filter:blur(0);}
+.section-title.fade-in::before{
+  transform-origin:center top;
+  transform:scaleY(.08);
+  transition:transform .63s cubic-bezier(.22,1,.36,1) .08s;
+}
+.section-title.fade-in.visible::before{transform:scaleY(1);}
+section > .section-desc.fade-in,
+section > .form-notice.fade-in{transition-delay:.10s;}
+section > .showcase-slider.fade-in,
+section > .sale-model-slider.fade-in,
+section > .options-grid.fade-in,
+section > .add-options-grid.fade-in,
+section > .notice-list.fade-in,
+section > .process-notes.fade-in{transition-delay:.15s;}
+
+@keyframes lavenderCardSettle{
+  from{opacity:0;translate:0 9px;filter:blur(1.5px);}
+  to{opacity:1;translate:0 0;filter:blur(0);}
+}
+/* Only animate small cards and text; never apply filter to the video itself. */
+.options-grid.fade-in.visible > .plan-card,
+.notice-list.fade-in.visible > .notice-item,
+.add-options-grid.fade-in.visible .add-option-tab,
+.process-notes.fade-in.visible > .process-note,
+.sample-tabs.choreography-visible > .sample-tab{
+  animation:lavenderCardSettle .65s cubic-bezier(.22,1,.36,1) both;
+}
+.options-grid.fade-in.visible > .plan-card:nth-child(2),
+.notice-list.fade-in.visible > .notice-item:nth-child(2),
+.add-options-grid.fade-in.visible .add-option-tab:nth-child(2),
+.process-notes.fade-in.visible > .process-note:nth-child(2),
+.sample-tabs.choreography-visible > .sample-tab:nth-child(2){animation-delay:65ms;}
+.options-grid.fade-in.visible > .plan-card:nth-child(3),
+.notice-list.fade-in.visible > .notice-item:nth-child(3),
+.add-options-grid.fade-in.visible .add-option-tab:nth-child(3),
+.process-notes.fade-in.visible > .process-note:nth-child(3),
+.sample-tabs.choreography-visible > .sample-tab:nth-child(3){animation-delay:130ms;}
+.notice-list.fade-in.visible > .notice-item:nth-child(4),
+.add-options-grid.fade-in.visible .add-option-tab:nth-child(4),
+.sample-tabs.choreography-visible > .sample-tab:nth-child(4){animation-delay:195ms;}
+.notice-list.fade-in.visible > .notice-item:nth-child(5),
+.add-options-grid.fade-in.visible .add-option-tab:nth-child(5),
+.sample-tabs.choreography-visible > .sample-tab:nth-child(5){animation-delay:260ms;}
+.add-options-grid.fade-in.visible .add-option-tab:nth-child(6),
+.sample-tabs.choreography-visible > .sample-tab:nth-child(6){animation-delay:325ms;}
+
+/* Short exit makes replacing a tab's details feel intentional, not abrupt. */
+@keyframes lavenderPanelExit{
+  to{opacity:0;transform:translate3d(0,-2px,0);}
+}
+.sample-category.sample-exit,
+.included-options-card.panel-transition-out > .included-details-enter,
+.add-option-panel.panel-transition-out > .add-option-details-enter{
+  animation:lavenderPanelExit .115s ease-in both;
+}
+.sample-category.sample-enter .sample-item,
+.sample-category.sample-enter .waiting-block{
+  animation-duration:.70s;
+}
+.included-details-enter,.add-option-details-enter{animation-duration:.70s;}
+@keyframes lavenderDetailSettle{
+  from{opacity:0;translate:0 5px;}
+  to{opacity:1;translate:0 0;}
+}
+.included-details-enter .included-option-item,
+.add-option-details-enter .add-option-item{
+  animation:lavenderDetailSettle .46s cubic-bezier(.22,1,.36,1) both;
+  animation-delay:.12s;
+}
+.included-details-enter .included-option-item:nth-child(2),
+.add-option-details-enter .add-option-item:nth-child(2){animation-delay:.16s;}
+.included-details-enter .included-option-item:nth-child(3),
+.add-option-details-enter .add-option-item:nth-child(3){animation-delay:.20s;}
+.included-details-enter .included-option-item:nth-child(4),
+.add-option-details-enter .add-option-item:nth-child(4){animation-delay:.24s;}
+.included-details-enter .included-option-item:nth-child(n+5),
+.add-option-details-enter .add-option-item:nth-child(n+5){animation-delay:.28s;}
+
+.showcase-slides,.sale-model-slides,.sale-media-slides,.waiting-slides{
+  transition:transform .55s cubic-bezier(.22,1,.36,1);
+}
+@keyframes lavenderCaptionIn{
+  from{opacity:.25;transform:translate3d(0,7px,0);}
+  to{opacity:1;transform:translate3d(0,0,0);}
+}
+.showcase-slide.is-current .showcase-caption{
+  animation:lavenderCaptionIn .55s cubic-bezier(.22,1,.36,1) .10s both;
+}
+.sale-panel-enter{animation-duration:.60s;}
+
+@keyframes lavenderSelected{
+  from{transform:scale(.90);opacity:.62;}
+  to{transform:scale(1);opacity:1;}
+}
+.plan-card[aria-pressed="true"] .plan-selected-mark,
+.form-addon-count:not([hidden]){animation:lavenderSelected .26s ease-out both;}
+.btn-primary,.btn-secondary,.btn-reset,.btn-copy,.btn-artmug-inquiry,
+.sample-tab,.add-option-tab,.form-addon-toggle,.form-radio-label,
+.slider-btn,.sale-model-outer-btn,.qty-btn{
+  -webkit-tap-highlight-color:transparent;
+}
+.btn-primary:active,.btn-secondary:active,.btn-reset:active,
+.btn-copy:active,.btn-artmug-inquiry:active,.sample-tab:active,
+.add-option-tab:active,.form-addon-toggle:active,.form-radio-label:active,
+.slider-btn:active,.sale-model-outer-btn:active,.qty-btn:active:not(:disabled){
+  transform:scale(.985);
+  transition-duration:.14s;
+}
+@media(hover:hover) and (pointer:fine){
+  .hero-reimagined .hero-top > .glass-card:hover,
+  .hero-reimagined .hero-bottom > .glass-card:hover{
+    border-color:rgba(144,126,220,.45);
+    box-shadow:0 10px 27px rgba(105,89,181,.13),0 0 0 1px rgba(155,144,224,.08);
+  }
+  .sale-model-left:hover,.sale-showcase-panel:hover,.sale-detail-gallery:hover,
+  .sample-item:hover,.collab-card:hover,.plan-card:hover,.included-category:hover,
+  .process-step:hover,.notice-item:hover{
+    box-shadow:0 10px 26px rgba(105,89,181,.13),0 0 0 1px rgba(155,144,224,.09);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .section-title.fade-in,.section-title.fade-in::before{transition:none!important;transform:none!important;filter:none!important;}
+  .options-grid.fade-in.visible > .plan-card,.notice-list.fade-in.visible > .notice-item,
+  .add-options-grid.fade-in.visible .add-option-tab,.process-notes.fade-in.visible > .process-note,
+  .sample-tabs.choreography-visible > .sample-tab,
+  .sample-category.sample-exit,.included-options-card.panel-transition-out > .included-details-enter,
+  .add-option-panel.panel-transition-out > .add-option-details-enter,
+  .included-details-enter .included-option-item,.add-option-details-enter .add-option-item,
+  .showcase-slide.is-current .showcase-caption,.plan-card[aria-pressed="true"] .plan-selected-mark,
+  .form-addon-count:not([hidden]){animation:none!important;opacity:1!important;filter:none!important;translate:none!important;transform:none!important;}
+  .showcase-slides,.sale-model-slides,.sale-media-slides,.waiting-slides{transition:none!important;}
+}
+
 </style>
 </head>
 <body>
@@ -3389,7 +3533,7 @@ function init() {
   initFeaturedShowcase();
   renderShowcase(); renderSaleModels(); renderSamples(); initSampleMediaLoading(); initLazySampleVideos(); renderCollabs();
   renderBaseOptions(); renderAddOptions(); renderNotices();
-  renderProcess(); renderForm(); initScrollFade(); initStaggerCardReveals();
+  renderProcess(); renderForm(); initScrollFade(); initStaggerCardReveals(); initSampleTabMotion();
 }
 
 /* Use the same first free-movement clip as the samples section.
@@ -3581,7 +3725,8 @@ function renderShowcase() {
   const slides = document.getElementById('showcase-slides');
   const dots   = document.getElementById('showcase-dots');
   items.forEach((item, i) => {
-    const slide = document.createElement('div'); slide.className = 'showcase-slide';
+    const slide = document.createElement('div');
+    slide.className = 'showcase-slide' + (i === scIdx ? ' is-current' : '');
     slide.innerHTML = `
       <div class="showcase-video-wrap">
         <iframe src="${item.videoUrl}?rel=0&modestbranding=1" allowfullscreen></iframe>
@@ -3603,9 +3748,14 @@ function renderShowcase() {
   document.getElementById('showcase-next').onclick = () => goSlide(scIdx+1);
 }
 function goSlide(idx) {
-  const n = (C.showcase||[]).length; scIdx = (idx+n)%n;
+  const n = (C.showcase||[]).length;
+  if (!n) return;
+  scIdx = (idx+n)%n;
   document.getElementById('showcase-slides').style.transform = `translateX(-${scIdx*100}%)`;
   document.querySelectorAll('#showcase-dots .slider-dot').forEach((d,i)=>d.classList.toggle('active',i===scIdx));
+  document.querySelectorAll('#showcase-slides .showcase-slide').forEach((slide,i)=>{
+    slide.classList.toggle('is-current',i===scIdx);
+  });
 }
 
 
@@ -4522,28 +4672,48 @@ function renderSamples() {
     ).join('')}</div>`;
   }
 */
+  let selectedSampleId = null;
+  let sampleSwitchTimer = null;
   function activate(id) {
     const selectedTab = tabsEl.querySelector(`.sample-tab[data-id="${id}"]`);
     const selectedCategory = document.getElementById('cat-' + id);
     if (!selectedTab || !selectedCategory) return;
+    if (selectedSampleId === id) return;
+    clearTimeout(sampleSwitchTimer);
+    catsEl.querySelectorAll('.sample-category.sample-exit').forEach(category => {
+      category.classList.remove('sample-exit');
+    });
 
     tabsEl.querySelectorAll('.sample-tab').forEach(tab => {
       const selected = tab === selectedTab;
       tab.classList.toggle('active', selected);
       tab.setAttribute('aria-pressed', String(selected));
     });
-    catsEl.querySelectorAll('.sample-category').forEach(category => {
-      category.classList.toggle('active', category === selectedCategory);
-    });
+    selectedSampleId = id;
+    const outgoing = catsEl.querySelector('.sample-category.active');
+    const commitCategory = () => {
+      catsEl.querySelectorAll('.sample-category').forEach(category => {
+        category.classList.remove('sample-exit');
+        category.classList.toggle('active', category === selectedCategory);
+      });
 
-    /* 다시 돌아온 탭에도 순차 등장 애니메이션이 재생되도록 초기화합니다. */
-    selectedCategory.classList.remove('sample-enter');
-    void selectedCategory.offsetWidth;
-    selectedCategory.classList.add('sample-enter');
+      /* 돌아온 카테고리도 부드럽게 등장하되 영상은 별도로 블러 처리하지 않습니다. */
+      selectedCategory.classList.remove('sample-enter');
+      void selectedCategory.offsetWidth;
+      selectedCategory.classList.add('sample-enter');
 
-    /* 이전 카테고리는 즉시 일시정지하고, 새 카테고리만 로딩합니다. */
-    refreshLazySampleVideos();
-    requestAnimationFrame(() => refreshLazySampleVideos());
+      /* 숨긴 카테고리의 영상은 일시정지하고, 선택한 영상만 필요할 때 로딩합니다. */
+      refreshLazySampleVideos();
+      requestAnimationFrame(() => refreshLazySampleVideos());
+    };
+
+    if (outgoing && outgoing !== selectedCategory &&
+        !window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+      outgoing.classList.add('sample-exit');
+      sampleSwitchTimer = setTimeout(commitCategory, 115);
+    } else {
+      commitCategory();
+    }
   }
   function buildWaitingBlock() {
     return `
@@ -4778,10 +4948,16 @@ function renderBaseOptions() {
   optionPanel.id = 'plan-included-panel';
   optionPanel.setAttribute('role', 'region');
   optionPanel.setAttribute('aria-label', '선택한 리깅의 기본 포함 옵션');
+  let currentPlanId = null;
+  let planSwitchTimer = null;
 
   function selectPlan(planId) {
     const plan = plans.find(item => item.id === planId);
     if (!plan) return;
+    if (currentPlanId === planId) return;
+    const hadSelection = currentPlanId !== null;
+    currentPlanId = planId;
+    clearTimeout(planSwitchTimer);
 
     planButtons.forEach((button, id) => {
       const selected = id === planId;
@@ -4821,7 +4997,7 @@ function renderBaseOptions() {
       </div>
     `).join('');
 
-    optionPanel.innerHTML = `
+    const detailHtml = `
       <div class="included-details-enter">
         <div class="included-head">
           <div>
@@ -4835,6 +5011,16 @@ function renderBaseOptions() {
         </div>
       </div>
     `;
+    const showDetails = () => {
+      optionPanel.classList.remove('panel-transition-out');
+      optionPanel.innerHTML = detailHtml;
+    };
+    if (hadSelection && !window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+      optionPanel.classList.add('panel-transition-out');
+      planSwitchTimer = setTimeout(showDetails, 115);
+    } else {
+      showDetails();
+    }
   }
 
   plans.forEach(plan => {
@@ -4897,6 +5083,8 @@ function renderAddOptions() {
   panel.id = 'add-option-detail-panel';
   panel.setAttribute('role', 'tabpanel');
   panel.tabIndex = 0;
+  let currentOptionIndex = -1;
+  let optionSwitchTimer = null;
 
   const tabs = categories.map(([key,title], index) => {
     const tab = document.createElement('button');
@@ -4931,13 +5119,17 @@ function renderAddOptions() {
 
   function selectCategory(index) {
     const [key,title] = categories[index];
+    if (currentOptionIndex === index) return;
+    const hadSelection = currentOptionIndex !== -1;
+    currentOptionIndex = index;
+    clearTimeout(optionSwitchTimer);
     tabs.forEach((tab,i) => {
       const active = i === index;
       tab.setAttribute('aria-selected', String(active));
       tab.tabIndex = active ? 0 : -1;
     });
     panel.setAttribute('aria-labelledby', tabs[index].id);
-    panel.innerHTML = `
+    const detailHtml = `
       <div class="add-option-details-enter">
         <div class="add-option-panel-head">
           <span class="add-option-panel-kicker">RIGGING ADD-ONS</span>
@@ -4953,6 +5145,16 @@ function renderAddOptions() {
         </div>
       </div>
     `;
+    const showDetails = () => {
+      panel.classList.remove('panel-transition-out');
+      panel.innerHTML = detailHtml;
+    };
+    if (hadSelection && !window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+      panel.classList.add('panel-transition-out');
+      optionSwitchTimer = setTimeout(showDetails, 115);
+    } else {
+      showDetails();
+    }
   }
 
   grid.appendChild(navigation);
@@ -5568,6 +5770,24 @@ function initStaggerCardReveals() {
     });
   }, {threshold:0, rootMargin:'-3% 0px -3% 0px'});
   cards.forEach(card => observer.observe(card));
+}
+
+/* Sample navigation enters after its section scrolls into view, and can replay. */
+function initSampleTabMotion() {
+  const tabs = document.getElementById('sample-tabs');
+  const section = document.getElementById('samples');
+  if (!tabs || !section) return;
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+    tabs.classList.add('choreography-visible');
+    return;
+  }
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      tabs.classList.toggle('choreography-visible', entry.isIntersecting);
+    });
+  }, {threshold:0, rootMargin:'-3% 0px -3% 0px'});
+  observer.observe(section);
 }
 
 function initScrollFade() {
