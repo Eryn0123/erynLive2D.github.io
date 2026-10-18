@@ -1,7 +1,8 @@
 {
   "mediaHosting": {
-    "_설명": "영상 파일만 개인 홈페이지 GitHub Pages에서 가져옵니다. videoBaseUrl은 images 폴더가 있는 홈페이지의 주소이며, 반드시 /로 끝나야 합니다. 판매 모델 등의 PNG 이미지는 기존 아트머그용 저장소에서 그대로 사용합니다.",
-    "videoBaseUrl": "https://eryn0123.github.io/"
+    "_설명": "videoBaseUrl은 리깅 영상, saleImageBaseUrl은 판매 모델 상세 이미지를 가져올 개인 홈페이지 주소입니다. 두 주소 모두 images 폴더가 있는 GitHub Pages 주소를 적으세요. 예: https://eryn0123.github.io/",
+    "videoBaseUrl": "https://eryn0123.github.io/",
+    "saleImageBaseUrl": "https://eryn0123.github.io/"
   },
   "heroVideo": {
     "_설명": "첫 화면 오른쪽에서 자동 재생되는 대표 영상입니다. src만 바꾸면 됩니다. 빈칸이면 자유 움직임 첫 번째 샘플을 사용합니다.",

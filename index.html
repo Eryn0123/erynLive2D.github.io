@@ -3642,33 +3642,36 @@ section > .process-notes.fade-in{transition-delay:.15s;}
 let C = {}, estimate = {};
 
 async function loadContent() {
-  try { const r = await fetch('content.json'); C = await r.json(); configureSharedVideoSources(); }
+  try { const r = await fetch('content.json'); C = await r.json(); configureSharedMediaSources(); }
   catch(e) { console.warn('content.json not found'); }
   init();
 }
 
-/* Video clips are hosted on Eryn's personal website.
-   Keep ArtMug-specific image paths and all other JSON fields unchanged. */
-function configureSharedVideoSources() {
-  const setting = C.mediaHosting?.videoBaseUrl;
-  if (typeof setting !== 'string' || !setting.trim()) return;
-  let videoRoot;
-  try {
-    videoRoot = new URL(setting.endsWith('/') ? setting : setting + '/');
-    if (videoRoot.protocol !== 'https:') return;
-  } catch { return; }
-
-  const linkVideo = item => {
-    if (!item || typeof item.src !== 'string') return;
-    if (!/^images\/[a-z0-9_/-]+\.(mp4|webm|mov)$/i.test(item.src)) return;
-    item.src = new URL(item.src, videoRoot).href;
+/* Shared video and sale-model image files live in Eryn's personal website.
+   All paths and pricing remain editable in content.json. */
+function configureSharedMediaSources() {
+  const resolveRoot = setting => {
+    if (typeof setting !== 'string' || !setting.trim()) return null;
+    try {
+      const root = new URL(setting.endsWith('/') ? setting : setting + '/');
+      return root.protocol === 'https:' ? root : null;
+    } catch { return null; }
+  };
+  const linkAsset = (item, root, extensions) => {
+    if (!root || !item || typeof item.src !== 'string') return;
+    if (!/^images\/[a-z0-9_/-]+\.[a-z0-9]+$/i.test(item.src)) return;
+    if (!extensions.test(item.src)) return;
+    item.src = new URL(item.src, root).href;
   };
 
+  const videoRoot = resolveRoot(C.mediaHosting?.videoBaseUrl);
+  const imageRoot = resolveRoot(C.mediaHosting?.saleImageBaseUrl);
+  const linkVideo = item => linkAsset(item, videoRoot, /\.(mp4|webm|mov)$/i);
+  const linkImage = item => linkAsset(item, imageRoot, /\.(png|jpe?g|webp|gif|avif)$/i);
   linkVideo(C.heroVideo);
-  (C.sampleCategories || []).forEach(category =>
-    (category.samples || []).forEach(linkVideo)
-  );
+  (C.sampleCategories || []).forEach(category => (category.samples || []).forEach(linkVideo));
   (C.waitingScreens || []).forEach(linkVideo);
+  (C.saleModels?.items || []).forEach(model => (model.images || []).forEach(linkImage));
 }
 
 const fmt = n => n.toLocaleString('ko-KR') + '원';
