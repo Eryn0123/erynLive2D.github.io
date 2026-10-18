@@ -1,5 +1,25 @@
 {
+  "_편집안내": {
+    "읽는법": "이 항목과 각 _설명은 편집용 메모입니다. 사이트 화면에는 표시되지 않으며 삭제하지 않아도 됩니다.",
+    "첫화면_대표영상": "heroVideo.src: 첫 화면 오른쪽 영상 파일 경로. 아래 sampleCategories의 src를 복사해도 됩니다. YouTube 페이지 주소가 아닌 mp4/webm 파일 경로를 입력하세요.",
+    "첫화면_작가소개": "artist: 이름, 소개글, 소개 태그",
+    "첫화면_할인행사": "event: 화면에 적히는 행사명·할인 문구·종료일. 실제 견적 할인액은 baseOptions.plans의 eventDiscount에서 따로 수정합니다.",
+    "첫화면_일정과안내": "slots: 작업 가능 월, 예약 상태, 왼쪽 안내사항 문구",
+    "작업영상": "showcase: YouTube 쇼케이스 목록 / sampleCategories: 카테고리별 mp4 영상 / waitingScreens: 대기화면 영상",
+    "판매모델": "saleModels.items: 판매 모델의 가격, 상태, 기능, 이미지 목록",
+    "가격과기본옵션": "baseOptions.plans: 기본 가격·이벤트 할인 / includedOptions: 공통 포함 기능 / planOptionChanges: SD 등 플랜별 차이",
+    "추가옵션과협업": "additionalOptions: 추가 기능별 가격 / collaborators: 협업 작가 소개·할인 금액",
+    "공지와신청": "notices: 공지사항 / workProcess: 작업 과정 / formFields: 신청 양식의 안내 문구",
+    "수정주의": "문자열은 쌍따옴표를 유지하고, 항목 사이 쉼표를 지워서는 안 됩니다. 금액은 숫자만 적습니다. 자세한 방법은 CONTENT_GUIDE.md를 참고하세요."
+  },
+  "heroVideo": {
+    "_설명": "첫 화면 오른쪽에서 자동 재생되는 대표 영상입니다. src만 바꾸면 됩니다. 빈칸이면 자유 움직임 첫 번째 샘플을 사용합니다.",
+    "src": "images/free_move/fm1.mp4",
+    "alt": "자유 움직임 대표 영상",
+    "poster": ""
+  },
   "artist": {
+    "_설명": "첫 화면 왼쪽 작가 소개. intro에서 \\n은 줄바꿈입니다.",
     "name": "Eryn",
     "title": "Live2D 리거",
     "intro": "안녕하세요 Live2D 리거 에린 Eryn 입니다.\n캐릭터의 개성을 살려 자연스럽고 예쁘게 움직이도록 작업하고 있습니다.\n방문해주셔서 감사드립니다!",
@@ -15,6 +35,7 @@
     }
   },
   "event": {
+    "_설명": "첫 화면 할인 행사 배너. 실제 견적에서 차감되는 금액은 baseOptions.plans의 eventDiscount에서 수정합니다.",
     "enabled": true,
     "title": "2026년 리깅 이벤트",
     "badge": "협업 할인 중복 가능",
@@ -24,6 +45,7 @@
     "benefit": "10만원 할인"
   },
   "slots": {
+    "_설명": "첫 화면 안내사항과 오른쪽 작업 슬롯. type은 empty(빈 슬롯), fullm(예약 완료)로 적습니다.",
     "enabled": true,
     "notice": "현재 10월 작업부터 3개월치 일정을 안내해드리며, 그 이후 작업도 문의가능합니다.",
     "slotNotices": [
@@ -170,6 +192,7 @@
     }
   ],
   "saleModels": {
+    "_설명": "판매 모델 슬라이드. 각 items 항목에서 이름, 일러·리깅 가격, 판매 여부, 이미지 경로를 수정하세요.",
     "enabled": true,
     "description": "현재 판매 중인 Live2D 모델입니다. 판매 모델의 상세 이미지를 확인할 수 있습니다.",
     "items": [
@@ -462,6 +485,7 @@
     }
   ],
   "baseOptions": {
+    "_설명": "기본 리깅 가격과 포함 기능. eventDiscount는 정가에서 빼는 이벤트 할인금액입니다(원 단위 숫자).",
     "plans": [
       {
         "id": "fullbody",
@@ -530,6 +554,7 @@
     }
   },
   "additionalOptions": {
+    "_설명": "추가 리깅 옵션의 카테고리별 이름과 가격. 각 항목의 price는 원 단위 숫자로 작성하세요.",
     "optionAdd": [
       {
         "id": "hair_simple",
@@ -792,6 +817,7 @@
     }
   ],
   "formFields": {
+    "_설명": "페이지 맨 아래 신청 양식의 입력창 안내 문구입니다. 가격 계산이나 양식 항목 종류는 이곳에서 바뀌지 않습니다.",
     "characterNamePlaceholder": "캐릭터 이름을 적어주세요.",
     "artistNamePlaceholder": "일러스트 작가님 이름/사이트 링크를 적어주세요.",
     "layerFileOptions": [

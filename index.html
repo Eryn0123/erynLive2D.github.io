@@ -40,7 +40,7 @@
 
   --text-primary:   #38347a;
   --text-secondary: #5c5890;
-  --text-muted:     #9494bc;
+  --text-muted:     #77749f;
 
   --glass-bg:          rgba(255,255,255,0.68);
   --glass-bg-hover:    rgba(255,255,255,0.85);
@@ -1814,7 +1814,7 @@ section{padding:var(--section-gap) 0;}
   font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:#fff;
 }
 .collab-name{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:5px;}
-.collab-detail{font-size:12px;color:var(--text-muted);line-height:1.6;}
+.collab-detail{font-size:13px;color:var(--text-muted);line-height:1.6;}
 
 .options-grid{
   display:grid;
@@ -1934,8 +1934,8 @@ section{padding:var(--section-gap) 0;}
   border-radius:999px;
   border:1px solid rgba(168,200,240,.30);
   background:rgba(168,200,240,.10);
-  font-size:11px;
-  color:#7f8fc3;
+  font-size:12px;
+  color:#6266a6;
 }
 
 .plan-desc{
@@ -1979,7 +1979,7 @@ section{padding:var(--section-gap) 0;}
 
 .included-subtitle{
   margin-top:4px;
-  font-size:11.5px;
+  font-size:12.5px;
   line-height:1.55;
   color:var(--text-muted);
 }
@@ -2305,7 +2305,7 @@ section{padding:var(--section-gap) 0;}
 
 .notice-summary{
   margin-top:3px;
-  font-size:11px;
+  font-size:12px;
   font-weight:400;
   line-height:1.5;
   color:var(--text-muted);
@@ -2499,7 +2499,7 @@ section{padding:var(--section-gap) 0;}
 .process-note{font-size:12.5px;color:var(--text-secondary);line-height:1.8;}
 .process-note::before{content:'◆ ';color:var(--purple-light);font-size:9px;}
 
-.form-notice{font-size:12px;color:var(--text-muted);margin-bottom:20px;line-height:1.7;}
+.form-notice{font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.7;}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 .form-group{display:flex;flex-direction:column;gap:6px;}
 .form-group.full{grid-column:1/-1;}
@@ -2565,7 +2565,7 @@ section{padding:var(--section-gap) 0;}
 .form-checkbox-label.checked .form-checkbox-box{background:var(--purple-light);border-color:var(--purple-light);}
 .form-checkbox-label.checked .form-checkbox-box::after{content:'✓';color:#fff;font-size:11px;line-height:1;}
 .form-section-title{font-size:13px;font-weight:600;color:var(--purple-dark);margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid rgba(179,168,240,0.22);}
-.form-section-subtitle{font-size:11px;font-weight:400;color:var(--text-muted);margin-left:8px;}
+.form-section-subtitle{font-size:12px;font-weight:400;color:var(--text-muted);margin-left:8px;}
 .form-addon-accordion{display:flex;flex-direction:column;gap:8px;}
 .form-addon-card{
   overflow:hidden;border:1px solid rgba(179,168,240,.25);border-radius:12px;
@@ -2651,6 +2651,10 @@ section{padding:var(--section-gap) 0;}
 .btn-reset:hover{color:var(--text-primary);background:rgba(255,255,255,0.88);}
 
 .form-estimate-wrap{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start;}
+/* The sticky card must have a column as tall as the form, not a content-height wrapper. */
+@media(min-width:961px){
+  .form-estimate-wrap > .estimate-column{align-self:stretch;min-width:0;}
+}
 .estimate-sticky{
   position:sticky;top:76px;
   background:rgba(255,255,255,0.78);border:1px solid var(--glass-border);
@@ -3522,7 +3526,7 @@ section > .process-notes.fade-in{transition-delay:.15s;}
           <button class="btn-reset" id="btn-reset">양식 초기화</button>
         </div>
       </div>
-      <div>
+      <div class="estimate-column">
         <div class="estimate-sticky">
           <div class="estimate-head">
             <div class="estimate-title-text">예상 견적</div>
@@ -3543,8 +3547,8 @@ section > .process-notes.fade-in{transition-delay:.15s;}
               </svg>
               <span class="btn-copy-text" aria-live="polite">견적 내용 복사하기</span>
             </button>
-            <button class="btn-artmug-inquiry" id="btn-artmug-inquiry" type="button" onclick="scrollToArtMugTop()">아트머그에서 문의하기 <span aria-hidden="true">↑</span></button>
-            <p class="estimate-action-help">버튼을 누르면 페이지 맨 위로 이동합니다.<br>상단의 문의하기에서 복사한 견적을 붙여넣어 주세요.</p>
+            <button class="btn-artmug-inquiry" id="btn-artmug-inquiry" type="button" onclick="scrollToArtMugTop()">상단 문의 버튼으로 이동 <span aria-hidden="true">↑</span></button>
+            <p class="estimate-action-help">페이지 맨 위로 이동합니다.<br>복사한 견적을 상단의 문의하기에 붙여넣어 주세요.</p>
           </div>
         </div>
       </div>
@@ -3706,19 +3710,23 @@ function createSlidingSelectionIndicator(container, activeSelector, markerClass)
   return position;
 }
 
-/* Use the same first free-movement clip as the samples section.
+/* The hero clip is editable via content.json > heroVideo.src.
+   Falls back to the first free-movement sample for older JSON files.
    Muted + playsinline enables autoplay on supported devices. */
 function initFeaturedShowcase() {
   const stage = document.getElementById('hero-video-stage');
   if (!stage) return;
+  const config = C.heroVideo || {};
   const group = (C.sampleCategories || []).find(category => category.id === 'free');
   const item = group && Array.isArray(group.samples) ? group.samples[0] : null;
-  if (!item || !item.src) {
-    stage.textContent = '자유 움직임 샘플을 준비 중입니다.';
+  const src = String(config.src || item?.src || '').trim();
+  if (!src) {
+    stage.textContent = '대표 영상을 준비 중입니다.';
     return;
   }
   const video = document.createElement('video');
-  video.src = item.src;
+  video.src = src;
+  if (config.poster) video.poster = config.poster;
   video.autoplay = true;
   video.muted = true;
   video.defaultMuted = true;
@@ -3727,7 +3735,7 @@ function initFeaturedShowcase() {
   video.preload = 'metadata';
   video.setAttribute('muted', '');
   video.setAttribute('playsinline', '');
-  video.setAttribute('aria-label', item.alt || '자유 움직임 대표 영상');
+  video.setAttribute('aria-label', config.alt || item?.alt || 'Live2D 리깅 대표 영상');
   stage.appendChild(video);
   video.play().catch(() => {
     const button = document.createElement('button');
