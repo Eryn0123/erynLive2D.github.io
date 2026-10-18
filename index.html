@@ -2009,6 +2009,10 @@ section{padding:var(--section-gap) 0;}
   grid-template-columns:repeat(2,minmax(0,1fr));
 }
 
+.included-category-grid[data-count="1"]{
+  grid-template-columns:minmax(0,1fr);
+}
+
 .included-category{
   min-width:0;
   overflow:hidden;
@@ -2177,6 +2181,14 @@ section{padding:var(--section-gap) 0;}
   color:var(--text-primary);
   font-size:17px;
   font-weight:700;
+}
+.add-option-panel-description{
+  margin-top:9px;
+  font-size:12.5px;
+  line-height:1.7;
+  color:var(--text-secondary);
+  white-space:pre-line;
+  overflow-wrap:anywhere;
 }
 .add-option-panel-list{
   display:flex;
@@ -5106,6 +5118,9 @@ function renderBaseOptions() {
 
   grid.innerHTML = '';
   const plans = Array.isArray(bo.plans) ? bo.plans : [];
+  // 각 리깅 플랜의 포함 기능을 content.json에서 독립적으로 편집합니다.
+  // 예전 includedOptions + planOptionChanges 형식도 계속 지원합니다.
+  const categoriesByPlan = bo.includedOptionsByPlan || {};
   let categories = Array.isArray(bo.includedOptions)
     ? bo.includedOptions
     : [];
@@ -5149,17 +5164,30 @@ function renderBaseOptions() {
         ? '현재 선택한 리깅' : '포함 옵션 살펴보기';
     });
 
-    if (!categories.length) return;
-    const changes = (bo.planOptionChanges || {})[planId] || {};
-    const exclusions = new Set(changes.exclude || []);
-    const replacements = changes.replace || {};
-
-    const includedCategories = categories.map(category => ({
-      ...category,
-      items: (Array.isArray(category.items) ? category.items : [])
-        .filter(item => !exclusions.has(item))
-        .map(item => replacements[item] || item)
-    })).filter(category => category.items.length);
+    const planCategories = categoriesByPlan[planId];
+    let includedCategories;
+    if (Array.isArray(planCategories)) {
+      // 플랜마다 카테고리명/설명/항목의 추가, 삭제 및 순서 변경 가능
+      includedCategories = planCategories;
+    } else {
+      // 기존 JSON을 쓰는 경우의 호환 처리
+      const changes = (bo.planOptionChanges || {})[planId] || {};
+      const exclusions = new Set(changes.exclude || []);
+      const replacements = changes.replace || {};
+      includedCategories = categories.map(category => ({
+        ...category,
+        items: (Array.isArray(category.items) ? category.items : [])
+          .filter(item => !exclusions.has(item))
+          .map(item => replacements[item] || item)
+      }));
+    }
+    includedCategories = includedCategories
+      .filter(category => category && Array.isArray(category.items))
+      .map(category => ({
+        ...category,
+        items: category.items.filter(item => typeof item === 'string' && item.trim())
+      }))
+      .filter(category => category.items.length);
 
     const categoryHtml = includedCategories.map(category => `
       <div class="included-category">
@@ -5189,9 +5217,11 @@ function renderBaseOptions() {
           </div>
           <div class="included-all-badge">기본 포함</div>
         </div>
-        <div class="included-category-grid" data-count="${includedCategories.length}">
-          ${categoryHtml}
-        </div>
+        ${includedCategories.length ? `
+          <div class="included-category-grid" data-count="${includedCategories.length}">
+            ${categoryHtml}
+          </div>
+        ` : `<div class="included-subtitle">현재 등록된 기본 포함 옵션이 없습니다.</div>`}
       </div>
     `;
     const showDetails = () => {
@@ -5235,7 +5265,7 @@ function renderBaseOptions() {
     grid.appendChild(card);
   });
 
-  if (categories.length && plans.length) {
+  if (plans.length && (categories.length || plans.some(plan => Array.isArray(categoriesByPlan[plan.id])))) {
     grid.appendChild(optionPanel);
     selectPlan(plans[0].id);
   }
@@ -5303,6 +5333,7 @@ function renderAddOptions() {
 
   function selectCategory(index) {
     const [key,title] = categories[index];
+    const description = String(ao.categoryDescriptions?.[key] || '').trim();
     if (currentOptionIndex === index) return;
     const hadSelection = currentOptionIndex !== -1;
     currentOptionIndex = index;
@@ -5319,6 +5350,7 @@ function renderAddOptions() {
         <div class="add-option-panel-head">
           <span class="add-option-panel-kicker">RIGGING ADD-ONS</span>
           <div class="add-option-panel-title">${escapeNoticeText(title)}</div>
+          ${description ? `<p class="add-option-panel-description">${escapeNoticeText(description)}</p>` : ''}
         </div>
         <div class="add-option-panel-list">
           ${ao[key].map(item => `

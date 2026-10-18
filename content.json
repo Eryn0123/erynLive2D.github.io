@@ -1,17 +1,4 @@
 {
-  "_편집안내": {
-    "읽는법": "이 항목과 각 _설명은 편집용 메모입니다. 사이트 화면에는 표시되지 않으며 삭제하지 않아도 됩니다.",
-    "첫화면_대표영상": "heroVideo.src: 첫 화면 오른쪽 영상 파일 경로. 아래 sampleCategories의 src를 복사해도 됩니다. YouTube 페이지 주소가 아닌 mp4/webm 파일 경로를 입력하세요.",
-    "첫화면_작가소개": "artist: 이름, 소개글, 소개 태그",
-    "첫화면_할인행사": "event: 화면에 적히는 행사명·할인 문구·종료일. 실제 견적 할인액은 baseOptions.plans의 eventDiscount에서 따로 수정합니다.",
-    "첫화면_일정과안내": "slots: 작업 가능 월, 예약 상태, 왼쪽 안내사항 문구",
-    "작업영상": "showcase: YouTube 쇼케이스 목록 / sampleCategories: 카테고리별 mp4 영상 / waitingScreens: 대기화면 영상",
-    "판매모델": "saleModels.items: 판매 모델의 가격, 상태, 기능, 이미지 목록",
-    "가격과기본옵션": "baseOptions.plans: 기본 가격·이벤트 할인 / includedOptions: 공통 포함 기능 / planOptionChanges: SD 등 플랜별 차이",
-    "추가옵션과협업": "additionalOptions: 추가 기능별 가격 / collaborators: 협업 작가 소개·할인 금액",
-    "공지와신청": "notices: 공지사항 / workProcess: 작업 과정 / formFields: 신청 양식의 안내 문구",
-    "수정주의": "문자열은 쌍따옴표를 유지하고, 항목 사이 쉼표를 지워서는 안 됩니다. 금액은 숫자만 적습니다. 자세한 방법은 CONTENT_GUIDE.md를 참고하세요."
-  },
   "heroVideo": {
     "_설명": "첫 화면 오른쪽에서 자동 재생되는 대표 영상입니다. src만 바꾸면 됩니다. 빈칸이면 자유 움직임 첫 번째 샘플을 사용합니다.",
     "src": "images/free_move/fm1.mp4",
@@ -485,7 +472,7 @@
     }
   ],
   "baseOptions": {
-    "_설명": "기본 리깅 가격과 포함 기능. eventDiscount는 정가에서 빼는 이벤트 할인금액입니다(원 단위 숫자).",
+    "_설명": "plans는 리깅 종류와 가격(eventDiscount는 할인액)입니다. includedOptionsByPlan에서는 LD 전신(fullbody), LD 반신(halfbody), SD 전신(sdbody)의 카테고리·설명·포함 기능을 각각 따로 편집할 수 있습니다.",
     "plans": [
       {
         "id": "fullbody",
@@ -507,54 +494,113 @@
         "description": "SD 몸 전신을 리깅하는 작업입니다.\n말랑말랑하면서 통통 튀는 귀여운 움직임이 느껴지도록 작업을 진행합니다."
       }
     ],
-    "includedOptions": [
-      {
-        "id": "face",
-        "title": "얼굴 / 표정",
-        "description": "표정과 페이셜 트래킹에 필요한 기본 구성입니다.",
-        "items": [
-          "눈 깜박임 + 동공 물리 연산",
-          "눈동자 XY 움직임",
-          "눈썹 상하/각도/변형",
-          "입 모양 12점",
-          "얼굴 감정 표현 3가지"
-        ]
-      },
-      {
-        "id": "movement",
-        "title": "움직임 / 물리",
-        "description": "머리와 몸의 자연스러운 움직임 및 물리 연산이 포함됩니다.",
-        "items": [
-          "머리 XYZ 움직임 및 물리 연산",
-          "몸 XYZ 움직임 및 물리 연산",
-          "머리카락 물리 연산",
-          "의상/악세서리 물리 연산"
-        ]
-      },
-      {
-        "id": "basic",
-        "title": "기본 기능",
-        "description": "기본 의상 ON&OFF 토글과 호흡 기능이 포함됩니다.",
-        "items": [
-          "기본 호흡",
-          "기본 의상/악세서리 ON&OFF 기능"
-        ]
-      }
-    ],
-    "planOptionChanges": {
-      "sdbody": {
-        "replace": {
-          "입 모양 12점": "입 모양 9점"
+    "includedOptionsByPlan": {
+      "_설명": "각 리깅별 목록은 완전히 독립적입니다. title은 카테고리명, description은 카테고리 설명, items는 실제 포함 기능입니다. 카테고리나 기능을 자유롭게 추가·삭제·수정할 수 있습니다.",
+      "fullbody": [
+        {
+          "id": "face",
+          "title": "얼굴 / 표정",
+          "description": "표정과 페이셜 트래킹에 필요한 기본 구성입니다.",
+          "items": [
+            "눈 깜박임 + 동공 물리 연산",
+            "눈동자 XY 움직임",
+            "눈썹 상하/각도/변형",
+            "입 모양 12점",
+            "얼굴 감정 표현 3가지"
+          ]
         },
-        "exclude": [
-          "기본 호흡",
-          "기본 의상/악세서리 ON&OFF 기능"
-        ]
-      }
+        {
+          "id": "movement",
+          "title": "움직임 / 물리",
+          "description": "머리와 몸의 자연스러운 움직임 및 물리 연산이 포함됩니다.",
+          "items": [
+            "머리 XYZ 움직임 및 물리 연산",
+            "몸 XYZ 움직임 및 물리 연산",
+            "머리카락 물리 연산",
+            "의상/악세서리 물리 연산"
+          ]
+        },
+        {
+          "id": "basic",
+          "title": "기본 기능",
+          "description": "기본 의상 ON&OFF 토글과 호흡 기능이 포함됩니다.",
+          "items": [
+            "기본 호흡",
+            "기본 의상/악세서리 ON&OFF 기능"
+          ]
+        }
+      ],
+      "halfbody": [
+        {
+          "id": "face",
+          "title": "얼굴 / 표정",
+          "description": "표정과 페이셜 트래킹에 필요한 기본 구성입니다.",
+          "items": [
+            "눈 깜박임 + 동공 물리 연산",
+            "눈동자 XY 움직임",
+            "눈썹 상하/각도/변형",
+            "입 모양 12점",
+            "얼굴 감정 표현 3가지"
+          ]
+        },
+        {
+          "id": "movement",
+          "title": "움직임 / 물리",
+          "description": "머리와 몸의 자연스러운 움직임 및 물리 연산이 포함됩니다.",
+          "items": [
+            "머리 XYZ 움직임 및 물리 연산",
+            "몸 XYZ 움직임 및 물리 연산",
+            "머리카락 물리 연산",
+            "의상/악세서리 물리 연산"
+          ]
+        },
+        {
+          "id": "basic",
+          "title": "기본 기능",
+          "description": "기본 의상 ON&OFF 토글과 호흡 기능이 포함됩니다.",
+          "items": [
+            "기본 호흡",
+            "기본 의상/악세서리 ON&OFF 기능"
+          ]
+        }
+      ],
+      "sdbody": [
+        {
+          "id": "face",
+          "title": "얼굴 / 표정",
+          "description": "표정과 페이셜 트래킹에 필요한 기본 구성입니다.",
+          "items": [
+            "눈 깜박임 + 동공 물리 연산",
+            "눈동자 XY 움직임",
+            "눈썹 상하/각도/변형",
+            "입 모양 9점",
+            "얼굴 감정 표현 3가지"
+          ]
+        },
+        {
+          "id": "movement",
+          "title": "움직임 / 물리",
+          "description": "머리와 몸의 자연스러운 움직임 및 물리 연산이 포함됩니다.",
+          "items": [
+            "머리 XYZ 움직임 및 물리 연산",
+            "몸 XYZ 움직임 및 물리 연산",
+            "머리카락 물리 연산",
+            "의상/악세서리 물리 연산"
+          ]
+        }
+      ]
     }
   },
   "additionalOptions": {
-    "_설명": "추가 리깅 옵션의 카테고리별 이름과 가격. 각 항목의 price는 원 단위 숫자로 작성하세요.",
+    "_설명": "categoryDescriptions에 각 카테고리 설명글을 적을 수 있습니다. 아래 옵션 목록의 price는 원 단위 숫자입니다.",
+    "categoryDescriptions": {
+      "optionAdd": "헤어스타일 및 의상 추가에 대한 옵션입니다.",
+      "expressionPose": "표정, 자세 및 치비 변환에 대한 옵션입니다.",
+      "iosPhysics": "iOS 페이셜 트래킹과 VBridger에 관련된 추가 기능입니다.",
+      "partsAdd": "팔 파츠와 소품을 추가하는 옵션입니다.",
+      "animalParts": "동물 귀, 꼬리 및 날개를 추가하는 옵션입니다.",
+      "other": "추가 수정 및 작업 공개 일정 관련 옵션입니다."
+    },
     "optionAdd": [
       {
         "id": "hair_simple",
