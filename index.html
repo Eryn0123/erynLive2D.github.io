@@ -3642,9 +3642,33 @@ section > .process-notes.fade-in{transition-delay:.15s;}
 let C = {}, estimate = {};
 
 async function loadContent() {
-  try { const r = await fetch('content.json'); C = await r.json(); }
+  try { const r = await fetch('content.json'); C = await r.json(); configureSharedVideoSources(); }
   catch(e) { console.warn('content.json not found'); }
   init();
+}
+
+/* Video clips are hosted on Eryn's personal website.
+   Keep ArtMug-specific image paths and all other JSON fields unchanged. */
+function configureSharedVideoSources() {
+  const setting = C.mediaHosting?.videoBaseUrl;
+  if (typeof setting !== 'string' || !setting.trim()) return;
+  let videoRoot;
+  try {
+    videoRoot = new URL(setting.endsWith('/') ? setting : setting + '/');
+    if (videoRoot.protocol !== 'https:') return;
+  } catch { return; }
+
+  const linkVideo = item => {
+    if (!item || typeof item.src !== 'string') return;
+    if (!/^images\/[a-z0-9_/-]+\.(mp4|webm|mov)$/i.test(item.src)) return;
+    item.src = new URL(item.src, videoRoot).href;
+  };
+
+  linkVideo(C.heroVideo);
+  (C.sampleCategories || []).forEach(category =>
+    (category.samples || []).forEach(linkVideo)
+  );
+  (C.waitingScreens || []).forEach(linkVideo);
 }
 
 const fmt = n => n.toLocaleString('ko-KR') + '원';
