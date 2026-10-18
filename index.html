@@ -3250,6 +3250,148 @@ section > .process-notes.fade-in{transition-delay:.15s;}
   .showcase-slides,.sale-model-slides,.sale-media-slides,.waiting-slides{transition:none!important;}
 }
 
+/* Premium lavender details: one short edge highlight per hover, never a cursor glow. */
+.premium-edge-glint{position:relative;}
+.premium-edge-glint::after{
+  content:'';position:absolute;top:1px;left:12px;right:12px;height:2px;
+  pointer-events:none;z-index:4;border-radius:999px;opacity:0;
+  background:linear-gradient(90deg,transparent 0%,rgba(202,190,255,.24) 27%,
+    rgba(255,255,255,.97) 50%,rgba(167,152,237,.72) 65%,transparent 100%);
+  background-size:220% 100%;background-position:100% 0;
+}
+@keyframes premiumEdgeSweep{
+  0%{opacity:0;background-position:100% 0;}
+  18%{opacity:.95;}
+  80%{opacity:.8;}
+  100%{opacity:0;background-position:0% 0;}
+}
+@media(hover:hover) and (pointer:fine){
+  .premium-edge-glint:hover::after{
+    animation:premiumEdgeSweep .84s cubic-bezier(.22,1,.36,1) both;
+  }
+}
+
+/* A shared moving selection background for sample tabs and the add-on category rail. */
+.sample-tabs.has-motion-indicator,.add-option-nav.has-motion-indicator{position:relative;}
+.sample-tab-indicator,.add-option-marker{
+  position:absolute;top:0;left:0;z-index:0;pointer-events:none;
+  width:0;height:0;opacity:0;
+  transition:transform .48s cubic-bezier(.22,1,.36,1),
+             width .48s cubic-bezier(.22,1,.36,1),
+             height .48s cubic-bezier(.22,1,.36,1),opacity .18s ease;
+}
+.sample-tab-indicator{
+  border-radius:999px;border:1px solid var(--purple-light);
+  background:linear-gradient(135deg,var(--purple-light),var(--purple-dark));
+  box-shadow:0 3px 14px var(--accent-glow);
+}
+.add-option-marker{
+  border-radius:11px;border:1px solid rgba(149,124,221,.66);
+  background:linear-gradient(110deg,rgba(234,228,252,.92),rgba(236,243,255,.75));
+  box-shadow:0 5px 15px rgba(112,95,195,.11);
+}
+.sample-tab-indicator.is-positioned,.add-option-marker.is-positioned{opacity:1;}
+.sample-tab-indicator:not(.can-animate),.add-option-marker:not(.can-animate){transition:none;}
+.sample-tabs.has-motion-indicator .sample-tab,
+.add-option-nav.has-motion-indicator .add-option-tab{position:relative;z-index:1;}
+.sample-tabs.has-motion-indicator .sample-tab.active{
+  background:transparent;border-color:transparent;box-shadow:none;
+}
+.add-option-nav.has-motion-indicator .add-option-tab[aria-selected="true"],
+.add-option-nav.has-motion-indicator .add-option-tab[aria-selected="true"]:hover{
+  background:transparent;border-color:transparent;box-shadow:none;
+}
+
+/* The representative Live2D video is framed without filtering or scaling the video. */
+.hero-frame-motion{
+  position:absolute;inset:1px;z-index:5;overflow:hidden;
+  border-radius:12px;pointer-events:none;
+}
+.hero-frame-motion .frame-edge{
+  position:absolute;display:block;opacity:.9;
+  background:linear-gradient(90deg,rgba(220,215,255,.75),rgba(166,153,238,.85),rgba(183,212,255,.78));
+  box-shadow:0 0 7px rgba(183,169,245,.25);
+}
+.frame-edge-top,.frame-edge-bottom{left:0;right:0;height:2px;transform:scaleX(0);}
+.frame-edge-left,.frame-edge-right{top:0;bottom:0;width:2px;transform:scaleY(0);}
+.frame-edge-top{top:0;transform-origin:left center;}
+.frame-edge-right{right:0;transform-origin:center top;}
+.frame-edge-bottom{bottom:0;transform-origin:right center;}
+.frame-edge-left{left:0;transform-origin:center bottom;}
+.hero-video-stage.premium-frame-once .frame-edge-top{animation:premiumDrawX .70s cubic-bezier(.22,1,.36,1) .35s forwards;}
+.hero-video-stage.premium-frame-once .frame-edge-right{animation:premiumDrawY .70s cubic-bezier(.22,1,.36,1) .55s forwards;}
+.hero-video-stage.premium-frame-once .frame-edge-bottom{animation:premiumDrawX .70s cubic-bezier(.22,1,.36,1) .75s forwards;}
+.hero-video-stage.premium-frame-once .frame-edge-left{animation:premiumDrawY .70s cubic-bezier(.22,1,.36,1) .95s forwards;}
+@keyframes premiumDrawX{to{transform:scaleX(1);}}
+@keyframes premiumDrawY{to{transform:scaleY(1);}}
+.hero-frame-motion::after{
+  content:'';position:absolute;top:0;left:0;height:2px;width:38%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.98),transparent);
+  transform:translateX(-110%);opacity:0;
+}
+.hero-video-stage.premium-frame-once .hero-frame-motion::after{
+  animation:premiumFrameFlash 1.05s ease-out 1.35s both;
+}
+@keyframes premiumFrameFlash{
+  15%{opacity:.9;}
+  75%{opacity:.65;}
+  100%{opacity:0;transform:translateX(300%);}
+}
+
+/* The discount glows once when content is ready; no looping pulse. */
+.event-benefit-wrap{position:relative;width:max-content;max-width:100%;isolation:isolate;}
+.event-benefit-wrap::before{
+  content:'';position:absolute;z-index:-1;inset:-9px -14px;
+  pointer-events:none;opacity:0;transform:scale(.88);
+  background:radial-gradient(ellipse at 45% 50%,rgba(172,153,240,.33),transparent 74%);
+}
+.event-benefit-wrap::after{
+  content:'✦';position:absolute;right:-10px;top:-12px;
+  color:#a497e6;font-size:16px;opacity:0;pointer-events:none;
+}
+.event-benefit-wrap.premium-event-once::before{
+  animation:premiumDiscountGlow 1.15s ease-out .40s forwards;
+}
+.event-benefit-wrap.premium-event-once::after{
+  animation:premiumDiscountSparkle 1.05s ease-out .49s forwards;
+}
+.event-benefit-wrap.premium-event-once .event-benefit{
+  animation:premiumDiscountText 1.08s ease-out .40s both;
+}
+@keyframes premiumDiscountGlow{
+  0%{opacity:0;transform:scale(.88);}
+  48%{opacity:.9;transform:scale(1.06);}
+  100%{opacity:.14;transform:scale(1);}
+}
+@keyframes premiumDiscountSparkle{
+  0%{opacity:0;transform:translate3d(-5px,7px,0) scale(.65);}
+  45%{opacity:.95;transform:translate3d(0,-3px,0) scale(1.05);}
+  100%{opacity:0;transform:translate3d(4px,-10px,0) scale(.75);}
+}
+@keyframes premiumDiscountText{
+  0%,100%{filter:brightness(1);}
+  50%{filter:brightness(1.12);}
+}
+@media(prefers-reduced-motion:reduce){
+  .premium-edge-glint:hover::after,
+  .hero-frame-motion .frame-edge,.hero-frame-motion::after,
+  .event-benefit-wrap.premium-event-once::before,
+  .event-benefit-wrap.premium-event-once::after,
+  .event-benefit-wrap.premium-event-once .event-benefit{animation:none!important;}
+  .hero-frame-motion .frame-edge{transform:none!important;}
+  .hero-frame-motion::after,.event-benefit-wrap::after{display:none!important;}
+  .sample-tab-indicator,.add-option-marker{display:none!important;}
+  .sample-tabs.has-motion-indicator .sample-tab.active{
+    background:linear-gradient(135deg,var(--purple-light),var(--purple-dark));
+    border-color:var(--purple-light);box-shadow:0 3px 14px var(--accent-glow);
+  }
+  .add-option-nav.has-motion-indicator .add-option-tab[aria-selected="true"]{
+    border-color:rgba(149,124,221,.66);
+    background:linear-gradient(110deg,rgba(234,228,252,.92),rgba(236,243,255,.75));
+    box-shadow:0 5px 15px rgba(112,95,195,.11);
+  }
+}
+
 </style>
 </head>
 <body>
@@ -3301,7 +3443,9 @@ section > .process-notes.fade-in{transition-delay:.15s;}
               </div>
             </div>
             <div class="event-service" id="event-service"></div>
-            <div class="event-benefit" id="event-benefit"></div>
+            <div class="event-benefit-wrap" id="event-benefit-wrap">
+              <div class="event-benefit" id="event-benefit"></div>
+            </div>
           </div>
         </div>
         <div class="hero-feature-actions">
@@ -3312,7 +3456,14 @@ section > .process-notes.fade-in{transition-delay:.15s;}
       </div>
       <div class="glass-card hero-video-card hero-entrance">
         <div class="hero-video-topline"><span><span class="hero-sparkle">✦</span> FREE MOVEMENT SAMPLE</span><span class="hero-video-note">LIVE2D · MOTION</span></div>
-        <div class="hero-video-stage" id="hero-video-stage"></div>
+        <div class="hero-video-stage" id="hero-video-stage">
+          <div class="hero-frame-motion" aria-hidden="true">
+            <span class="frame-edge frame-edge-top"></span>
+            <span class="frame-edge frame-edge-right"></span>
+            <span class="frame-edge frame-edge-bottom"></span>
+            <span class="frame-edge frame-edge-left"></span>
+          </div>
+        </div>
       </div>
     </div>
     <div class="hero-bottom">
@@ -3533,7 +3684,71 @@ function init() {
   initFeaturedShowcase();
   renderShowcase(); renderSaleModels(); renderSamples(); initSampleMediaLoading(); initLazySampleVideos(); renderCollabs();
   renderBaseOptions(); renderAddOptions(); renderNotices();
-  renderProcess(); renderForm(); initScrollFade(); initStaggerCardReveals(); initSampleTabMotion();
+  renderProcess(); renderForm(); initPremiumEdgeGlints(); initPremiumHeroMoments();
+  initScrollFade(); initStaggerCardReveals(); initSampleTabMotion();
+}
+
+/* A short top-edge reflection, applied only to cards (not their media). */
+function initPremiumEdgeGlints(root = document) {
+  root.querySelectorAll([
+    '.hero-reimagined .hero-top > .glass-card',
+    '.hero-reimagined .hero-bottom > .glass-card',
+    '.sale-model-left', '.sale-showcase-panel', '.sale-detail-gallery',
+    '.sample-item', '.collab-card', '.plan-card', '.included-category',
+    '.included-options-card', '.add-option-panel', '.notice-item', '.process-step'
+  ].join(',')).forEach(card => card.classList.add('premium-edge-glint'));
+}
+
+/* Frame and discount effects play once when each element actually enters view. */
+function initPremiumHeroMoments() {
+  const moments = [
+    [document.getElementById('hero-video-stage'), 'premium-frame-once'],
+    [document.getElementById('event-benefit-wrap'), 'premium-event-once']
+  ].filter(([node]) => node);
+
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+    moments.forEach(([node, className]) => node.classList.add(className));
+    return;
+  }
+  const actions = new Map(moments);
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add(actions.get(entry.target));
+      obs.unobserve(entry.target);
+    });
+  }, {threshold:.20});
+  moments.forEach(([node]) => observer.observe(node));
+}
+
+/* One absolute selection surface follows the active tab; wrapped mobile rows work too. */
+function createSlidingSelectionIndicator(container, activeSelector, markerClass) {
+  if (!container || window.matchMedia('(prefers-reduced-motion:reduce)').matches)
+    return () => {};
+
+  const marker = document.createElement('span');
+  marker.className = markerClass;
+  marker.setAttribute('aria-hidden', 'true');
+  container.classList.add('has-motion-indicator');
+  container.appendChild(marker);
+
+  const position = () => {
+    const active = container.querySelector(activeSelector);
+    if (!active) return;
+    marker.style.width = `${active.offsetWidth}px`;
+    marker.style.height = `${active.offsetHeight}px`;
+    marker.style.transform = `translate3d(${active.offsetLeft}px,${active.offsetTop}px,0)`;
+    marker.classList.add('is-positioned');
+    if (!marker.classList.contains('can-animate')) {
+      requestAnimationFrame(() => marker.classList.add('can-animate'));
+    }
+  };
+
+  window.addEventListener('resize', position, {passive:true});
+  if ('ResizeObserver' in window) new ResizeObserver(position).observe(container);
+  if (document.fonts?.ready) document.fonts.ready.then(position).catch(() => {});
+  return position;
 }
 
 /* Use the same first free-movement clip as the samples section.
@@ -4674,6 +4889,7 @@ function renderSamples() {
 */
   let selectedSampleId = null;
   let sampleSwitchTimer = null;
+  let moveSampleIndicator = () => {};
   function activate(id) {
     const selectedTab = tabsEl.querySelector(`.sample-tab[data-id="${id}"]`);
     const selectedCategory = document.getElementById('cat-' + id);
@@ -4689,6 +4905,7 @@ function renderSamples() {
       tab.classList.toggle('active', selected);
       tab.setAttribute('aria-pressed', String(selected));
     });
+    moveSampleIndicator();
     selectedSampleId = id;
     const outgoing = catsEl.querySelector('.sample-category.active');
     const commitCategory = () => {
@@ -4770,6 +4987,9 @@ function renderSamples() {
     renderWaitingSlides('cat');
   }
 
+  moveSampleIndicator = createSlidingSelectionIndicator(
+    tabsEl, '.sample-tab.active', 'sample-tab-indicator'
+  );
   /* 가장 먼저 보여줄 샘플은 자유 움직임, 없으면 첫 카테고리입니다. */
   const initialId = cats.find(cat => cat.id === 'free')?.id ||
     cats[0]?.id || (waitingItems.length ? 'waiting' : null);
@@ -5014,6 +5234,7 @@ function renderBaseOptions() {
     const showDetails = () => {
       optionPanel.classList.remove('panel-transition-out');
       optionPanel.innerHTML = detailHtml;
+      initPremiumEdgeGlints(optionPanel);
     };
     if (hadSelection && !window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
       optionPanel.classList.add('panel-transition-out');
@@ -5085,6 +5306,7 @@ function renderAddOptions() {
   panel.tabIndex = 0;
   let currentOptionIndex = -1;
   let optionSwitchTimer = null;
+  let moveAddOptionIndicator = () => {};
 
   const tabs = categories.map(([key,title], index) => {
     const tab = document.createElement('button');
@@ -5128,6 +5350,7 @@ function renderAddOptions() {
       tab.setAttribute('aria-selected', String(active));
       tab.tabIndex = active ? 0 : -1;
     });
+    moveAddOptionIndicator();
     panel.setAttribute('aria-labelledby', tabs[index].id);
     const detailHtml = `
       <div class="add-option-details-enter">
@@ -5159,6 +5382,9 @@ function renderAddOptions() {
 
   grid.appendChild(navigation);
   grid.appendChild(panel);
+  moveAddOptionIndicator = createSlidingSelectionIndicator(
+    navigation, '.add-option-tab[aria-selected="true"]', 'add-option-marker'
+  );
   selectCategory(0);
 }
 
