@@ -1717,34 +1717,9 @@ section{padding:var(--section-gap) 0;}
   content:' · RETRY';
 }
 
-50%{transform:translateY(-3px);}
-}
-
-to{transform:rotate(405deg);}
-}
-
-50%{
-    filter:brightness(1.15);
-    box-shadow:
-      0 0 13px rgba(179,168,240,.32),
-      0 0 28px rgba(168,200,240,.20);
-  }
-}
-
-35%{
-    opacity:.95;
-    transform:scale(1) rotate(35deg);
-  }
-  55%{
-    opacity:.65;
-    transform:scale(.75) rotate(70deg);
-  }
-}
-
 @keyframes sampleLoaderShine{
   0%,25%{transform:translateX(-55%);}
   75%,100%{transform:translateX(55%);}
-}
 }
 .sample-placeholder{
   flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -3250,24 +3225,44 @@ section > .process-notes.fade-in{transition-delay:.15s;}
   .showcase-slides,.sale-model-slides,.sale-media-slides,.waiting-slides{transition:none!important;}
 }
 
-/* Premium lavender details: one short edge highlight per hover, never a cursor glow. */
-.premium-edge-glint{position:relative;}
-.premium-edge-glint::after{
-  content:'';position:absolute;top:1px;left:12px;right:12px;height:2px;
-  pointer-events:none;z-index:4;border-radius:999px;opacity:0;
-  background:linear-gradient(90deg,transparent 0%,rgba(202,190,255,.24) 27%,
-    rgba(255,255,255,.97) 50%,rgba(167,152,237,.72) 65%,transparent 100%);
-  background-size:220% 100%;background-position:100% 0;
+/* Small fixed-position lavender stardust, not an edge sweep or cursor-tracking glow. */
+.premium-sparkle-card{position:relative;}
+.premium-sparkle-card > .card-sparkle-layer,
+.hero-reimagined .hero-top > .glass-card > .card-sparkle-layer,
+.hero-reimagined .hero-bottom > .glass-card > .card-sparkle-layer{
+  position:absolute;inset:0;z-index:3;overflow:hidden;
+  border-radius:inherit;pointer-events:none;
 }
-@keyframes premiumEdgeSweep{
-  0%{opacity:0;background-position:100% 0;}
-  18%{opacity:.95;}
-  80%{opacity:.8;}
-  100%{opacity:0;background-position:0% 0;}
+.card-sparkle-layer::before{
+  content:'';position:absolute;right:-45px;top:-42px;
+  width:180px;height:140px;border-radius:50%;opacity:0;
+  background:radial-gradient(ellipse,rgba(186,170,245,.22),transparent 73%);
+  transition:opacity .42s ease;
+}
+.card-sparkle{
+  position:absolute;display:block;opacity:0;line-height:1;
+  color:#aa9ce8;text-shadow:0 0 8px rgba(185,168,248,.38);
+  transform:translate3d(0,5px,0) scale(.55);
+}
+.card-sparkle-one{top:15px;right:17px;font-size:13px;}
+.card-sparkle-two{top:35px;right:42px;font-size:8px;color:#b0c2ef;}
+.card-sparkle-three{bottom:15px;left:17px;font-size:10px;color:#b3a5ee;}
+@keyframes cardStardustAppear{
+  0%{opacity:0;transform:translate3d(0,5px,0) scale(.55);}
+  35%{opacity:.94;transform:translate3d(0,0,0) scale(1.05);}
+  64%{opacity:.72;transform:translate3d(0,-4px,0) scale(1);}
+  100%{opacity:0;transform:translate3d(0,-9px,0) scale(.78);}
 }
 @media(hover:hover) and (pointer:fine){
-  .premium-edge-glint:hover::after{
-    animation:premiumEdgeSweep .84s cubic-bezier(.22,1,.36,1) both;
+  .premium-sparkle-card:hover > .card-sparkle-layer::before{opacity:.50;}
+  .premium-sparkle-card:hover .card-sparkle-one{
+    animation:cardStardustAppear .86s cubic-bezier(.22,1,.36,1) .02s both;
+  }
+  .premium-sparkle-card:hover .card-sparkle-two{
+    animation:cardStardustAppear .90s cubic-bezier(.22,1,.36,1) .14s both;
+  }
+  .premium-sparkle-card:hover .card-sparkle-three{
+    animation:cardStardustAppear .94s cubic-bezier(.22,1,.36,1) .25s both;
   }
 }
 
@@ -3338,48 +3333,61 @@ section > .process-notes.fade-in{transition-delay:.15s;}
   100%{opacity:0;transform:translateX(300%);}
 }
 
-/* The discount glows once when content is ready; no looping pulse. */
+/* A gentle 4.6s rhythm: brief glimmer, followed by an unhurried resting phase. */
 .event-benefit-wrap{position:relative;width:max-content;max-width:100%;isolation:isolate;}
 .event-benefit-wrap::before{
   content:'';position:absolute;z-index:-1;inset:-9px -14px;
-  pointer-events:none;opacity:0;transform:scale(.88);
+  pointer-events:none;opacity:.14;transform:scale(1);
   background:radial-gradient(ellipse at 45% 50%,rgba(172,153,240,.33),transparent 74%);
 }
 .event-benefit-wrap::after{
   content:'✦';position:absolute;right:-10px;top:-12px;
   color:#a497e6;font-size:16px;opacity:0;pointer-events:none;
 }
-.event-benefit-wrap.premium-event-once::before{
-  animation:premiumDiscountGlow 1.15s ease-out .40s forwards;
+.event-benefit-sparkle{
+  position:absolute;left:-12px;bottom:-3px;font-size:12px;line-height:1;
+  color:#a9bce9;opacity:0;pointer-events:none;
 }
-.event-benefit-wrap.premium-event-once::after{
-  animation:premiumDiscountSparkle 1.05s ease-out .49s forwards;
+.event-benefit-wrap.premium-event-playing::before{
+  animation:premiumDiscountGlowLoop 4.6s ease-in-out infinite;
 }
-.event-benefit-wrap.premium-event-once .event-benefit{
-  animation:premiumDiscountText 1.08s ease-out .40s both;
+.event-benefit-wrap.premium-event-playing::after{
+  animation:premiumDiscountSparkleLoop 4.6s ease-in-out infinite;
 }
-@keyframes premiumDiscountGlow{
-  0%{opacity:0;transform:scale(.88);}
-  48%{opacity:.9;transform:scale(1.06);}
-  100%{opacity:.14;transform:scale(1);}
+.event-benefit-wrap.premium-event-playing .event-benefit-sparkle{
+  animation:premiumDiscountSecondSparkle 4.6s ease-in-out infinite;
 }
-@keyframes premiumDiscountSparkle{
-  0%{opacity:0;transform:translate3d(-5px,7px,0) scale(.65);}
-  45%{opacity:.95;transform:translate3d(0,-3px,0) scale(1.05);}
-  100%{opacity:0;transform:translate3d(4px,-10px,0) scale(.75);}
+.event-benefit-wrap.premium-event-playing .event-benefit{
+  transform-origin:left center;
+  animation:premiumDiscountTextLoop 4.6s ease-in-out infinite;
 }
-@keyframes premiumDiscountText{
-  0%,100%{filter:brightness(1);}
-  50%{filter:brightness(1.12);}
+@keyframes premiumDiscountGlowLoop{
+  0%,54%,100%{opacity:.14;transform:scale(1);}
+  17%{opacity:.48;transform:scale(1.045);}
+  33%{opacity:.30;transform:scale(1.02);}
+}
+@keyframes premiumDiscountSparkleLoop{
+  0%,9%,32%,100%{opacity:0;transform:translate3d(-4px,5px,0) scale(.64);}
+  19%{opacity:.94;transform:translate3d(0,-3px,0) scale(1.06);}
+}
+@keyframes premiumDiscountSecondSparkle{
+  0%,24%,47%,100%{opacity:0;transform:translate3d(0,4px,0) scale(.65);}
+  35%{opacity:.82;transform:translate3d(-2px,-4px,0) scale(1);}
+}
+@keyframes premiumDiscountTextLoop{
+  0%,10%,44%,100%{transform:scale(1);}
+  22%{transform:scale(1.012);}
 }
 @media(prefers-reduced-motion:reduce){
-  .premium-edge-glint:hover::after,
+  .card-sparkle-layer,
   .hero-frame-motion .frame-edge,.hero-frame-motion::after,
-  .event-benefit-wrap.premium-event-once::before,
-  .event-benefit-wrap.premium-event-once::after,
-  .event-benefit-wrap.premium-event-once .event-benefit{animation:none!important;}
+  .event-benefit-wrap.premium-event-playing::before,
+  .event-benefit-wrap.premium-event-playing::after,
+  .event-benefit-wrap.premium-event-playing .event-benefit,
+  .event-benefit-wrap.premium-event-playing .event-benefit-sparkle{animation:none!important;}
+  .card-sparkle-layer{display:none!important;}
   .hero-frame-motion .frame-edge{transform:none!important;}
-  .hero-frame-motion::after,.event-benefit-wrap::after{display:none!important;}
+  .hero-frame-motion::after,.event-benefit-wrap::after,.event-benefit-sparkle{display:none!important;}
   .sample-tab-indicator,.add-option-marker{display:none!important;}
   .sample-tabs.has-motion-indicator .sample-tab.active{
     background:linear-gradient(135deg,var(--purple-light),var(--purple-dark));
@@ -3445,6 +3453,7 @@ section > .process-notes.fade-in{transition-delay:.15s;}
             <div class="event-service" id="event-service"></div>
             <div class="event-benefit-wrap" id="event-benefit-wrap">
               <div class="event-benefit" id="event-benefit"></div>
+              <span class="event-benefit-sparkle" aria-hidden="true">✧</span>
             </div>
           </div>
         </div>
@@ -3684,42 +3693,65 @@ function init() {
   initFeaturedShowcase();
   renderShowcase(); renderSaleModels(); renderSamples(); initSampleMediaLoading(); initLazySampleVideos(); renderCollabs();
   renderBaseOptions(); renderAddOptions(); renderNotices();
-  renderProcess(); renderForm(); initPremiumEdgeGlints(); initPremiumHeroMoments();
+  renderProcess(); renderForm(); initCardSparkles(); initPremiumHeroMoments();
   initScrollFade(); initStaggerCardReveals(); initSampleTabMotion();
 }
 
-/* A short top-edge reflection, applied only to cards (not their media). */
-function initPremiumEdgeGlints(root = document) {
+/* Three tiny fixed-position stars and a soft corner aura appear once per hover. */
+function initCardSparkles(root = document) {
   root.querySelectorAll([
     '.hero-reimagined .hero-top > .glass-card',
     '.hero-reimagined .hero-bottom > .glass-card',
     '.sale-model-left', '.sale-showcase-panel', '.sale-detail-gallery',
     '.sample-item', '.collab-card', '.plan-card', '.included-category',
     '.included-options-card', '.add-option-panel', '.notice-item', '.process-step'
-  ].join(',')).forEach(card => card.classList.add('premium-edge-glint'));
+  ].join(',')).forEach(card => {
+    if (card.classList.contains('premium-sparkle-card')) return;
+    card.classList.add('premium-sparkle-card');
+    const layer = document.createElement('span');
+    layer.className = 'card-sparkle-layer';
+    layer.setAttribute('aria-hidden', 'true');
+    layer.innerHTML = `
+      <span class="card-sparkle card-sparkle-one">✦</span>
+      <span class="card-sparkle card-sparkle-two">✧</span>
+      <span class="card-sparkle card-sparkle-three">✦</span>`;
+    card.appendChild(layer);
+  });
 }
 
-/* Frame and discount effects play once when each element actually enters view. */
+/* The video frame plays once; the discount glimmers while it remains in view. */
 function initPremiumHeroMoments() {
-  const moments = [
-    [document.getElementById('hero-video-stage'), 'premium-frame-once'],
-    [document.getElementById('event-benefit-wrap'), 'premium-event-once']
-  ].filter(([node]) => node);
+  const stage = document.getElementById('hero-video-stage');
+  const discount = C.event?.enabled ? document.getElementById('event-benefit-wrap') : null;
 
   if (!('IntersectionObserver' in window) ||
       window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
-    moments.forEach(([node, className]) => node.classList.add(className));
+    stage?.classList.add('premium-frame-once');
+    discount?.classList.add('premium-event-playing');
     return;
   }
-  const actions = new Map(moments);
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add(actions.get(entry.target));
-      obs.unobserve(entry.target);
-    });
-  }, {threshold:.20});
-  moments.forEach(([node]) => observer.observe(node));
+  if (stage) {
+    const frameObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('premium-frame-once');
+        obs.unobserve(entry.target);
+      });
+    }, {threshold:.20});
+    frameObserver.observe(stage);
+  }
+  if (discount) {
+    let discountInView = false;
+    const syncDiscountMotion = () => {
+      discount.classList.toggle('premium-event-playing', discountInView && !document.hidden);
+    };
+    const discountObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => { discountInView = entry.isIntersecting; });
+      syncDiscountMotion();
+    }, {threshold:.20});
+    discountObserver.observe(discount);
+    document.addEventListener('visibilitychange', syncDiscountMotion);
+  }
 }
 
 /* One absolute selection surface follows the active tab; wrapped mobile rows work too. */
@@ -5234,7 +5266,7 @@ function renderBaseOptions() {
     const showDetails = () => {
       optionPanel.classList.remove('panel-transition-out');
       optionPanel.innerHTML = detailHtml;
-      initPremiumEdgeGlints(optionPanel);
+      initCardSparkles(optionPanel);
     };
     if (hadSelection && !window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
       optionPanel.classList.add('panel-transition-out');
