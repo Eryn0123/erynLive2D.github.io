@@ -2762,6 +2762,18 @@ to{transform:rotate(405deg);}
   background:linear-gradient(135deg,var(--purple-dark),var(--blue-mid));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
+/* 선택한 견적 항목과 합계만 짧고 차분하게 강조합니다. */
+.estimate-item.is-updated{animation:estimateItemUpdate .68s cubic-bezier(.22,1,.36,1);border-radius:8px;}
+@keyframes estimateItemUpdate{
+  0%{background-color:rgba(179,168,240,.24);box-shadow:0 0 0 1px rgba(155,144,224,.25);transform:translateY(3px);}
+  100%{background-color:transparent;box-shadow:none;transform:translateY(0);}
+}
+.estimate-total-price{display:inline-block;}
+.estimate-total-price.is-updated{animation:estimateTotalUpdate .44s cubic-bezier(.22,1,.36,1);}
+@keyframes estimateTotalUpdate{
+  0%,100%{transform:scale(1);}
+  42%{transform:scale(1.045);}
+}
 .estimate-empty{font-size:12.5px;color:var(--text-muted);text-align:center;padding:8px 0;}
 
 .footer{border-top:1px solid var(--glass-border);padding:38px 0;text-align:center;color:var(--text-muted);font-size:13px;}
@@ -3032,7 +3044,27 @@ to{transform:rotate(405deg);}
   }
   .sale-model-cover img,.sale-media-slide img{transition:transform .65s cubic-bezier(.2,.8,.2,1);}
   .sale-model-cover:hover img,.sale-media-slide:hover img{transform:scale(1.018);}
+  .form-addon-toggle:hover{background:rgba(179,168,240,.07);}
+  .form-qty-row:hover{transform:translateX(2px);}
+  .collab-card:hover .collab-avatar{transform:scale(1.025);box-shadow:0 5px 15px rgba(122,109,212,.13);}
+  .process-step:hover .process-num{transform:translateY(-1px) scale(1.035);}
 }
+
+/* 협업 작가·작업 과정은 각 카드가 가볍게 순차 등장합니다.
+   hover의 transform과 충돌하지 않도록 독립적인 translate 속성을 사용합니다. */
+.collab-avatar,.process-num{
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease;
+}
+.stagger-reveal-card{
+  opacity:0;translate:0 10px;filter:blur(2px);
+  transition:
+    opacity .68s cubic-bezier(.22,1,.36,1) var(--stagger-delay,0ms),
+    translate .68s cubic-bezier(.22,1,.36,1) var(--stagger-delay,0ms),
+    filter .68s ease var(--stagger-delay,0ms),
+    transform .35s cubic-bezier(.2,.8,.2,1),
+    border-color .3s ease,box-shadow .35s ease,background .3s ease;
+}
+.stagger-reveal-card.is-revealed{opacity:1;translate:0 0;filter:blur(0);}
 
 /* Each sale slide reveals its three content panels when selected. */
 .sale-panel-enter{animation:salePanelIn .54s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--sale-delay,0ms);}
@@ -3048,6 +3080,9 @@ to{transform:rotate(405deg);}
   .sample-item,.collab-card,.plan-card,.included-category,
   .process-step,.notice-item,.add-option-tab,
   .sale-model-feature,.sale-model-price-row,.included-option-item,.add-option-item{transition:none!important;transform:none!important;}
+  .stagger-reveal-card{opacity:1!important;translate:none!important;filter:none!important;transition:none!important;}
+  .estimate-item.is-updated,.estimate-total-price.is-updated{animation:none!important;}
+  .collab-avatar,.process-num{transition:none!important;}
 }
 
 .section-title {
@@ -3225,7 +3260,7 @@ to{transform:rotate(405deg);}
       <div class="process-note">컨펌 피드백 전달이 늦어질 경우 일정이 지연될 수 있습니다.</div>
       <div class="process-note">수정 횟수는 최대 2회이며, 수정 횟수 추가 요청은 추가금이 발생합니다.</div>
     </div>
-    <div class="process-grid fade-in" id="process-grid"></div>
+    <div class="process-grid" id="process-grid"></div>
   </section>
 
   <section id="form">
@@ -3354,7 +3389,7 @@ function init() {
   initFeaturedShowcase();
   renderShowcase(); renderSaleModels(); renderSamples(); initSampleMediaLoading(); initLazySampleVideos(); renderCollabs();
   renderBaseOptions(); renderAddOptions(); renderNotices();
-  renderProcess(); renderForm(); initScrollFade();
+  renderProcess(); renderForm(); initScrollFade(); initStaggerCardReveals();
 }
 
 /* Use the same first free-movement clip as the samples section.
@@ -5355,6 +5390,8 @@ function getOrderedEstimatePrices(items) {
     .sort(([keyA],[keyB]) => rank(keyA) - rank(keyB));
 }
 
+let previousEstimatePrices = new Map();
+let previousEstimateTotal = 0;
 function updateEstimate() {
   updateFormAddonCounts();
   const list = document.getElementById('estimate-list');
@@ -5363,7 +5400,11 @@ function updateEstimate() {
 
   if (!items.length) {
     list.innerHTML = '<div class="estimate-empty">항목을 선택하면 견적이 표시됩니다.</div>';
-    totalEl.textContent = '0원'; return;
+    totalEl.textContent = '0원';
+    totalEl.classList.remove('is-updated');
+    previousEstimatePrices.clear();
+    previousEstimateTotal = 0;
+    return;
   }
 
   let total = 0;
@@ -5372,6 +5413,9 @@ function updateEstimate() {
   const radioItems   = items.filter(([k]) => k.startsWith('__radio_'));
   const priceItems   = getOrderedEstimatePrices(items);
   const memoItem     = items.find(([k]) => k === '__memo');
+  const changedPrices = new Set(priceItems
+    .filter(([key, value]) => previousEstimatePrices.get(key) !== value.price)
+    .map(([key]) => key));
 
   let html = '';
 
@@ -5399,7 +5443,7 @@ function updateEstimate() {
   if (priceItems.length) {
     html += priceItems.map(([k,v]) => {
       total += v.price;
-      return `<div class="estimate-item${v.isDiscount ? ' estimate-item-discount' : ''}">
+      return `<div class="estimate-item${v.isDiscount ? ' estimate-item-discount' : ''}${changedPrices.has(k) ? ' is-updated' : ''}">
         <span class="estimate-item-name">${escHtml(v.name)}</span>
         <span class="estimate-item-price">${fmt(v.price)}</span>
       </div>`;
@@ -5413,6 +5457,13 @@ function updateEstimate() {
 
   list.innerHTML = html;
   totalEl.textContent = fmt(total);
+  if (total !== previousEstimateTotal) {
+    totalEl.classList.remove('is-updated');
+    void totalEl.offsetWidth;
+    totalEl.classList.add('is-updated');
+  }
+  previousEstimatePrices = new Map(priceItems.map(([key, value]) => [key, value.price]));
+  previousEstimateTotal = total;
 }
 
 function escHtml(str) {
@@ -5491,6 +5542,32 @@ function resetForm() {
   makeQtySelect('f-parts-wrap', ao.partsAdd||[], 'parts');
   document.querySelectorAll('.form-input:not([readonly])').forEach(i=>i.value='');
   document.querySelectorAll('.form-textarea').forEach(t=>t.value='');
+}
+
+/* 협업 작가 / 작업 과정 카드의 순차 등장: 화면에서 완전히 벗어난 뒤 다시 나타날 수 있습니다. */
+function initStaggerCardReveals() {
+  const groups = [
+    [...document.querySelectorAll('#collab-grid .collab-card')],
+    [...document.querySelectorAll('#process-grid .process-step')]
+  ];
+  const cards = groups.flat();
+  groups.forEach(group => group.forEach((card, index) => {
+    card.classList.add('stagger-reveal-card');
+    card.style.setProperty('--stagger-delay', `${(index % 4) * 65}ms`);
+  }));
+
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+    cards.forEach(card => card.classList.add('is-revealed'));
+    return;
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('is-revealed', entry.isIntersecting);
+    });
+  }, {threshold:0, rootMargin:'-3% 0px -3% 0px'});
+  cards.forEach(card => observer.observe(card));
 }
 
 function initScrollFade() {
