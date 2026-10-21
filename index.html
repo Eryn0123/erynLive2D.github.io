@@ -3362,6 +3362,95 @@ section > .process-notes.fade-in{transition-delay:.15s;}
   }
 }
 
+
+/* ───────────────────────────────────────────────────────────────
+   Mobile responsive sizing — ArtMug estimate calculator (2026-10-21)
+   Narrow-screen only. Desktop design and JS are unchanged.
+   ─────────────────────────────────────────────────────────────── */
+@media (max-width:960px) {
+  #form .form-estimate-wrap {
+    grid-template-columns:minmax(0,1fr);
+    gap:16px;
+  }
+  #form .form-estimate-wrap > .glass-card,
+  #form .form-estimate-wrap > .estimate-column,
+  #form #form-content,
+  #form .estimate-sticky {
+    min-width:0;
+    max-width:100%;
+  }
+  #form .estimate-sticky { margin-top:0; }
+}
+@media (max-width:720px) {
+  /* Keep calculator cards, controls and amount rows inside the available width. */
+  #form .form-estimate-wrap > .glass-card { padding:clamp(14px,3.8vw,22px); }
+  #form .form-grid { grid-template-columns:minmax(0,1fr); gap:14px; }
+  #form .form-group,
+  #form .form-plan-select-wrap,
+  #form .form-addon-accordion,
+  #form .form-addon-card,
+  #form .form-addon-name,
+  #form .form-qty-label,
+  #form .estimate-list,
+  #form .estimate-item-name,
+  #form .estimate-info-value { min-width:0; }
+  #form .form-input,
+  #form .form-select,
+  #form .form-textarea {
+    display:block;
+    width:100%;
+    min-width:0;
+    max-width:100%;
+  }
+  #form .form-addon-toggle { padding:11px 12px; gap:8px; }
+  #form .form-addon-name { overflow-wrap:anywhere; }
+  #form .form-addon-panel { padding:10px 12px 12px; }
+  #form .form-qty-row { padding:10px 11px; min-width:0; gap:9px; }
+  #form .qty-name-line { min-width:0; overflow-wrap:anywhere; }
+  #form .form-radio-label { min-width:0; max-width:100%; padding:8px 11px; white-space:normal; }
+  #form .form-checkbox-label { min-width:0; align-items:flex-start; overflow-wrap:anywhere; }
+  #form .form-checkbox-box { margin-top:2px; }
+  #form .form-section-subtitle { display:inline; margin-left:5px; overflow-wrap:anywhere; }
+  #form .estimate-sticky { padding:17px 15px; }
+  #form .estimate-item { min-width:0; gap:8px; }
+  #form .estimate-item-name,
+  #form .estimate-tag-name { overflow-wrap:anywhere; }
+  #form .estimate-item-price { flex-shrink:0; font-size:12px; }
+  #form .estimate-info { min-width:0; }
+  #form .estimate-total { min-width:0; flex-wrap:wrap; gap:6px 10px; }
+  #form .estimate-total-price { max-width:100%; font-size:clamp(17px,4.8vw,20px); overflow-wrap:anywhere; }
+  #form .estimate-actions > * { max-width:100%; }
+  /* Prices and names of extra features also stay inside their card. */
+  #add-options .add-options-grid > *,
+  #add-options .add-option-item,
+  #add-options .add-option-name { min-width:0; }
+  #add-options .add-option-item { gap:8px; padding:10px 11px; }
+  #add-options .add-option-name { overflow-wrap:anywhere; }
+  #add-options .add-option-price { font-size:12px; }
+}
+@media (max-width:420px) {
+  #form .form-estimate-wrap > .glass-card { padding:14px 12px; }
+  #form .form-notice { font-size:12px; }
+  #form .form-addon-toggle { padding:11px 10px; font-size:12px; }
+  #form .form-addon-panel { padding:9px 9px 11px; }
+  /* Long option labels sit above the +/- stepper rather than being squeezed. */
+  #form .form-qty-row { flex-direction:column; align-items:stretch; gap:8px; }
+  #form .form-qty-label { width:100%; font-size:12px; }
+  #form .qty-stepper { align-self:flex-end; }
+  #form .qty-btn { width:34px; height:34px; }
+  #form .qty-val { height:34px; min-width:40px; }
+  #form .form-actions { margin-top:16px; }
+  #form .form-actions .btn-reset { max-width:100%; padding:11px 16px; }
+  #form .estimate-sticky { padding:15px 12px; }
+  #form .estimate-total { align-items:baseline; }
+  #form .estimate-total-price { font-size:18px; }
+  #add-options .add-option-item { align-items:flex-start; flex-wrap:wrap; }
+  #add-options .add-option-price { margin-left:auto; }
+  #add-options .add-option-panel { padding:15px 12px; }
+  #add-options .add-option-nav { padding:8px; gap:6px; }
+  #add-options .add-option-tab { min-width:0; padding:9px 8px; font-size:11px; overflow-wrap:anywhere; }
+}
+
 </style>
 </head>
 <body>
