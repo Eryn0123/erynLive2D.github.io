@@ -95,7 +95,7 @@
     {
       "id": 1,
       "title": "나에 작가님 협업 판매 모델",
-      "subtitle": "[일러 90 + 리깅 90] 180만원 판매 중",
+      "subtitle": "판매 완료",
       "videoUrl": "https://www.youtube.com/embed/bGxJeHw--hA",
       "thumbnail": "",
       "illust": "Nae",
@@ -189,63 +189,6 @@
     "description": "현재 판매 중인 Live2D 모델입니다. 판매 모델의 상세 이미지를 확인할 수 있습니다.",
     "items": [
       {
-        "id": "mint-cat-girl",
-        "title": "Mint Cat Girl",
-        "subtitle": "민트 고양이 소녀 Live2D 모델",
-        "status": "판매 중",
-        "badge": "1인 한정 판매",
-        "sold": false,
-        "illustrationPrice": 900000,
-        "riggingPrice": 900000,
-        "description": "나에 작가님과 협업하여 제작한 민트 고양이 소녀 Live2D 모델입니다.",
-        "illust": "Nae",
-        "rig": "ERYN",
-        "features": [
-          "VBridger 트래킹 대응",
-          "표정 5종 + 눈 표정 3종",
-          "옷 ON & OFF + 추가 팔 파츠 1종",
-          "꼬리 기능 + 치비 변환"
-        ],
-        "showcaseUrl": "https://youtu.be/bGxJeHw--hA",
-        "images": [
-          {
-            "src": "images/sale_models/mint_cat_girl/01_cover.png",
-            "alt": "Mint Cat Girl 대표 이미지",
-            "caption": "모델 대표 이미지"
-          },
-          {
-            "src": "images/sale_models/mint_cat_girl/02_expression_preview.png",
-            "alt": "Mint Cat Girl 표정 미리보기",
-            "caption": "표정 미리보기"
-          },
-          {
-            "src": "images/sale_models/mint_cat_girl/03_expression_set_a.png",
-            "alt": "Mint Cat Girl 감정 표정 모음 1",
-            "caption": "감정 표정 모음 1"
-          },
-          {
-            "src": "images/sale_models/mint_cat_girl/04_expression_set_b.png",
-            "alt": "Mint Cat Girl 감정 표정 모음 2",
-            "caption": "감정 표정 모음 2"
-          },
-          {
-            "src": "images/sale_models/mint_cat_girl/05_toggle.png",
-            "alt": "Mint Cat Girl 토글",
-            "caption": "옷 & 손 토글"
-          },
-          {
-            "src": "images/sale_models/mint_cat_girl/06_tail.png",
-            "alt": "Mint Cat Girl 꼬리 움직임",
-            "caption": "꼬리 움직임"
-          },
-          {
-            "src": "images/sale_models/mint_cat_girl/07_chibi.png",
-            "alt": "Mint Cat Girl 치비 변환",
-            "caption": "치비 변환"
-          }
-        ]
-      },
-      {
         "id": "velvet-rose-vampire",
         "title": "Velvet Rose Vampire",
         "subtitle": "뱀파이어 귀족 콘셉트 Live2D 모델",
@@ -294,6 +237,63 @@
             "src": "images/sale_models/velvet_rose_vampire/06_leanout_extra_arm.png",
             "alt": "Velvet Rose Vampire 몸 앞으로 내밀기와 추가 팔 파츠",
             "caption": "몸 앞으로 내밀기 · 추가 팔 파츠"
+          }
+        ]
+      },
+      {
+        "id": "mint-cat-girl",
+        "title": "Mint Cat Girl",
+        "subtitle": "민트 고양이 소녀 Live2D 모델",
+        "status": "판매 중",
+        "badge": "1인 한정 판매",
+        "sold": true,
+        "illustrationPrice": 900000,
+        "riggingPrice": 900000,
+        "description": "나에 작가님과 협업하여 제작한 민트 고양이 소녀 Live2D 모델입니다.",
+        "illust": "Nae",
+        "rig": "ERYN",
+        "features": [
+          "VBridger 트래킹 대응",
+          "표정 5종 + 눈 표정 3종",
+          "옷 ON & OFF + 추가 팔 파츠 1종",
+          "꼬리 기능 + 치비 변환"
+        ],
+        "showcaseUrl": "https://youtu.be/bGxJeHw--hA",
+        "images": [
+          {
+            "src": "images/sale_models/mint_cat_girl/01_cover.png",
+            "alt": "Mint Cat Girl 대표 이미지",
+            "caption": "모델 대표 이미지"
+          },
+          {
+            "src": "images/sale_models/mint_cat_girl/02_expression_preview.png",
+            "alt": "Mint Cat Girl 표정 미리보기",
+            "caption": "표정 미리보기"
+          },
+          {
+            "src": "images/sale_models/mint_cat_girl/03_expression_set_a.png",
+            "alt": "Mint Cat Girl 감정 표정 모음 1",
+            "caption": "감정 표정 모음 1"
+          },
+          {
+            "src": "images/sale_models/mint_cat_girl/04_expression_set_b.png",
+            "alt": "Mint Cat Girl 감정 표정 모음 2",
+            "caption": "감정 표정 모음 2"
+          },
+          {
+            "src": "images/sale_models/mint_cat_girl/05_toggle.png",
+            "alt": "Mint Cat Girl 토글",
+            "caption": "옷 & 손 토글"
+          },
+          {
+            "src": "images/sale_models/mint_cat_girl/06_tail.png",
+            "alt": "Mint Cat Girl 꼬리 움직임",
+            "caption": "꼬리 움직임"
+          },
+          {
+            "src": "images/sale_models/mint_cat_girl/07_chibi.png",
+            "alt": "Mint Cat Girl 치비 변환",
+            "caption": "치비 변환"
           }
         ]
       }
