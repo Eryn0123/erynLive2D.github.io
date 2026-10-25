@@ -1453,29 +1453,60 @@ section{padding:var(--section-gap) 0;}
   .sale-lightbox-next{right:8px;}
 }
 
-/* 판매 완료 */
+/* 판매 완료 모델: 이미지 전체를 덮는 차분한 오버레이 + 선명한 상태 표시 */
 .sale-model-sold-overlay{
   position:absolute;
+  inset:0;
   z-index:4;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  color:#fff;
+  text-align:center;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(34,30,48,.24),rgba(34,30,48,.42) 60%,rgba(34,30,48,.54));
+}
+.sale-model-sold-stamp{
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  background:rgba(35,32,48,.62);
-  color:#fff;
+  width:min(100%,270px);
+  padding:20px 20px 18px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.65);
+  background:rgba(48,42,65,.86);
+  box-shadow:0 13px 35px rgba(17,13,30,.29),inset 0 1px rgba(255,255,255,.12);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
 }
 .sale-model-sold-en{
-  font-family:'Outfit',sans-serif;
-  font-size:30px;
+  font-family:'Outfit','Paperozi',sans-serif;
+  font-size:clamp(24px,3.5vw,37px);
+  line-height:1.1;
   font-weight:800;
-  letter-spacing:2px;
+  letter-spacing:2.5px;
+  white-space:nowrap;
+}
+.sale-model-sold-divider{
+  width:48px;
+  height:1px;
+  margin:12px 0 10px;
+  background:rgba(255,255,255,.62);
 }
 .sale-model-sold-ko{
-  margin-top:5px;
-  font-size:12px;
+  font-size:13px;
+  line-height:1.5;
   font-weight:700;
-  letter-spacing:1px;
-  opacity:.88;
+  letter-spacing:.5px;
+  color:#f5f0ff;
+}
+@media(max-width:600px){
+  .sale-model-sold-overlay{padding:12px;}
+  .sale-model-sold-stamp{width:min(83%,250px);padding:17px 14px 15px;}
+  .sale-model-sold-en{font-size:clamp(23px,7vw,32px);}
+  .sale-model-sold-ko{font-size:12px;}
 }
 .sale-model-slide.is-sold .sale-model-left{
   background:linear-gradient(180deg,rgba(232,232,240,.96),rgba(216,217,230,.96));
@@ -1511,13 +1542,15 @@ section{padding:var(--section-gap) 0;}
   color:#777386;
 }
 .sale-model-price-sold{
-  margin-top:8px;
-  padding-top:9px;
-  border-top:1px solid rgba(120,115,145,.20);
+  margin-top:10px;
+  padding:10px 12px;
+  border:1px solid rgba(117,108,145,.26);
+  border-radius:9px;
+  background:rgba(120,115,145,.12);
   text-align:center;
-  font-size:11px;
+  font-size:12px;
   font-weight:700;
-  color:#686476;
+  color:#504963;
 }
 
 @media(max-width:900px){
@@ -4237,9 +4270,12 @@ function renderSaleModels() {
             ${
               item.sold
                 ? `
-                  <div class="sale-model-sold-overlay">
-                    <div class="sale-model-sold-en">SOLD OUT</div>
-                    <div class="sale-model-sold-ko">판매 완료</div>
+                  <div class="sale-model-sold-overlay" aria-label="판매가 완료된 모델입니다">
+                    <div class="sale-model-sold-stamp">
+                      <div class="sale-model-sold-en">SOLD OUT</div>
+                      <div class="sale-model-sold-divider" aria-hidden="true"></div>
+                      <div class="sale-model-sold-ko">판매 완료 · 구매 불가</div>
+                    </div>
                   </div>
                 `
                 : ''
