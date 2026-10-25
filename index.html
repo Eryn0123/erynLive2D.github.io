@@ -1515,6 +1515,34 @@ section{padding:var(--section-gap) 0;}
 .sale-model-slide.is-sold .sale-model-cover img{
   filter:grayscale(.45) brightness(.78);
 }
+
+/* 판매 완료: 오른쪽 유튜브와 상세 이미지도 왼쪽 커버처럼 차분하게 표시.
+   반투명 필터는 클릭을 가로막지 않으며, 확대 원본에는 적용하지 않습니다. */
+.sale-model-slide.is-sold .sale-showcase-panel,
+.sale-model-slide.is-sold .sale-detail-gallery{
+  background:rgba(231,230,239,.93);
+  border-color:rgba(120,115,145,.30);
+}
+.sale-model-slide.is-sold .sale-showcase-frame iframe,
+.sale-model-slide.is-sold .sale-media-slide img{
+  filter:grayscale(.46) brightness(.84) saturate(.75);
+}
+.sale-model-slide.is-sold .sale-showcase-frame::after,
+.sale-model-slide.is-sold .sale-detail-stage::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:rgba(37,33,52,.19);
+}
+.sale-model-slide.is-sold .sale-detail-head,
+.sale-model-slide.is-sold .sale-showcase-caption,
+.sale-model-slide.is-sold .sale-detail-controls{
+  background:rgba(232,231,240,.76);
+  border-color:rgba(120,115,145,.20);
+  color:#777386;
+}
 .sale-model-slide.is-sold .sale-model-status{
   background:linear-gradient(135deg,#9692a7,#656273);
   box-shadow:none;
