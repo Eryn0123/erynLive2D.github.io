@@ -39,7 +39,7 @@
   "slots": {
     "_설명": "첫 화면 안내사항과 오른쪽 작업 슬롯. type은 empty(빈 슬롯), fullm(예약 완료)로 적습니다.",
     "enabled": true,
-    "notice": "현재 10월 작업부터 3개월치 일정을 안내해드리며, 그 이후 작업도 문의가능합니다.",
+    "notice": "현재 예약 가능한 12월 작업부터 3개월치 일정을 안내해드리며, 그 이후 작업도 문의가능합니다.",
     "slotNotices": [
       "PSD 파일을 첨부해주시면 빠른 견적 확인이 가능하며, 해당 신청을 우선으로 진행합니다.",
       "작업자의 사전 동의 없이 파일을 역복원하거나 추출, 2차 수정 및 유포하는 행위는 일절 허용하지 않습니다.",
@@ -48,40 +48,40 @@
     ],
     "months": [
       {
-        "month": "2026-10",
-        "status": "available",
-        "slots": [
-          {
-            "type": "fullm",
-            "label": "예약 완료"
-          },
-          {
-            "type": "fullm",
-            "label": "예약 완료"
-          }
-        ]
-      },
-      {
-        "month": "2026-11",
-        "status": "available",
-        "slots": [
-          {
-            "type": "fullm",
-            "label": "예약 완료"
-          },
-          {
-            "type": "fullm",
-            "label": "예약 완료"
-          }
-        ]
-      },
-      {
         "month": "2026-12",
         "status": "available",
         "slots": [
           {
             "type": "fullm",
             "label": "예약 완료"
+          },
+          {
+            "type": "empty",
+            "label": "빈 슬롯"
+          }
+        ]
+      },
+      {
+        "month": "2027-01",
+        "status": "available",
+        "slots": [
+          {
+            "type": "empty",
+            "label": "빈 슬롯"
+          },
+          {
+            "type": "empty",
+            "label": "빈 슬롯"
+          }
+        ]
+      },
+      {
+        "month": "2027-02",
+        "status": "available",
+        "slots": [
+          {
+            "type": "empty",
+            "label": "빈 슬롯"
           },
           {
             "type": "empty",
