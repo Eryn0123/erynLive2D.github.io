@@ -1856,6 +1856,56 @@ section{padding:var(--section-gap) 0;}
 .sample-item img,
 .sample-item video {width: 100%;height: 100%;object-fit:cover;display:block;}
 .sample-caption{padding:8px 10px;font-size:12px;color:var(--text-secondary);text-align:center;border-top:1px solid var(--glass-border);}
+
+/* 2026-11-02 | Rigging samples: reserve the REAL video aspect ratio BEFORE
+   the card is displayed, so its loader and video have the same geometry. */
+.sample-item[data-sample-loading="true"]{min-height:0;}
+.sample-grid{align-items:start;}
+.sample-media-frame{
+  position:relative;
+  width:100%;
+  aspect-ratio:var(--sample-ratio,6/5);
+  flex:none;
+  overflow:hidden;
+  background:linear-gradient(135deg,#eef0fa,#eae7f8);
+}
+.sample-item .sample-media-frame .sample-load-media{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+/* If metadata cannot be read, never resize after the card appears. */
+.sample-item .sample-media-frame.sample-ratio-estimate .sample-load-media{object-fit:cover;}
+/* Do not show short provisional boxes while metadata is being fetched. */
+.sample-category:not(.sample-ratios-ready) .sample-grid{display:none;}
+.sample-ratio-preparing{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:11px;
+  min-height:190px;
+  padding:24px 14px;
+  font-size:12px;
+  color:var(--text-muted);
+}
+.sample-ratio-preparing::before{
+  content:'◇';
+  font:700 27px/1 'Outfit',sans-serif;
+  color:var(--purple-mid);
+  animation:sampleRatioPreparePulse 2s ease-in-out infinite;
+}
+.sample-category.sample-ratios-ready .sample-ratio-preparing{display:none;}
+@keyframes sampleRatioPreparePulse{
+  0%,100%{opacity:.4;transform:scale(.92)}
+  50%{opacity:1;transform:scale(1.09)}
+}
+@media(prefers-reduced-motion:reduce){
+  .sample-ratio-preparing::before{animation:none}
+}
+
 .animal-desc{font-size:13px;color:var(--text-secondary);line-height:1.9;white-space:pre-line;}
 .all-cat-block{margin-bottom:28px;}
 .all-cat-label{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:12px;padding-left:10px;border-left:3px solid var(--purple-light);}
@@ -4954,6 +5004,108 @@ function initSampleMediaLoading() {
     });
 }
 
+/* ── Accurate sample frame sizing BEFORE showing each category ──
+   Same approach as the personal site: fetch lightweight video metadata first.
+   Existing playback remains lazy / intersection-observed and unchanged. */
+const sampleFrameRatioCache = new Map();
+const sampleFrameRatioPending = new Map();
+
+function sampleDefaultFrameRatio(item, categoryId) {
+  const spec = item?.aspectRatio;
+  let declared = Number(spec);
+  if (typeof spec === 'string' && spec.includes('/')) {
+    const [w, h] = spec.split('/').map(Number);
+    declared = w / h;
+  }
+  if (Number.isFinite(declared) && declared >= .25 && declared <= 3.5) return declared;
+  const cached = sampleFrameRatioCache.get(item?.src);
+  if (cached) return cached;
+  const defaults = {free:6/5, face:6/5, phys:6/5, bodyxyz:9/16, chibi:9/16};
+  return defaults[categoryId] || 6/5;
+}
+
+function getSampleFrameRatio(item, categoryId) {
+  const src = typeof item?.src === 'string' ? item.src : '';
+  const fallback = sampleDefaultFrameRatio(item, categoryId);
+  if (!src) return Promise.resolve({ratio:fallback, measured:false});
+  if (item.aspectRatio != null && item.aspectRatio !== '')
+    return Promise.resolve({ratio:fallback, measured:true});
+  if (sampleFrameRatioCache.has(src))
+    return Promise.resolve({ratio:sampleFrameRatioCache.get(src), measured:true});
+  if (sampleFrameRatioPending.has(src)) return sampleFrameRatioPending.get(src);
+
+  const promise = new Promise(resolve => {
+    const isVideo = /\.(mp4|webm|mov)(?:[?#].*)?$/i.test(src) || /^data:video\//i.test(src) || src.startsWith('blob:');
+    let media;
+    let completed = false;
+    let timeout;
+    const finish = success => {
+      if (completed) return;
+      completed = true;
+      clearTimeout(timeout);
+      let ratio = fallback;
+      let measured = false;
+      if (success) {
+        const w = isVideo ? media.videoWidth : media.naturalWidth;
+        const h = isVideo ? media.videoHeight : media.naturalHeight;
+        const measuredRatio = w / h;
+        if (Number.isFinite(measuredRatio) && measuredRatio >= .25 && measuredRatio <= 3.5) {
+          ratio = measuredRatio;
+          measured = true;
+          sampleFrameRatioCache.set(src, ratio);
+        }
+      }
+      if (isVideo) {
+        media.removeAttribute('src');
+        media.load();
+      } else media.src = '';
+      resolve({ratio, measured});
+    };
+
+    timeout = setTimeout(() => finish(false), 6500);
+    if (isVideo) {
+      media = document.createElement('video');
+      media.preload = 'metadata';
+      media.muted = true;
+      media.playsInline = true;
+      media.addEventListener('loadedmetadata', () => finish(true), {once:true});
+      media.addEventListener('error', () => finish(false), {once:true});
+      media.src = src;
+      media.load();
+    } else {
+      media = new Image();
+      media.onload = () => finish(true);
+      media.onerror = () => finish(false);
+      media.src = src;
+    }
+  });
+  sampleFrameRatioPending.set(src, promise);
+  promise.finally(() => sampleFrameRatioPending.delete(src));
+  return promise;
+}
+
+function prepareSampleCategoryFrameSizes(category, panel) {
+  if (!category || !panel || panel.dataset.sampleRatiosRequested === 'true') return;
+  panel.dataset.sampleRatiosRequested = 'true';
+  const samples = Array.isArray(category.samples) ? category.samples : [];
+  Promise.all(samples.map(sample => getSampleFrameRatio(sample, category.id)))
+    .then(ratios => {
+      if (!panel.isConnected) return;
+      panel.querySelectorAll('.sample-media-frame[data-sample-index]').forEach(frame => {
+        const result = ratios[Number(frame.dataset.sampleIndex)];
+        if (!result) return;
+        frame.style.setProperty('--sample-ratio', String(result.ratio));
+        frame.classList.toggle('sample-ratio-estimate', !result.measured);
+      });
+      panel.classList.add('sample-ratios-ready');
+      // The existing lazy-video observer ignores hidden grids. Recheck now.
+      if (panel.classList.contains('active')) {
+        refreshLazySampleVideos();
+        requestAnimationFrame(() => refreshLazySampleVideos());
+      }
+    });
+}
+
 /* ── Samples ── */
 function renderSamples() {
   const cats = C.sampleCategories || [];
@@ -4973,7 +5125,7 @@ function renderSamples() {
     return 'video/mp4';
   }
 
-  return `<div class="sample-grid">${samples.map(s => {
+  return `<div class="sample-grid">${samples.map((s, sampleIndex) => {
     if (!s.src) {
       return `<div class="sample-item">
         <div class="sample-placeholder">
@@ -5005,6 +5157,7 @@ function renderSamples() {
           decoding="async">`;
 
     return `<div class="sample-item" data-sample-loading="true">
+      <div class="sample-media-frame" data-sample-index="${sampleIndex}">
       <div class="sample-loader" aria-hidden="true">
         <div class="sample-loader-gem">
           <svg class="sample-loader-diamond-svg" viewBox="0 0 48 48" aria-hidden="true">
@@ -5029,6 +5182,7 @@ function renderSamples() {
         <div class="sample-loader-text">LOADING</div>
       </div>
       ${media}
+      </div>
       ${s.caption ? `<div class="sample-caption">${s.caption}</div>` : ''}
     </div>`;
   }).join('')}</div>`;
@@ -5074,6 +5228,10 @@ function renderSamples() {
       void selectedCategory.offsetWidth;
       selectedCategory.classList.add('sample-enter');
 
+      /* Show cards only after metadata has established their final frame ratios. */
+      const sampleCategory = cats.find(cat => cat.id === id);
+      if (sampleCategory) prepareSampleCategoryFrameSizes(sampleCategory, selectedCategory);
+
       /* 숨긴 카테고리의 영상은 일시정지하고, 선택한 영상만 필요할 때 로딩합니다. */
       refreshLazySampleVideos();
       requestAnimationFrame(() => refreshLazySampleVideos());
@@ -5118,8 +5276,13 @@ function renderSamples() {
     div.className = 'sample-category'; div.id = 'cat-'+cat.id;
     let html = '';
     if (cat.description&&cat.id!=='animal') html += `<div class="sample-cat-desc">${cat.description}</div>`;
-    if (cat.samples&&cat.samples.length) html += buildGrid(cat.samples);
-    else if (cat.description) html += `<div class="animal-desc">${cat.description}</div>`;
+    if (cat.samples&&cat.samples.length) {
+      html += '<div class="sample-ratio-preparing" role="status" aria-live="polite">영상 미리보기를 준비하고 있어요…</div>';
+      html += buildGrid(cat.samples);
+    } else {
+      div.classList.add('sample-ratios-ready');
+    }
+    if ((!cat.samples || !cat.samples.length) && cat.description) html += `<div class="animal-desc">${cat.description}</div>`;
     div.innerHTML = html; catsEl.appendChild(div);
   });
 
