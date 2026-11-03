@@ -4912,6 +4912,39 @@ function initSampleVideoLightbox(){
   if (!dialog || !player || !picture || !loading || !title || !root) return;
 
   let lastTrigger = null;
+  let openingScroll = null;
+
+  // ArtMug embeds this long page in an iframe. Native <dialog> focus restoration
+  // may otherwise scroll its document (or a same-origin parent) on close.
+  function rememberScrollPosition(){
+    const state = {x:window.scrollX, y:window.scrollY, parent:null};
+    try {
+      if (window.parent && window.parent !== window) {
+        // Access is only possible for a same-origin embedding page.
+        const parent = window.parent;
+        state.parent = {x:parent.scrollX, y:parent.scrollY};
+      }
+    } catch (_) { /* Cross-origin ArtMug embeds: never touch parent scroll. */ }
+    return state;
+  }
+  function restoreScrollPosition(state){
+    if (!state) return;
+    const jumpBack = (target, x, y) => {
+      try {
+        const scroller = target.document.scrollingElement || target.document.documentElement;
+        const previousBehavior = scroller.style.scrollBehavior;
+        scroller.style.scrollBehavior = 'auto';
+        target.scrollTo({left:x, top:y, behavior:'instant'});
+        scroller.style.scrollBehavior = previousBehavior;
+      } catch (_) { /* Cross-origin or unavailable browsing context. */ }
+    };
+    jumpBack(window, state.x, state.y);
+    if (state.parent) jumpBack(window.parent, state.parent.x, state.parent.y);
+  }
+  function closeWithoutScrollJump(){
+    if (dialog.open) dialog.close();
+  }
+
   function open(trigger){
     if (dialog.open) return;
     const frame = trigger.closest('.sample-media-frame, .waiting-video-wrap');
@@ -4927,6 +4960,7 @@ function initSampleVideoLightbox(){
     if (!src) return;
 
     lastTrigger = trigger;
+    openingScroll = rememberScrollPosition();
     title.textContent = trigger.dataset.title || '리깅 샘플';
     loading.textContent = smallVideo ? '영상을 불러오는 중...' : '이미지를 불러오는 중...';
     loading.hidden = false;
@@ -4937,6 +4971,11 @@ function initSampleVideoLightbox(){
       // Old browsers without native dialog support still have a usable preview.
       window.open(src, '_blank', 'noopener,noreferrer');
       return;
+    }
+    // Blur the opener before showModal: native automatic focus restoration can
+    // otherwise scroll the ArtMug page, before the close event even fires.
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
     }
     dialog.showModal();
     document.body.classList.add('artmug-sample-dialog-open');
@@ -4982,13 +5021,17 @@ function initSampleVideoLightbox(){
       if (trigger) { event.preventDefault(); open(trigger); }
     }
   });
-  document.getElementById('artmug-sample-dialog-close')?.addEventListener('click', () => dialog.close());
+  document.getElementById('artmug-sample-dialog-close')?.addEventListener('click', closeWithoutScrollJump);
+  dialog.addEventListener('cancel', event => {
+    event.preventDefault();
+    closeWithoutScrollJump();
+  });
   dialog.addEventListener('click', event => {
     // A click on the dimmed backdrop closes, not clicks on the player/controls.
     if (event.target !== dialog) return;
     const rect = dialog.getBoundingClientRect();
     if (event.clientX < rect.left || event.clientX > rect.right ||
-        event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+        event.clientY < rect.top || event.clientY > rect.bottom) closeWithoutScrollJump();
   });
   dialog.addEventListener('close', () => {
     player.pause();
@@ -5009,6 +5052,18 @@ function initSampleVideoLightbox(){
     refreshLazySampleVideos();
     if (lastTrigger?.isConnected) lastTrigger.focus({preventScroll:true});
     lastTrigger = null;
+    // Restore after native close/focus and after the document's overflow changes.
+    // Repeat on two animation frames to account for delayed browser scroll anchoring.
+    const position = openingScroll;
+    openingScroll = null;
+    restoreScrollPosition(position);
+    requestAnimationFrame(() => {
+      if (dialog.open) return;
+      restoreScrollPosition(position);
+      requestAnimationFrame(() => {
+        if (!dialog.open) restoreScrollPosition(position);
+      });
+    });
   });
 }
 
