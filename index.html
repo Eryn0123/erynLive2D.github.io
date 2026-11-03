@@ -3580,7 +3580,6 @@ section > .process-notes.fade-in{transition-delay:.15s;}
   box-shadow:0 7px 22px rgba(81,68,148,.23);
 }
 .sample-zoom-button:focus-visible{outline:3px solid rgba(142,126,213,.5);outline-offset:3px;}
-body.artmug-sample-dialog-open{overflow:hidden;}
 .artmug-sample-dialog{
   position:fixed;inset:0;margin:auto;
   width:min(980px,calc(100vw - 34px));max-width:none;
@@ -3633,6 +3632,49 @@ body.artmug-sample-dialog-open{overflow:hidden;}
 @media(prefers-reduced-motion:reduce){
   .artmug-sample-dialog[open]{animation:none;}
   .sample-zoom-button,.artmug-sample-dialog-video{transition:none;}
+}
+
+
+/* 2026-11-03 · Embedded ArtMug scroll safety.
+   No native <dialog>. Native showModal/close can move the scroll position of
+   ArtMug's cross-origin parent iframe, which an embedded page cannot undo.
+   This overlay is absolute/inert to document flow and centered at the clicked
+   sample's document position, without touching body overflow or focus. */
+.artmug-sample-overlay[hidden]{display:none!important;}
+.artmug-sample-overlay{
+  position:absolute;top:0;left:0;right:0;z-index:10050;
+  width:100%;pointer-events:none;
+}
+.artmug-sample-overlay-backdrop{
+  position:absolute;inset:0;pointer-events:auto;
+  background:rgba(31,26,56,.75);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+}
+.artmug-sample-overlay .artmug-sample-dialog{
+  position:absolute;top:0;left:50%;right:auto;bottom:auto;
+  display:flex;flex-direction:column;gap:13px;
+  width:min(980px,calc(100% - 34px));
+  max-height:min(760px,calc(100dvh - 34px));
+  margin:0;transform:translateX(-50%);
+  pointer-events:auto;animation:artmugEmbedDialogFade .22s ease-out both;
+}
+.artmug-sample-overlay .artmug-sample-dialog-video,
+.artmug-sample-overlay .artmug-sample-dialog-image{
+  max-height:min(570px,calc(100dvh - 185px));
+}
+@keyframes artmugEmbedDialogFade{from{opacity:0}to{opacity:1}}
+@media(max-width:600px){
+  .artmug-sample-overlay .artmug-sample-dialog{
+    width:calc(100% - 20px);max-height:min(640px,calc(100dvh - 20px));
+    gap:10px;
+  }
+  .artmug-sample-overlay .artmug-sample-dialog-video,
+  .artmug-sample-overlay .artmug-sample-dialog-image{
+    max-height:min(480px,calc(100dvh - 142px));
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .artmug-sample-overlay .artmug-sample-dialog{animation:none;}
 }
 
 </style>
@@ -3844,22 +3886,25 @@ body.artmug-sample-dialog-open{overflow:hidden;}
 
 
 
-<!-- 리깅 샘플 및 대기화면: 원본 미리보기를 끊지 않고 확대 보기 -->
-<dialog class="artmug-sample-dialog" id="artmug-sample-dialog" aria-labelledby="artmug-sample-dialog-title" aria-describedby="artmug-sample-dialog-hint">
-  <div class="artmug-sample-dialog-head">
-    <div class="artmug-sample-dialog-meta">
-      <div class="artmug-sample-dialog-kicker">ERYN · LIVE2D MOTION</div>
-      <div class="artmug-sample-dialog-title" id="artmug-sample-dialog-title">리깅 샘플</div>
+<!-- 리깅 샘플/대기화면 확대: ArtMug의 긴 cross-origin iframe에서도 문서 스크롤을 움직이지 않는 오버레이. -->
+<div class="artmug-sample-overlay" id="artmug-sample-overlay" hidden>
+  <div class="artmug-sample-overlay-backdrop" data-artmug-sample-close aria-hidden="true"></div>
+  <div class="artmug-sample-dialog" id="artmug-sample-dialog" role="dialog" aria-modal="true" aria-labelledby="artmug-sample-dialog-title" aria-describedby="artmug-sample-dialog-hint">
+    <div class="artmug-sample-dialog-head">
+      <div class="artmug-sample-dialog-meta">
+        <div class="artmug-sample-dialog-kicker">ERYN · LIVE2D MOTION</div>
+        <div class="artmug-sample-dialog-title" id="artmug-sample-dialog-title">리깅 샘플</div>
+      </div>
+      <button type="button" class="artmug-sample-dialog-close" id="artmug-sample-dialog-close" aria-label="확대 영상 닫기">×</button>
     </div>
-    <button type="button" class="artmug-sample-dialog-close" id="artmug-sample-dialog-close" aria-label="확대 영상 닫기">×</button>
+    <div class="artmug-sample-dialog-stage">
+      <span class="artmug-sample-dialog-loading" id="artmug-sample-dialog-loading" role="status">영상을 불러오는 중...</span>
+      <video id="artmug-sample-dialog-video" class="artmug-sample-dialog-video" controls playsinline muted loop preload="none" aria-label="확대된 리깅 샘플 영상"></video>
+      <img id="artmug-sample-dialog-image" class="artmug-sample-dialog-image" alt="" hidden>
+    </div>
+    <p class="artmug-sample-dialog-hint" id="artmug-sample-dialog-hint">ESC 키 또는 닫기 버튼으로 돌아갈 수 있어요.</p>
   </div>
-  <div class="artmug-sample-dialog-stage">
-    <span class="artmug-sample-dialog-loading" id="artmug-sample-dialog-loading" role="status">영상을 불러오는 중...</span>
-    <video id="artmug-sample-dialog-video" class="artmug-sample-dialog-video" controls playsinline muted loop preload="none" aria-label="확대된 리깅 샘플 영상"></video>
-    <img id="artmug-sample-dialog-image" class="artmug-sample-dialog-image" alt="" hidden>
-  </div>
-  <p class="artmug-sample-dialog-hint" id="artmug-sample-dialog-hint">ESC 키 또는 닫기 버튼으로 돌아갈 수 있어요.</p>
-</dialog>
+</div>
 
 <!-- 판매 모델 상세 이미지 확대 보기 -->
 <div
@@ -4903,137 +4948,48 @@ document.addEventListener('keydown', event => {
    the personal portfolio). The small preview keeps playing while the enlarged
    player starts near the preview's currentTime. No extra downloads at page load. */
 function initSampleVideoLightbox(){
+  const overlay = document.getElementById('artmug-sample-overlay');
   const dialog = document.getElementById('artmug-sample-dialog');
   const player = document.getElementById('artmug-sample-dialog-video');
   const picture = document.getElementById('artmug-sample-dialog-image');
   const loading = document.getElementById('artmug-sample-dialog-loading');
   const title = document.getElementById('artmug-sample-dialog-title');
   const root = document.getElementById('sample-categories');
-  if (!dialog || !player || !picture || !loading || !title || !root) return;
+  const closeButton = document.getElementById('artmug-sample-dialog-close');
+  if (!overlay || !dialog || !player || !picture || !loading || !title || !root) return;
 
+  let openedFrame = null;
+  let isOpen = false;
   let lastTrigger = null;
-  let openingScroll = null;
 
-  // ArtMug embeds this long page in an iframe. Native <dialog> focus restoration
-  // may otherwise scroll its document (or a same-origin parent) on close.
-  function rememberScrollPosition(){
-    const state = {x:window.scrollX, y:window.scrollY, parent:null};
-    try {
-      if (window.parent && window.parent !== window) {
-        // Access is only possible for a same-origin embedding page.
-        const parent = window.parent;
-        state.parent = {x:parent.scrollX, y:parent.scrollY};
-      }
-    } catch (_) { /* Cross-origin ArtMug embeds: never touch parent scroll. */ }
-    return state;
-  }
-  function restoreScrollPosition(state){
-    if (!state) return;
-    const jumpBack = (target, x, y) => {
-      try {
-        const scroller = target.document.scrollingElement || target.document.documentElement;
-        const previousBehavior = scroller.style.scrollBehavior;
-        scroller.style.scrollBehavior = 'auto';
-        target.scrollTo({left:x, top:y, behavior:'instant'});
-        scroller.style.scrollBehavior = previousBehavior;
-      } catch (_) { /* Cross-origin or unavailable browsing context. */ }
-    };
-    jumpBack(window, state.x, state.y);
-    if (state.parent) jumpBack(window.parent, state.parent.x, state.parent.y);
-  }
-  function closeWithoutScrollJump(){
-    if (dialog.open) dialog.close();
+  function updateOverlayPosition(){
+    if (!isOpen || !openedFrame) return;
+    // Critical: this overlay does not affect the document flow or the iframe's
+    // measured height. ArtMug owns the *outer* scrolling position and we never
+    // focus a button or run scrollIntoView on modal open/close.
+    const docHeight = Math.max(
+      document.documentElement.scrollHeight, document.body.scrollHeight,
+      window.innerHeight
+    );
+    overlay.style.height = `${docHeight}px`;
+    const rect = openedFrame.getBoundingClientRect();
+    const frameTop = rect.top + window.scrollY;
+    const dialogHeight = dialog.getBoundingClientRect().height;
+    const desired = frameTop + (rect.height - dialogHeight) / 2;
+    const maxTop = Math.max(12, docHeight - dialogHeight - 12);
+    dialog.style.top = `${Math.max(12, Math.min(desired, maxTop))}px`;
   }
 
-  function open(trigger){
-    if (dialog.open) return;
-    const frame = trigger.closest('.sample-media-frame, .waiting-video-wrap');
-    if (!frame) return;
-    const smallVideo = frame.querySelector('video.sample-load-media');
-    const smallImage = frame.querySelector('img.sample-load-media');
-    if (!smallVideo && !smallImage) return;
-
-    const srcNode = smallVideo?.querySelector('source');
-    const src = smallVideo
-      ? (srcNode?.getAttribute('src') || srcNode?.dataset.src || smallVideo.currentSrc)
-      : (smallImage.currentSrc || smallImage.getAttribute('src'));
-    if (!src) return;
-
-    lastTrigger = trigger;
-    openingScroll = rememberScrollPosition();
-    title.textContent = trigger.dataset.title || '리깅 샘플';
-    loading.textContent = smallVideo ? '영상을 불러오는 중...' : '이미지를 불러오는 중...';
-    loading.hidden = false;
-    player.hidden = !!smallImage;
-    picture.hidden = !!smallVideo;
-
-    if (typeof dialog.showModal !== 'function') {
-      // Old browsers without native dialog support still have a usable preview.
-      window.open(src, '_blank', 'noopener,noreferrer');
-      return;
-    }
-    // Blur the opener before showModal: native automatic focus restoration can
-    // otherwise scroll the ArtMug page, before the close event even fires.
-    if (document.activeElement instanceof HTMLElement) {
+  function close(){
+    if (!isOpen) return;
+    // Blur the close button before hiding it. Never restore focus to the opener:
+    // iframe focus restoration can move an inaccessible cross-origin parent.
+    if (overlay.contains(document.activeElement) &&
+        document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
-    dialog.showModal();
-    document.body.classList.add('artmug-sample-dialog-open');
-    if (smallImage) {
-      picture.onload = () => { loading.hidden = true; };
-      picture.onerror = () => { loading.textContent = '이미지를 불러오지 못했어요.'; };
-      picture.alt = smallImage.alt || title.textContent;
-      picture.src = src;
-      if (picture.complete && picture.naturalWidth) loading.hidden = true;
-      return;
-    }
-
-    player.classList.remove('is-ready');
-    player.muted = true;
-    player.onloadedmetadata = () => {
-      // Read the current time only when the enlarged video is ready. The
-      // thumbnail is never paused, and remains at its original DOM position.
-      const time = smallVideo.currentTime || 0;
-      if (time > 0 && (!Number.isFinite(player.duration) || time < player.duration)) {
-        try { player.currentTime = time; } catch (_) { /* Seeking may need data. */ }
-      }
-    };
-    const showReady = () => {
-      player.classList.add('is-ready');
-      loading.hidden = true;
-    };
-    player.onloadeddata = showReady;
-    player.onplaying = showReady;
-    player.onerror = () => { loading.textContent = '영상을 불러오지 못했어요.'; };
-    // This is a second player only while enlarged. The original continues.
-    player.src = src;
-    player.load();
-    player.play().catch(() => { /* Built-in controls allow manual playback. */ });
-  }
-
-  // Delegation handles grid cards and waiting-screen slides alike.
-  root.addEventListener('click', event => {
-    const button = event.target.closest('.sample-zoom-button');
-    if (button) { event.preventDefault(); open(button); return; }
-    const frame = event.target.closest('.sample-media-frame, .waiting-video-wrap');
-    if (frame && root.contains(frame)) {
-      const trigger = frame.querySelector('.sample-zoom-button');
-      if (trigger) { event.preventDefault(); open(trigger); }
-    }
-  });
-  document.getElementById('artmug-sample-dialog-close')?.addEventListener('click', closeWithoutScrollJump);
-  dialog.addEventListener('cancel', event => {
-    event.preventDefault();
-    closeWithoutScrollJump();
-  });
-  dialog.addEventListener('click', event => {
-    // A click on the dimmed backdrop closes, not clicks on the player/controls.
-    if (event.target !== dialog) return;
-    const rect = dialog.getBoundingClientRect();
-    if (event.clientX < rect.left || event.clientX > rect.right ||
-        event.clientY < rect.top || event.clientY > rect.bottom) closeWithoutScrollJump();
-  });
-  dialog.addEventListener('close', () => {
+    isOpen = false;
+    overlay.hidden = true;
     player.pause();
     player.onloadedmetadata = null;
     player.onloadeddata = null;
@@ -5047,24 +5003,91 @@ function initSampleVideoLightbox(){
     picture.removeAttribute('src');
     picture.alt = '';
     loading.hidden = false;
-    document.body.classList.remove('artmug-sample-dialog-open');
-    // Keep the existing small preview exactly as-is and continue lazy playback.
-    refreshLazySampleVideos();
-    if (lastTrigger?.isConnected) lastTrigger.focus({preventScroll:true});
+    openedFrame = null;
     lastTrigger = null;
-    // Restore after native close/focus and after the document's overflow changes.
-    // Repeat on two animation frames to account for delayed browser scroll anchoring.
-    const position = openingScroll;
-    openingScroll = null;
-    restoreScrollPosition(position);
-    requestAnimationFrame(() => {
-      if (dialog.open) return;
-      restoreScrollPosition(position);
-      requestAnimationFrame(() => {
-        if (!dialog.open) restoreScrollPosition(position);
-      });
-    });
+    // Resume visibility-based playback without touching focus or scroll state.
+    refreshLazySampleVideos();
+  }
+
+  function open(trigger){
+    if (isOpen) return;
+    const frame = trigger.closest('.sample-media-frame, .waiting-video-wrap');
+    if (!frame) return;
+    const smallVideo = frame.querySelector('video.sample-load-media');
+    const smallImage = frame.querySelector('img.sample-load-media');
+    if (!smallVideo && !smallImage) return;
+
+    const srcNode = smallVideo?.querySelector('source');
+    const src = smallVideo
+      ? (srcNode?.getAttribute('src') || srcNode?.dataset.src || smallVideo.currentSrc)
+      : (smallImage.currentSrc || smallImage.getAttribute('src'));
+    if (!src) return;
+
+    lastTrigger = trigger;
+    openedFrame = frame;
+    isOpen = true;
+    title.textContent = trigger.dataset.title || '리깅 샘플';
+    loading.textContent = smallVideo ? '영상을 불러오는 중...' : '이미지를 불러오는 중...';
+    loading.hidden = false;
+    player.hidden = !!smallImage;
+    picture.hidden = !!smallVideo;
+    player.classList.remove('is-ready');
+    // No showModal(), scroll-lock class, automatic focus, or native dialog close.
+    overlay.hidden = false;
+    updateOverlayPosition();
+
+    if (smallImage) {
+      picture.onload = () => { loading.hidden = true; updateOverlayPosition(); };
+      picture.onerror = () => { loading.textContent = '이미지를 불러오지 못했어요.'; };
+      picture.alt = smallImage.alt || title.textContent;
+      picture.src = src;
+      if (picture.complete && picture.naturalWidth) {
+        loading.hidden = true;
+        updateOverlayPosition();
+      }
+      return;
+    }
+
+    player.muted = true;
+    player.onloadedmetadata = () => {
+      const time = smallVideo.currentTime || 0;
+      if (time > 0 && (!Number.isFinite(player.duration) || time < player.duration)) {
+        try { player.currentTime = time; } catch (_) { /* May still be seeking. */ }
+      }
+      updateOverlayPosition();
+    };
+    const showReady = () => {
+      player.classList.add('is-ready');
+      loading.hidden = true;
+      updateOverlayPosition();
+    };
+    player.onloadeddata = showReady;
+    player.onplaying = showReady;
+    player.onerror = () => { loading.textContent = '영상을 불러오지 못했어요.'; };
+    player.src = src;
+    player.load();
+    player.play().catch(() => { /* Keep native playback controls available. */ });
+  }
+
+  root.addEventListener('click', event => {
+    const button = event.target.closest('.sample-zoom-button');
+    if (button) { event.preventDefault(); open(button); return; }
+    const frame = event.target.closest('.sample-media-frame, .waiting-video-wrap');
+    if (frame && root.contains(frame)) {
+      const trigger = frame.querySelector('.sample-zoom-button');
+      if (trigger) { event.preventDefault(); open(trigger); }
+    }
   });
+  closeButton?.addEventListener('click', event => { event.preventDefault(); close(); });
+  overlay.querySelector('.artmug-sample-overlay-backdrop')?.addEventListener('click', close);
+  document.addEventListener('keydown', event => {
+    if (isOpen && event.key === 'Escape') {
+      event.preventDefault();
+      event.stopPropagation();
+      close();
+    }
+  }, true);
+  window.addEventListener('resize', updateOverlayPosition, {passive:true});
 }
 
 /* ── 샘플 영상: 선택한 카테고리만 지연 로딩 / 재생 ──
